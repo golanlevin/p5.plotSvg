@@ -11,14 +11,17 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 **Contents:**
 
-* About p5.plotSvg
-* Quickstart Installation 
-* What the p5.plotSvg library *IS*
-* What the p5.plotSvg library *IS NOT*
-* Example Programs
-* Usage Notes
-* Known Issues and Bugs
-* Other Libraries and Related Work
+* [About p5.plotSvg](#about-p5plotsvg)
+* [Quickstart Installation](#quickstart-installation)
+* [What the p5.plotSvg library *IS*](#what-the-p5plotsvg-library-is)
+* [What the p5.plotSvg library *IS NOT*](#what-the-p5plotsvg-library-is-not)
+* [Example Programs](#example-programs)
+* [Usage Notes](#usage-notes)
+* [Known Issues and Bugs](#known-issues-and-bugs)
+* [Other Libraries and Related Work](#other-libraries-and-related-work)
+* [Code of Conduct](#code-of-conduct)
+* [License](#license)
+* [Keywords](#keywords)
 
 ---
 ## About p5.plotSvg
@@ -26,8 +29,6 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 The p5.plotSvg library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files tailored for path-based vector output devices like the AxiDraw pen-plotter. Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js.
 
 p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the CMU [Drawing with Machines](https://github.com/golanlevin/DrawingWithMachines) course. It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
-
-
 
 
 ---
@@ -155,18 +156,20 @@ The following projects may be of interest to creative coders working with SVG fi
 * [stitch.js](https://github.com/stitchables/stitch.js) by Stitchables is a JavaScript library for rendering SVG-based embroidery patterns. It allows users to convert drawings made with HTML5 Canvas or SVG paths into embroidery stitch paths.
 * Bob Cook's [SVG Example](https://jsfiddle.net/bobcook/2p9tqzze/) provides an example demonstrating how to convert canvas-based drawings to SVG using a custom library in a jsFiddle example.
 
---- 
-## Keywords
+---
+## Code of Conduct
 
-Pen plotters, vector output, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, open-source software tools for the arts. 
+The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
 
 ---
 ## License
 
 p5.plotSvg is released under the [MIT License](LICENSE). 
 
----
-## Code of Conduct
 
-The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
+--- 
+## Keywords
+
+Pen plotters, vector output, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, open-source software tools for the arts. 
+
 
