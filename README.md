@@ -45,7 +45,7 @@ p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin
 ## Quickstart Installation
 
 First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js) or 
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can include p5.plotSvg.js in your projects directly by obtaining it from [https://github.com/golanlevin/p5.plotSvg](https://github.com/golanlevin/p5.plotSvg).  Be sure to include a link to `p5.plotSvg.js` in your `index.html` file, like this: 
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can include p5.plotSvg.js in your projects directly by downloading a local copy of it from [https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js](https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js).  Be sure to include a link to `p5.plotSvg.js` in your `index.html` file, like this: 
 
 ```
 <!-- inside index.html -->
@@ -54,7 +54,7 @@ First, include `p5.plotSvg.js` in your project. You can do this by linking to an
 <!-- Or https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js -->
 ```
 
-Next, include the structure below in your p5.js sketch. Press the 's' key to export an SVG file.
+Next, include the structure like the one below in your p5.js sketch. Press the 's' key to export an SVG file.
 
 ```
 let bDoExportSvg = false; 
