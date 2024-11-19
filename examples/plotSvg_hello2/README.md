@@ -4,12 +4,23 @@ The `plotSvg_hello2` example shows basic use of the p5.plotSvg library, in the c
 
 ![plotSvg_hello2.png](plotSvg_hello2.png)
 
+Code: 
+
+* At editor.p5js.org: [https://editor.p5js.org/golan/sketches/JA-ty5j83](https://editor.p5js.org/golan/sketches/JA-ty5j83)
+* At openprocessing.org: [https://openprocessing.org/sketch/2455390](https://openprocessing.org/sketch/2455390)
+* At Github: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_hello2/sketch.js)
+
 
 ```
-// Demonstrates how to use the p5.plotSvg library to export SVG files.
+// https://github.com/golanlevin/p5.plotSvg (v.0.1.0)
+// A Plotter-Oriented SVG Exporter for p5.js
+// Golan Levin, November 2024
+//
+// This sketch emonstrates how to use the p5.plotSvg library 
+// to export SVG files. Press 's' to export an SVG. 
 
 // This line of code disables the p5.js "Friendly Error System" (FES), 
-// to prevent several distracting warnings. Feel free to comment this out.
+// to prevent several distracting warnings. Feel free to comment this out:
 p5.disableFriendlyErrors = true; 
 
 let bDoExportSvg = false; 
@@ -33,6 +44,7 @@ function draw(){
     beginRecordSVG(this, "plotSvg_hello2.svg");
   }
 
+  // Draw your artwork here.
   circle(width/2, height/2, 300); 
   ellipse(width/2-60, height/2-40, 30, 50);
   ellipse(width/2+60, height/2-40, 30, 50);
