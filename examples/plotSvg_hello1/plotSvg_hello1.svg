@@ -1,0 +1,23 @@
+<!-- plotSvg_hello1.svg -->
+<!-- Generated using p5.plotSvg: -->
+<!-- A Plotter-Oriented SVG Exporter for p5.js -->
+<!-- Tue Nov 19 2024 03:20:36 GMT-0500 (Eastern Standard Time) -->
+<!-- DPI: 96 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="6in" height="4in" viewBox="0 0 576 384">
+  <style>
+    circle, ellipse, line, path, polygon, polyline, rect, quad, text {
+      fill: none;
+      stroke: black;
+      stroke-width: 1;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+  </style>
+<g vector-effect="non-scaling-stroke">
+  <circle cx="288" cy="192" r="150"/>
+  <ellipse cx="228" cy="152" rx="15" ry="25"/>
+  <ellipse cx="348" cy="152" rx="15" ry="25"/>
+  <path d="M 363 222 A 75 50 0 0 1 213 222"/>
+</g>
+</svg>

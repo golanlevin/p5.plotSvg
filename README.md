@@ -4,7 +4,7 @@
 
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
-p5.plotSvg is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
+**p5.plotSvg** is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
 Version 0.1.0, November 19, 2024<br />
 By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 [CMU School of Art](https://art.cmu.edu/)
@@ -23,10 +23,11 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 * [License](#license)
 * [Keywords](#keywords)
 
+
 ---
 ## About p5.plotSvg
 
-The p5.plotSvg library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.1](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js). 
+The p5.plotSvg library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.1](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js). 
 
 p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the CMU [Drawing with Machines](https://github.com/golanlevin/DrawingWithMachines) course. It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -93,12 +94,14 @@ function draw(){
 
 These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg:
 
-* **plotSvg_hello**: Simplest possible demonstration
-* **plotSvg_smorgasbord**: Demonstration of all drawing primitives
+1. [**plotSvg_hello1**](examples/plotSvg_hello1/): Simplest possible demo; all art in `setup()` only.
+2. [**plotSvg_hello2**](examples/plotSvg_hello2/): Simple demo; uses `setup()` & `draw()` and a keypress. 
+3. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export.
+4. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): Demonstration of all p5.js drawing primitives.
 
-*Not yet implemented: *
 
-* *plotSvg_generative_art*: An artwork is generated and, on a button press, exported.
+*Examples awaiting implementation:*
+
 * *plotSvg_animation_grab*: On a button press, one frame of animation is exported.
 * *plotSvg_particle_paths*: Many frames are accreted into a single SVG image.
 * *plotSvg_flipbook*: A number of frames are arranged onto a page.
