@@ -1,5 +1,5 @@
 // Demonstrates how to use the p5.plotSvg library to export 
-// SVG files from a simple "generative art" sketch in p5.js.
+// SVG files from a "generative art" sketch in p5.js.
 
 // This line of code disables the p5.js "Friendly Error System" (FES), 
 // to prevent some distracting warnings. Feel free to comment this out.
@@ -21,22 +21,14 @@ function setup() {
   exportSvgButton = createButton('Export SVG');
   exportSvgButton.position(100, height);
   exportSvgButton.mousePressed(initiateSvgExport);
-
-  // Set important values for our SVG exporting: 
-  setSvgResolutionDPI(96); 
-  setSvgPointRadius(0.25); 
-  setSvgCoordinatePrecision(4); 
-  setSvgTransformPrecision(6); 
-  setSvgIndent(SVG_INDENT_SPACES, 2); 
-  setSvgDefaultStrokeColor('black'); 
-  setSvgDefaultStrokeWeight(1); 
-  setSvgFlattenTransforms(false); 
 }
 
 //------------------------------------------------------------
+// Make a new random seed when the "Regenerate" button is pressed
 function regenerate(){
   myRandomSeed = round(millis()); 
 }
+// Set the SVG to be exported when the "Export SVG" button is pressed
 function initiateSvgExport(){
   bDoExportSvg = true; 
 }

@@ -2,9 +2,13 @@
 
 ![plotSvg_generative.png](plotSvg_generative.png)
 
-The `plotSvg_generative` example shows one way that p5.plotSvg could be used for generative plotter art. In this sketch, pressing the `Regenerate` button changes the random seed; the user can then press the `Export SVG` button when they like the results.
+The `plotSvg_generative` example shows one possible way that p5.plotSvg could be used for generative plotter art. In this sketch, pressing the `Regenerate` button changes the design's random seed; the user can then press the `Export SVG` button when they are satisfied with the results.
 
+Code:
 
+* At editor.p5js.org: [https://editor.p5js.org/golan/sketches/LRTXmDg2q](https://editor.p5js.org/golan/sketches/LRTXmDg2q)
+* At openProcessing.org: [https://openprocessing.org/sketch/2455399](https://openprocessing.org/sketch/2455399)
+* At GitHub: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_generative/sketch.js)
 
 ```
 // Demonstrates how to use the p5.plotSvg library to export 
@@ -33,9 +37,11 @@ function setup() {
 }
 
 //------------------------------------------------------------
+// Make a new random seed when the "Regenerate" button is pressed
 function regenerate(){
   myRandomSeed = round(millis()); 
 }
+// Set the SVG to be exported when the "Export SVG" button is pressed
 function initiateSvgExport(){
   bDoExportSvg = true; 
 }
