@@ -21,6 +21,16 @@ function setup() {
   exportSvgButton = createButton('Export SVG');
   exportSvgButton.position(100, height);
   exportSvgButton.mousePressed(initiateSvgExport);
+
+  // Set important values for our SVG exporting: 
+  setSvgResolutionDPI(96); 
+  setSvgPointRadius(0.25); 
+  setSvgCoordinatePrecision(4); 
+  setSvgTransformPrecision(6); 
+  setSvgIndent(SVG_INDENT_SPACES, 2); 
+  setSvgDefaultStrokeColor('black'); 
+  setSvgDefaultStrokeWeight(1); 
+  setSvgFlattenTransforms(false); 
 }
 
 //------------------------------------------------------------

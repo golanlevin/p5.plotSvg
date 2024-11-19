@@ -9,7 +9,12 @@ Version 0.1.0, November 19, 2024<br />
 By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 [CMU School of Art](https://art.cmu.edu/)
 
-**Contents:**
+### Key Links:
+
+* [**Download p5.plotSvg.js**](lib/p5.plotSvg.js)
+* [**Documentation**](documentation.md)
+
+### Contents:
 
 * [About p5.plotSvg](#about-p5plotsvg)
 * [Quickstart Installation](#quickstart-installation)
@@ -100,7 +105,7 @@ These examples show how to generate plotter-friendly SVGs from p5.js using p5.pl
 4. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): Demonstration of all p5.js drawing primitives.
 
 
-*Examples awaiting implementation:*
+*Examples awaiting implementation (more soon!):*
 
 * *plotSvg_animation_grab*: On a button press, one frame of animation is exported.
 * *plotSvg_particle_paths*: Many frames are accreted into a single SVG image.
