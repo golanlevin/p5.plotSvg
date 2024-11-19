@@ -26,7 +26,7 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 ---
 ## About p5.plotSvg
 
-The p5.plotSvg library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files tailored for path-based vector output devices like the AxiDraw pen-plotter. Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js.
+The p5.plotSvg library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.1](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js). 
 
 p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the CMU [Drawing with Machines](https://github.com/golanlevin/DrawingWithMachines) course. It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -67,6 +67,7 @@ function draw(){
   }
 }
 ```
+
 
 ---
 ## What the p5.plotSvg library *IS*: 
@@ -166,10 +167,7 @@ The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapte
 
 p5.plotSvg is released under the [MIT License](LICENSE). 
 
-
 --- 
 ## Keywords
 
 Pen plotters, vector output, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, open-source software tools for the arts. 
-
-
