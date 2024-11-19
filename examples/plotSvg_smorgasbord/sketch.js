@@ -372,22 +372,21 @@ function drawDesign(){
   textFont("Times"); 
   textStyle(NORMAL);
   textAlign(LEFT,BASELINE); 
-  text("Hello World", 50, 770); 
+  text("Press 's' to save an SVG.", 50, 770); 
   
   textSize(30); 
   textAlign(CENTER,BASELINE); 
   text("abc", 50, 475); 
   textAlign(RIGHT,BASELINE); 
   text("abc", 50, 500); 
-  
   textAlign(LEFT,BASELINE); 
-  text("bas", 50, 450); 
-  textAlign(LEFT,TOP); 
-  text("top", 100, 450); 
-  textAlign(LEFT,CENTER); 
-  text("cen", 100, 450); 
-  textAlign(LEFT,BOTTOM); 
-  text("bot", 100, 450); 
-  line(0,450, 150,450); 
+  text("abc", 50, 450); 
+  // textAlign(LEFT,TOP);    // Not ready for prime time
+  // text("top", 100, 450); 
+  // textAlign(LEFT,CENTER); // Not ready for prime time
+  // text("cen", 100, 450); 
+  // textAlign(LEFT,BOTTOM); // Not ready for prime time
+  // text("bot", 100, 450); 
+  // line(0,450, 150,450); 
   endSvgGroup();
 }

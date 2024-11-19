@@ -34,4 +34,7 @@ function draw(){
     endRecordSVG();
     bDoExportSvg = false;
   }
+
+  fill(0); noStroke();
+  text("Press 's' to save an SVG file.", 10, 20);
 }
