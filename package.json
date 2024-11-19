@@ -1,0 +1,31 @@
+{
+  "name": "p5.plotsvg",
+  "version": "0.1.0",
+  "description": "A Plotter-Oriented SVG Exporter for p5.js",
+  "main": "lib/p5.plotSvg.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/golanlevin/p5.plotSvg.git"
+  },
+  "keywords": [
+    "plotters",
+    "p5.js",
+    "SVG",
+    "#plotterTwitter",
+    "creativecoding",
+    "generativeart"
+  ],
+  "author": "Golan Levin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/golanlevin/p5.plotSvg/issues"
+  },
+  "homepage": "https://github.com/golanlevin/p5.plotSvg#readme"
+}

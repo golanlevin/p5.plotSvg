@@ -13,6 +13,9 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 * [**Download p5.plotSvg.js**](lib/p5.plotSvg.js)
 * [**Documentation**](documentation.md)
+* npmjs.com: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
+* unpkg.com: [https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js)
+* cdn.jsdelivr.net: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
 
 ### Contents:
 
@@ -27,6 +30,7 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 * [Code of Conduct](#code-of-conduct)
 * [License](#license)
 * [Keywords](#keywords)
+* [Todo](#todo)
 
 
 ---
@@ -179,3 +183,10 @@ p5.plotSvg is released under the [MIT License](LICENSE).
 ## Keywords
 
 Pen plotters, vector output, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, open-source software tools for the arts. 
+
+---
+## Todo
+
+* Upload to unpkg/jsDelivr CDN
+* More examples
+* Fix bugs
