@@ -11,11 +11,11 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 ### Key Links:
 
-* [**Download p5.plotSvg.js**](lib/p5.plotSvg.js)
+* [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub
+* **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
+* **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js)
+* **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * [**Documentation**](documentation.md)
-* npmjs.com: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
-* unpkg.com: [https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js)
-* cdn.jsdelivr.net: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
 
 ### Contents:
 
@@ -44,12 +44,14 @@ p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin
 ---
 ## Quickstart Installation
 
-First, include `p5.plotSvg.js` in your project. For example, in the [p5.js Editor](https://editor.p5js.org/), include `p5.plotSvg.js` in your `index.html` file, and make sure that the `p5.plotSvg.js` is in the same directory as your sketch:
+First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js) or 
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can include p5.plotSvg.js in your projects directly by obtaining it from [https://github.com/golanlevin/p5.plotSvg](https://github.com/golanlevin/p5.plotSvg).  Be sure to include a link to `p5.plotSvg.js` in your `index.html` file, like this: 
 
 ```
 <!-- inside index.html -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
-<script src="p5.plotSvg.js"></script>
+<script src="https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js"></script>
+<!-- Or https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js -->
 ```
 
 Next, include the structure below in your p5.js sketch. Press the 's' key to export an SVG file.
@@ -103,10 +105,10 @@ function draw(){
 
 These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg:
 
-1. [**plotSvg_hello1**](examples/plotSvg_hello1/): Simplest possible demo; all art in `setup()` only.
-2. [**plotSvg_hello2**](examples/plotSvg_hello2/): Simple demo; uses `setup()` & `draw()` and a keypress. 
-3. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export.
-4. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): Demonstration of all p5.js drawing primitives.
+1. [**plotSvg_hello1**](examples/plotSvg_hello1/): Simplest possible demo; all art in `setup()` only. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/AW8GI36fA)
+2. [**plotSvg_hello2**](examples/plotSvg_hello2/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/JA-ty5j83)
+3. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/LRTXmDg2q)
+4. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): Demonstration of all p5.js drawing primitives exporting to SVG. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/QReF_9ss2)
 
 
 *Examples awaiting implementation (more soon!):*
@@ -183,10 +185,3 @@ p5.plotSvg is released under the [MIT License](LICENSE).
 ## Keywords
 
 Pen plotters, vector output, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, open-source software tools for the arts. 
-
----
-## Todo
-
-* Upload to unpkg/jsDelivr CDN
-* More examples
-* Fix bugs

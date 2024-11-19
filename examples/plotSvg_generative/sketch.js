@@ -1,5 +1,5 @@
 // Demonstrates how to use the p5.plotSvg library to export 
-// SVG files from a "generative art" sketch in p5.js.
+// SVG files from a simple "generative art" sketch in p5.js.
 
 // This line of code disables the p5.js "Friendly Error System" (FES), 
 // to prevent some distracting warnings. Feel free to comment this out.
