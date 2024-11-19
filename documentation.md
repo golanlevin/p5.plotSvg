@@ -27,7 +27,7 @@ Begins recording SVG output for a p5.js sketch.
 Initializes recording state, validates and sets the output filename,
 and overrides p5.js drawing functions to capture drawing commands for SVG export.
 
-### Parameters
+#### Parameters
 
 *   `p5Instance` **[object][26]** A reference to the current p5.js sketch (e.g. `this`).
 *   `fn` **[string][27]?** Optional filename for the output SVG file.
@@ -38,7 +38,7 @@ and overrides p5.js drawing functions to capture drawing commands for SVG export
 Pauses or unpauses recording of SVG output for a p5.js sketch,
 depending on whether the bPause argument is true or false.
 
-### Parameters
+#### Parameters
 
 *   `bPause` &#x20;
 
@@ -52,7 +52,7 @@ and restores the original p5.js functions.
 
 Sets the default stroke weight for SVG elements.
 
-### Parameters
+#### Parameters
 
 *   `wei` **[number][28]** The stroke weight to set.
 
@@ -60,7 +60,7 @@ Sets the default stroke weight for SVG elements.
 
 Sets the default stroke color for SVG elements.
 
-### Parameters
+#### Parameters
 
 *   `col` **[string][27]** The stroke color to set, in valid CSS color format.
 
@@ -69,7 +69,7 @@ Sets the default stroke color for SVG elements.
 Sets the resolution for the exported SVG file in dots per inch (DPI).
 This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output.
 
-### Parameters
+#### Parameters
 
 *   `dpi` **[number][28]** The resolution in dots per inch. Must be a positive number.
 
@@ -78,7 +78,7 @@ This value is used to determine the scaling of units (pixels to physical dimensi
 Sets the type and amount of indentation used for formatting SVG output.
 The function allows for spaces, tabs, or no indentation.
 
-### Parameters
+#### Parameters
 
 *   `itype` **[string][27]** The type of indentation to use. Valid values are
     'SVG\_INDENT\_SPACES', 'SVG\_INDENT\_TABS', or 'SVG\_INDENT\_NONE'.
@@ -91,7 +91,7 @@ Set whether or not to use a stack to encode matrix transforms.
 setSvgFlattenTransforms(true) -- larger SVG files, greater fidelity to original
 setSvgFlattenTransforms(false) -- smaller SVG files, potentially less fidelity
 
-### Parameters
+#### Parameters
 
 *   `b` &#x20;
 
@@ -100,7 +100,7 @@ setSvgFlattenTransforms(false) -- smaller SVG files, potentially less fidelity
 Sets the output precision for graphics coordinates in SVGs by adjusting
 the number of decimal digits used when formatting values.
 
-### Parameters
+#### Parameters
 
 *   `p` **[number][28]** The desired number of decimal digits for coordinates.
     Must be a non-negative integer. If an invalid value is provided, a warning is issued.
@@ -110,7 +110,7 @@ the number of decimal digits used when formatting values.
 Sets the output precision for matrix-transform values in SVGs by adjusting
 the number of decimal digits used when formatting rotations, translations, etc.
 
-### Parameters
+#### Parameters
 
 *   `p` **[number][28]** The desired number of decimal digits for matrix values.
     Must be a non-negative integer. If an invalid value is provided, a warning is issued.
@@ -119,7 +119,7 @@ the number of decimal digits used when formatting rotations, translations, etc.
 
 Sets the radius for points (rendered as tiny circles) in the SVG output.
 
-### Parameters
+#### Parameters
 
 *   `radius` **[number][28]** The desired radius for points, specified as a positive number.
     If an invalid value (non-positive or non-number) is provided, a warning is issued.
@@ -130,7 +130,7 @@ Begins a new user-defined grouping of SVG elements.
 Optionally associates a group name to the SVG group.
 Be sure to call `endSvgGroup()` later or the SVG file will report errors.
 
-### Parameters
+#### Parameters
 
 *   `gname` **[string][27]?** Optional group name used as an ID for the SVG group.
 
