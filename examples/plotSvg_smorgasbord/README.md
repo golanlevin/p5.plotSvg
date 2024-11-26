@@ -1,6 +1,6 @@
 # plotSvg_smorgasbord Example
 
-![plotSvg_smorgasbord_canvas.png](plotSvg_smorgasbord_canvas.png)
+![plotSvg_smorgasbord.png](plotSvg_smorgasbord.png)
 
 The `plotSvg_smorgasbord` is intended as a comprehensive test, to ensure that all relevant p5.js drawing commands are successfully exporting vector paths to an SVG file. `plotSvg_smorgasbord` 
 includes tests of the following p5.js drawing commands and options: 
