@@ -5,7 +5,7 @@
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
-Version 0.1.0, November 19, 2024<br />
+Version 0.1.1, December 4, 2024<br />
 By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 [CMU School of Art](https://art.cmu.edu/)
 
@@ -13,7 +13,7 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 * [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub
 * **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
-* **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js)
+* **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js)
 * **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * [**Documentation**](documentation.md)
 
@@ -44,23 +44,33 @@ p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin
 ---
 ## Quickstart Installation
 
-First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js) or 
+First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js) or 
 [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can include p5.plotSvg.js in your projects directly by downloading a local copy of it from [https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js](https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js).  Be sure to include a link to `p5.plotSvg.js` in your `index.html` file, like this: 
 
 ```
 <!-- inside index.html -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
-<script src="https://unpkg.com/p5.plotsvg@0.1.0/lib/p5.plotSvg.js"></script>
-<!-- Or https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js -->
+<script src="https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js"></script>
 ```
-
-Next, include the structure like the one below in your p5.js sketch. Press the 's' key to export an SVG file.
+OR this: 
 
 ```
-let bDoExportSvg = false; // press 's' to initiate export
+<!-- inside index.html -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js">
+<script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js"</script>
+```
+
+
+
+Next, make a p5.js sketch like the one below. Press the 's' key to export an SVG file.
+
+```
+// press 's' to initiate export
+let bDoExportSvg = false; 
 
 function setup(){
-  createCanvas(816, 1056); // 8.5"x11" at 96 dpi
+  // The canvas dimensions are 8.5"x11" at 96 dpi
+  createCanvas(816, 1056); 
 }
 
 function keyPressed(){
@@ -154,11 +164,11 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 ---
 ## Known Issues and Bugs: 
 
-* As of p5.plotSvg v.0.1.0, non-default vertical `textAlign()` settings are not yet supported; only BASELINE currently works correctly.
-* As of p5.plotSvg v.0.1.0, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
-* As of p5.plotSvg v.0.1.0, there is a small discrepancy in the SVG output of polylines rendered with curveVertex(). Specifically, there is an error with the starting orientation of the first point of the polyline. 
-* As of p5.plotSvg v.0.1.0, this library is not intended to be used in WEBGL mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
-* The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to p5.plotSvg v.0.1.0.
+* As of p5.plotSvg v.0.1.1, non-default vertical `textAlign()` settings are not yet supported; only BASELINE currently works correctly.
+* As of p5.plotSvg v.0.1.1, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
+* As of p5.plotSvg v.0.1.1, there is a small discrepancy in the SVG output of polylines rendered with curveVertex(). Specifically, there is an error with the starting orientation of the first point of the polyline. 
+* As of p5.plotSvg v.0.1.1, this library is not intended to be used in WEBGL mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
+* The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to p5.plotSvg v.0.1.x.
 
 ---
 ## Other Libraries and Related Work
@@ -189,4 +199,4 @@ p5.plotSvg is released under the [MIT License](LICENSE).
 --- 
 ## Keywords
 
-Pen plotters, vector output, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, open-source software tools for the arts. 
+Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, AxiDraw, open-source software tools for the arts. 
