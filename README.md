@@ -4,7 +4,7 @@
 
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
-**p5.plotSvg** is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
+[**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
 Version 0.1.0, November 19, 2024<br />
 By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 [CMU School of Art](https://art.cmu.edu/)
@@ -36,7 +36,7 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 ---
 ## About p5.plotSvg
 
-The p5.plotSvg library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.1](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js). 
+The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.1](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js). 
 
 p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the CMU [Drawing with Machines](https://github.com/golanlevin/DrawingWithMachines) course. It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -57,7 +57,12 @@ First, include `p5.plotSvg.js` in your project. You can do this by linking to an
 Next, include the structure like the one below in your p5.js sketch. Press the 's' key to export an SVG file.
 
 ```
-let bDoExportSvg = false; 
+let bDoExportSvg = false; // press 's' to initiate export
+
+function setup(){
+  createCanvas(816, 1056); // 8.5"x11" at 96 dpi
+}
+
 function keyPressed(){
   if (key == 's'){ 
     bDoExportSvg = true; 
