@@ -5,13 +5,11 @@
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
-Version 0.1.1, December 4, 2024<br />
-By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
-[CMU School of Art](https://art.cmu.edu/)
+Version 0.1.1, December 4, 2024 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 ### Key Links:
 
-* [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub
+* [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
 * **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
 * **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js)
 * **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
@@ -27,31 +25,29 @@ By Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 * [Usage Notes](#usage-notes)
 * [Known Issues and Bugs](#known-issues-and-bugs)
 * [Other Libraries and Related Work](#other-libraries-and-related-work)
-* [Code of Conduct](#code-of-conduct)
-* [License](#license)
+* [License and Code of Conduct](#license-and-code-of-conduct)
 * [Keywords](#keywords)
-* [Todo](#todo)
 
 
 ---
 ## About p5.plotSvg
 
-The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.1](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js). 
+The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.2](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js). 
 
-p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the CMU [Drawing with Machines](https://github.com/golanlevin/DrawingWithMachines) course. It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
+p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
 
 ---
 ## Quickstart Installation
 
 First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js) or 
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can include p5.plotSvg.js in your projects directly by downloading a local copy of it from [https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js](https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js).  Be sure to include a link to `p5.plotSvg.js` in your `index.html` file, as in this example: 
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can include p5.plotSvg.js in your projects directly by downloading a local copy of it from [https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js](https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js). This example shows how to include `p5.plotSvg.js` in your project's `index.html` file: 
 
 ```
 <!-- This is the index.html file -->
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js"></script>
   </head>
   <body>
@@ -163,7 +159,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 ---
 ## Known Issues and Bugs: 
 
-* As of p5.plotSvg v.0.1.1, non-default vertical `textAlign()` settings are not yet supported; only BASELINE currently works correctly.
+* As of p5.plotSvg v.0.1.1, non-default vertical `textAlign()` settings are not yet supported; only `BASELINE` currently works correctly.
 * As of p5.plotSvg v.0.1.1, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
 * As of p5.plotSvg v.0.1.1, there is a small discrepancy in the SVG output of polylines rendered with curveVertex(). Specifically, there is an error with the starting orientation of the first point of the polyline. 
 * As of p5.plotSvg v.0.1.1, this library is not intended to be used in WEBGL mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
@@ -174,7 +170,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 
 The following projects may be of interest to creative coders working with SVG files:
 
-* [p5.js-svg](https://github.com/zenozeng/p5.js-svg) by Zenozeng allows for direct SVG rendering in p5.js sketches, offering an alternative SVG-based renderer for the web browser. It supports a wide range of SVG elements but also aims for full compatibility with p5.js drawing functions.
+* [p5.js-svg](https://github.com/zenozeng/p5.js-svg) by Zenozeng allows for direct SVG rendering in p5.js sketches, offering an alternative SVG-based renderer for the web browser. It supports a wide range of SVG elements but also aims for full compatibility with p5.js drawing functions. *Note*: As of December 2024, p5.js-svg is only compatible with p5.js up to v.1.6.0.
 * [canvas2svg](https://github.com/gliffy/canvas2svg) by Gliffy provides a way to export HTML5 Canvas content to SVG using JavaScript. It works by implementing a virtual canvas that mimics the CanvasRenderingContext2D interface, capturing drawing commands as SVG elements.
 * [p5-svg-test](https://github.com/runemadsen/p5-svg-test) by Rune Madsen is a simple test for SVG generation using p5.js. This repository provides a proof of concept for exporting p5.js graphics to SVG format but is not a fully-featured library.
 * [Rune.js](https://runemadsen.github.io/rune.js/) by Rune Madsen is a JavaScript library for creative coding, similar to p5.js. While it is not strictly a p5.js SVG exporter, it includes capabilities for working with vector graphics, including SVG import/export.
@@ -186,14 +182,11 @@ The following projects may be of interest to creative coders working with SVG fi
 * Bob Cook's [SVG Example](https://jsfiddle.net/bobcook/2p9tqzze/) provides an example demonstrating how to convert canvas-based drawings to SVG using a custom library in a jsFiddle example.
 
 ---
-## Code of Conduct
-
-The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
-
----
-## License
+## License and Code of Conduct
 
 p5.plotSvg is released under the [MIT License](LICENSE). 
+
+The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
 
 --- 
 ## Keywords
