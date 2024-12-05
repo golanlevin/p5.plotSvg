@@ -1,7 +1,12 @@
-// Demonstrates how to use the p5.plotSvg library to export SVG files.
+// https://github.com/golanlevin/p5.plotSvg (v.0.1.x)
+// A Plotter-Oriented SVG Exporter for p5.js
+// Golan Levin, November 2024
+//
+// This sketch emonstrates how to use the p5.plotSvg library 
+// to export SVG files. Press 's' to export an SVG. 
 
 // This line of code disables the p5.js "Friendly Error System" (FES), 
-// to prevent several distracting warnings. Feel free to comment this out.
+// to prevent several distracting warnings. Feel free to comment this out:
 p5.disableFriendlyErrors = true; 
 
 let bDoExportSvg = false; 
@@ -25,6 +30,7 @@ function draw(){
     beginRecordSVG(this, "plotSvg_hello2.svg");
   }
 
+  // Draw your artwork here.
   circle(width/2, height/2, 300); 
   ellipse(width/2-60, height/2-40, 30, 50);
   ellipse(width/2+60, height/2-40, 30, 50);
@@ -34,7 +40,4 @@ function draw(){
     endRecordSVG();
     bDoExportSvg = false;
   }
-
-  fill(0); noStroke();
-  text("Press 's' to save an SVG file.", 10, 20);
 }
