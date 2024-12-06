@@ -11,7 +11,7 @@ Version 0.1.2, December 6, 2024 • by Golan Levin ([@golanlevin](https://githu
 
 * [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
 * p5.plotSvg.js at **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
-* p5.plotSvg.js at **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js)
+* p5.plotSvg.js at **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.2/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.2/lib/p5.plotSvg.js)
 * p5.plotSvg.js at **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * [**Documentation**](documentation.md)
 
@@ -40,7 +40,7 @@ p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin
 ---
 ## Quickstart Installation
 
-First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js) or 
+First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.2/lib/p5.plotSvg.js) or 
 [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](hhttps://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). This example shows one way to include `p5.plotSvg.js` in your project's `index.html` file: 
 
 ```
