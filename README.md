@@ -32,7 +32,7 @@ Version 0.1.2, December 6, 2024 • by Golan Levin ([@golanlevin](https://githu
 ---
 ## About p5.plotSvg
 
-The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with [p5.js v.1.11.2](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js). 
+The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with p5.js version [1.11.2](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js). 
 
 p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -94,7 +94,7 @@ function draw(){
 ---
 ## What the p5.plotSvg library *IS*: 
 
-* The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable vector paths, such as lines, arcs, shapes, polylines, and curves. I anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter or an AxiDraw/NextDraw pen-plotter.
+* The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. I anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter or an AxiDraw/NextDraw pen-plotter.
 * The p5.plotSvg library is intended for use with p5.js, and is modeled after the way in which [PDF exporting](https://processing.org/reference/libraries/pdf/index.html) and [SVG exporting](https://processing.org/reference/libraries/svg/index.html) are implemented in [Processing](https://processing.org/) (Java). To use p5.plotSvg, you are expected to manage the timing of a `beginRecordSVG()` and `endRecordSVG()` function.
 * The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored. 
 
@@ -150,19 +150,19 @@ The p5.plotSvg library offers two different ways of encoding graphics transforma
 
 ### Numeric Precision
 
-p5.plotSvg offers two convenience functions which control how many digits of decimal precision are exported to SVG files. These have a major impact on SVG file size: 
+p5.plotSvg offers two convenience functions which control how many digits of decimal precision are exported to SVG files. These can have a major impact on SVG file size: 
 
 * `setSvgCoordinatePrecision()` - The default is 4 digits of precision for path coordinates, e.g. `3.1416`
 * `setSvgTransformPrecision()` - The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
 
 ---
-## Known Issues and Bugs: 
+## Known Issues and Bugs:
 
 * As of p5.plotSvg v.0.1.x, non-default vertical `textAlign()` settings are not yet supported; only `BASELINE` currently works correctly.
-* As of p5.plotSvg v.0.1.x, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
+* As of p5.plotSvg v.0.1.x, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, users should encode each contour in its own `beginShape()` / `endShape()` block instead. 
 * As of p5.plotSvg v.0.1.x, there is a small discrepancy in the SVG output of polylines rendered with `curveVertex()`. Specifically, there is an error with the starting orientation of the first point of the polyline. 
 * As of p5.plotSvg v.0.1.x, this library is not intended to be used in `WEBGL` mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
-* The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to p5.plotSvg v.0.1.x.
+* p5.plotSvg v.0.1.x works with versions of p5.js as old as v.1.4.2. The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to portions of p5.plotSvg v.0.1.x.
 
 ---
 ## Other Libraries and Related Work
@@ -183,9 +183,7 @@ The following projects may be of interest to creative coders working with SVG fi
 ---
 ## License and Code of Conduct
 
-p5.plotSvg is released under the [MIT License](LICENSE). 
-
-The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
+p5.plotSvg is released under the [MIT License](LICENSE). The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
 
 --- 
 ## Keywords
