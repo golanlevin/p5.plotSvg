@@ -5,14 +5,14 @@
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
-Version 0.1.1, December 4, 2024 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
+Version 0.1.2, December 6, 2024 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
-### Key Links:
+### Downloads and Documentation:
 
 * [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
-* **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
-* **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js)
-* **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
+* p5.plotSvg.js at **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
+* p5.plotSvg.js at **unpkg.com**: [https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js)
+* p5.plotSvg.js at **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * [**Documentation**](documentation.md)
 
 ### Contents:
@@ -41,7 +41,7 @@ p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin
 ## Quickstart Installation
 
 First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.1/lib/p5.plotSvg.js) or 
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can include p5.plotSvg.js in your projects directly by downloading a local copy of it from [https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js](https://github.com/golanlevin/p5.plotSvg/blob/main/lib/p5.plotSvg.js). This example shows how to include `p5.plotSvg.js` in your project's `index.html` file: 
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](hhttps://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). This example shows one way to include `p5.plotSvg.js` in your project's `index.html` file: 
 
 ```
 <!-- This is the index.html file -->
@@ -56,7 +56,7 @@ First, include `p5.plotSvg.js` in your project. You can do this by linking to an
 </html>
 ```
 
-Next, make a p5.js sketch like the one below, in the same directory as your `index.html`. When you run it, you can press the 's' key to export an SVG file.
+Next, make a p5.js file like the one below, `sketch.js`, in the same directory as your `index.html`. When you run it, you can press the `s` key to export an SVG file.
 
 ```
 // This is the sketch.js file.
@@ -142,27 +142,26 @@ These examples show how to generate plotter-friendly SVGs from p5.js using p5.pl
 
 ### Graphics Transforms
 
-The p5.plotSvg library offers two different ways of encoding graphics transformation operations (such as `rotate()`, `translate()`, `scale()`, `shearX()` and `shearY()`) into your SVG. These are selected with the following functions during `setup()`: 
+The p5.plotSvg library offers two different ways of encoding graphics transformation operations (such as `rotate()`, `translate()`, `scale()`, `shearX()` and `shearY()`) into your SVG. You can select the option you prefer using one the following functions during `setup()`: 
 
 * `setSvgFlattenTransforms (true)`: The current transformation matrix is encoded into each SVG element. This leads to potentially larger SVG files, but graphical elements will appear with *exactly* the same transformations as they do in the corresponding p5 sketch. 
-* `setSvgFlattenTransforms (false)` (default): Graphics transforms are encoded into a hierarchy of SVG groups, each containing an atomic transform operation. This may produce smaller SVG files, depending on your design, but there is a possibility that different SVG rendering engines may accumulate the transforms with slightly different results.
-* If no graphics transforms are used in a p5 sketch, none are encoded into the SVG file. 
+* `setSvgFlattenTransforms (false)` (*default option*): Graphics transforms are encoded into a hierarchy of SVG groups, each containing an atomic transform operation. This may produce smaller SVG files, depending on your design, but there is a possibility that different SVG rendering engines may accumulate the transforms with slightly different results.
+* If no graphics transforms are used in a p5 sketch, none are encoded into the SVG file.
 
 ### Numeric Precision
 
 p5.plotSvg offers two convenience functions which control how many digits of decimal precision are exported to SVG files. These have a major impact on SVG file size: 
 
-* `setSvgCoordinatePrecision()` - default is 4 digits of precision for path coordinates
-* `setSvgTransformPrecision()` - default is 6 digits of precision for  matrix transform data. 
-
+* `setSvgCoordinatePrecision()` - The default is 4 digits of precision for path coordinates, e.g. `3.1416`
+* `setSvgTransformPrecision()` - The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
 
 ---
 ## Known Issues and Bugs: 
 
-* As of p5.plotSvg v.0.1.1, non-default vertical `textAlign()` settings are not yet supported; only `BASELINE` currently works correctly.
-* As of p5.plotSvg v.0.1.1, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
-* As of p5.plotSvg v.0.1.1, there is a small discrepancy in the SVG output of polylines rendered with curveVertex(). Specifically, there is an error with the starting orientation of the first point of the polyline. 
-* As of p5.plotSvg v.0.1.1, this library is not intended to be used in WEBGL mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
+* As of p5.plotSvg v.0.1.x, non-default vertical `textAlign()` settings are not yet supported; only `BASELINE` currently works correctly.
+* As of p5.plotSvg v.0.1.x, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
+* As of p5.plotSvg v.0.1.x, there is a small discrepancy in the SVG output of polylines rendered with `curveVertex()`. Specifically, there is an error with the starting orientation of the first point of the polyline. 
+* As of p5.plotSvg v.0.1.x, this library is not intended to be used in `WEBGL` mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
 * The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to p5.plotSvg v.0.1.x.
 
 ---
