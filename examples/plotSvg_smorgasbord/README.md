@@ -41,7 +41,7 @@ In addition, this example also tests the following drawing-state modifiers:
 
 ### Known Issues and Bugs: 
 
-1. In p5.plotSvg v.0.1.0, there is a small discrepancy in the SVG output of polylines rendered with curveVertex(). Specifically, there is an error with the starting orientation of the first point of the polyline.
-2. In p5.plotSvg v.0.1.0, non-default vertical `textAlign()` settings are not yet supported; only BASELINE currently works correctly.
-3. In p5.plotSvg v.0.1.0, *multi-contour* shapes (made with `beginContour()` / `endContour()`etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
+1. In p5.plotSvg v.0.1.x, there is a small discrepancy in the SVG output of polylines rendered with curveVertex(). Specifically, there is an error with the starting orientation of the first point of the polyline.
+2. In p5.plotSvg v.0.1.x, non-default vertical `textAlign()` settings are not yet supported; only BASELINE currently works correctly.
+3. In p5.plotSvg v.0.1.x, *multi-contour* shapes (made with `beginContour()` / `endContour()`etc.) are not yet unsupported. For the time being, encode each contour in its own `beginShape()` / `endShape()` block instead. 
 

@@ -1,6 +1,6 @@
 # plotSvg_hello_animating Example
 
-The `plotSvg_hello2` example shows basic use of the p5.plotSvg library, for a p5.js sketch in the familiar "animating/looping" mode, with both `setup()` and `draw()` functions.  Note that the global boolean variable `bDoExportSvg` is used as a latch to export an SVG file only when the user presses the `s` key. 
+The `plotSvg_hello_animating ` example shows basic use of the p5.plotSvg library, for a p5.js sketch in the familiar "animating/looping" mode, which uses both `setup()` and `draw()` functions. Note that the global boolean variable `bDoExportSvg` is used as a latch to export an SVG file only when the user presses the `s` key. 
 
 ![plotSvg_hello_animating.png](plotSvg_hello_animating.png)
 
@@ -16,8 +16,8 @@ Code:
 // A Plotter-Oriented SVG Exporter for p5.js
 // Golan Levin, November 2024
 //
-// This sketch emonstrates how to use the p5.plotSvg library 
-// to export SVG files. Press 's' to export an SVG. 
+// This sketch demonstrates how to use the p5.plotSvg library 
+// to export SVG files during interaction. Press 's' to export an SVG. 
 
 // This line of code disables the p5.js "Friendly Error System" (FES), 
 // in order to prevent several distracting warnings:

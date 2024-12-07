@@ -2,8 +2,8 @@
 // A Plotter-Oriented SVG Exporter for p5.js
 // Golan Levin, November 2024
 //
-// This sketch emonstrates how to use the p5.plotSvg library 
-// to export SVG files. Press 's' to export an SVG. 
+// This sketch demonstrates how to use the p5.plotSvg library 
+// to export SVG files during interaction. Press 's' to export an SVG. 
 
 // This line of code disables the p5.js "Friendly Error System" (FES), 
 // in order to prevent several distracting warnings:

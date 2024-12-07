@@ -1,6 +1,6 @@
 # plotSvg_hello_static Example
 
-The `plotSvg_hello_static ` example shows the simplest possible use of the p5.plotSvg library. The program runs in the p5.js "static mode", and the SVG is exported at the conclusion of `setup()`. There is no interactivity or animation. 
+The `plotSvg_hello_static` example shows the simplest possible use of the p5.plotSvg library. The program runs in the p5.js "static mode", and the SVG is exported at the conclusion of `setup()`. There is no interactivity or animation. 
 
 ![plotSvg_hello_static.png](plotSvg_hello_static.png)
 
