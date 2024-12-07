@@ -119,12 +119,11 @@ These examples show how to generate plotter-friendly SVGs from p5.js using p5.pl
 2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/): Simplest possible demo; all art in `setup()` only. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing.org](https://openprocessing.org/sketch/2455362)
 3. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing.org](https://openprocessing.org/sketch/2455390)
 4. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing.org](https://openprocessing.org/sketch/2455399)
-5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): • Records and exports a series of marks drawn by the user. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing.org](https://openprocessing.org/sketch/2478914)
-
+5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): Records a series of marks drawn by the user. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing.org](https://openprocessing.org/sketch/2478914)
+6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing.org](https://openprocessing.org/sketch/2478945)
 
 *Examples awaiting implementation (more soon!):*
 
-* *plotSvg_particle_paths*: Many frames are accreted into a single SVG image.
 * *plotSvg_flipbook*: A number of frames are arranged onto a page.
 * *plotSvg_hershey*: Displays [Hershey Font](https://en.wikipedia.org/wiki/Hershey_fonts) text using Lingdong Huang's [p5-hershey-js](https://github.com/LingDong-/p5-hershey-js)
 * *plotSvg_simple_fill*: A trick for exporting hatched shapes is demonstrated. 
