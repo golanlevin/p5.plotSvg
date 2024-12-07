@@ -115,8 +115,8 @@ function draw(){
 
 These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg:
 
-1. [**plotSvg_hello1**](examples/plotSvg_hello1/): Simplest possible demo; all art in `setup()` only. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing.org](https://openprocessing.org/sketch/2455362)
-2. [**plotSvg_hello2**](examples/plotSvg_hello2/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing.org](https://openprocessing.org/sketch/2455390)
+1. [**plotSvg_hello_static**](examples/plotSvg_hello_static/): Simplest possible demo; all art in `setup()` only. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing.org](https://openprocessing.org/sketch/2455362)
+2. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing.org](https://openprocessing.org/sketch/2455390)
 3. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing.org](https://openprocessing.org/sketch/2455399)
 4. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): Demonstration of all p5.js drawing primitives exporting to SVG. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing.org](https://openprocessing.org/sketch/2455426)
 
