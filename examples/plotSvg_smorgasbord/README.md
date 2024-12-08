@@ -2,6 +2,12 @@
 
 The `plotSvg_smorgasbord` example is intended as a comprehensive test, to ensure that all path-based p5.js drawing commands are successfully exporting vector paths to an SVG file. 
 
+### Code: 
+
+* At editor.p5js.org: [https://editor.p5js.org/golan/sketches/QReF_9ss2](https://editor.p5js.org/golan/sketches/QReF_9ss2)
+* At openprocessing.org: [https://openprocessing.org/sketch/2455426](https://openprocessing.org/sketch/2455426)
+* At Github: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_smorgasbord/sketch.js)
+
 ![plotSvg_smorgasbord.png](plotSvg_smorgasbord.png)
 
 `plotSvg_smorgasbord` 

@@ -1,4 +1,6 @@
-
+// plotSvg_smorgasbord Example
+// This example demonstrates the full range of p5.js drawing functions 
+// that are supported by p5.plotSvg.
 
 // This line of code disables the p5.js "Friendly Error System" (FES), 
 // in order to prevent several dozen distracting warnings that arise 
@@ -11,7 +13,7 @@ function setup() {
   createCanvas(612, 792);
   
   // Set important values for our SVG exporting: 
-  setSvgResolutionDPI(96); // 96 is default
+  setSvgResolutionDPI(96); // 96 dpi is default
   setSvgPointRadius(0.25); // a "point" is a 0.25 circle by default
   setSvgCoordinatePrecision(4); // how many decimal digits; default is 4
   setSvgTransformPrecision(6); // how many decimal digits; default is 6
@@ -23,6 +25,7 @@ function setup() {
 
 
 function keyPressed(){
+  // Press 's' to save an SVG file of the current plot
   if (key == 's'){
     bDoExportSvg = true; 
   }
@@ -49,6 +52,7 @@ function draw(){
 
 
 function drawDesign(){
+  // (This text gets added as metadata inside the SVG.)
   describe("A test program to export an SVG from p5.js graphics."); 
   
   // Tests of squares and rects with various rectModes
