@@ -114,16 +114,15 @@ function draw(){
 ---
 ## Example Programs
 
-These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg:
+These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. Examples are mirrored at [editor.p5js.org](https://editor.p5js.org) and [openProcessing.org](https://openprocessing.org).
 
-1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): ⭐ Full demonstration of all p5.js drawing primitives exported to SVG. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing.org](https://openprocessing.org/sketch/2455426)
-2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/): Simplest possible demo; all art in `setup()` only. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing.org](https://openprocessing.org/sketch/2455362)
-3. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing.org](https://openprocessing.org/sketch/2455390)
-4. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing.org](https://openprocessing.org/sketch/2455399)
-5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): Records a series of marks drawn by the user. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing.org](https://openprocessing.org/sketch/2478914)
-6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing.org](https://openprocessing.org/sketch/2478945)
-7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing.org](https://openprocessing.org/sketch/2479519)
-
+1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): ⭐ Full demonstration of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
+2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/): Simplest possible demo; all art in `setup()` only. [@editor](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing](https://openprocessing.org/sketch/2455362)
+3. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing](https://openprocessing.org/sketch/2455390)
+4. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing](https://openprocessing.org/sketch/2455399)
+5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): Records a series of marks drawn by the user. [@editor](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing](https://openprocessing.org/sketch/2478914)
+6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
+7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
 
 
 *Examples awaiting implementation (more soon!):*
