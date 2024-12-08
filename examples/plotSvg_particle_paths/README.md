@@ -2,7 +2,7 @@
 
 The `plotSvg_particle_paths ` example accumulates the positions of particles as they move over time, and exports these traces as an SVG after 100 frames. (Particles are influenced by a Perlin Noise flow field.) 
 
-**Note**: *For the sake of simplicity, this example is not implemented intelligently; it produces overly-large files that lack information about the connectivity of the exported points. It would be smarter to record the paths of the particles into dedicated data structures, similar to the [plotSvg_drawing_recorder](../plotSvg_drawing_recorder/README.md) example.*
+**Note**: *This example is written to have simple, brief code. As such, it produces overly-large SVG files that lack information about how the exported points are connected. It would be smarter to record the paths of the particles into dedicated data structures, similar to the [plotSvg_drawing_recorder](../plotSvg_drawing_recorder/README.md) example.*
 
 
 ![plotSvg_particle_paths.png](plotSvg_particle_paths.png)
@@ -54,7 +54,8 @@ function setup() {
 }
 
 function draw(){
-  // Accrete each of the stored marks onto the canvas
+  // Accrete each of the stored marks onto the canvas,
+  // and update the positions of the particles
   if (bDoExportSvg){
     for (let i=0; i<particles.length; i++){
       let currx = particles[i].x; 

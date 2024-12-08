@@ -11,10 +11,7 @@ Code:
 * At GitHub: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_hello_static/sketch.js)
 
 ```
-// https://github.com/golanlevin/p5.plotSvg (v.0.1.x)
-// A Plotter-Oriented SVG Exporter for p5.js
-// Golan Levin, November 2024
-//
+// plotSvg_hello_static Example
 // Extremely simple demo of using p5.plotSvg to export SVG files.
 // Requires https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js
 // 

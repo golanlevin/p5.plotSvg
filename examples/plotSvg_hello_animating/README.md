@@ -12,10 +12,7 @@ Code:
 
 
 ```
-// https://github.com/golanlevin/p5.plotSvg (v.0.1.x)
-// A Plotter-Oriented SVG Exporter for p5.js
-// Golan Levin, November 2024
-//
+// plotSvg_hello_animating Example
 // This sketch demonstrates how to use the p5.plotSvg library 
 // to export SVG files during interaction. Press 's' to export an SVG. 
 

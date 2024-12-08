@@ -12,10 +12,7 @@ Code:
 
 
 ```
-// https://github.com/golanlevin/p5.plotSvg (v.0.1.x)
-// A Plotter-Oriented SVG Exporter for p5.js
-// Golan Levin, November 2024
-//
+// plotSvg_drawing_recorder Example
 // This sketch records a series of marks drawn by the user
 // and exports an SVG file when the 's' key is pressed.
 // 
