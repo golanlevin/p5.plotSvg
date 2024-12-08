@@ -7,7 +7,7 @@
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
 Version 0.1.2, December 6, 2024 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
-### Downloads and Documentation:
+### Downloads, Mirrors, and Documentation:
 
 * [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
 * p5.plotSvg.js at **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
@@ -27,6 +27,7 @@ Version 0.1.2, December 6, 2024 • by Golan Levin ([@golanlevin](https://githu
 * [Other Libraries and Related Work](#other-libraries-and-related-work)
 * [License and Code of Conduct](#license-and-code-of-conduct)
 * [Keywords](#keywords)
+* [Acknowledgments](#acknowledgments)
 
 
 ---
@@ -105,7 +106,7 @@ function draw(){
 * The p5.plotSvg library is not a general purpose p5-to-SVG exporter; it is intended for the *specific needs of plotter enthusiasts*. Large parts of both the p5 and SVG specifications have been purposefully omitted, even where they are common to both. To ensure plotter compatibility, this library provides no support for exporting SVG files with graphics features that have no analogue in pen-plotting — such as pixel-based images, transparency, filters, shaders, blend modes, gradients, animation, or (even) fills and stroke weights. You may be able to render such things onscreen with p5.js, but they will not appear in the SVG vector files made with this library.
 * p5.plotSvg is not an SVG-based alternative renderer for the web browser. What you see onscreen is a regular p5 canvas. If you want an SVG runtime in the browser as a substitute for p5.js graphics, consider using Zenozeng's [p5.js-svg](https://github.com/zenozeng/p5.js-svg) library.
 * This is not a library for loading, parsing, or displaying SVG files in p5.js. Zenozeng's [p5.js-svg](https://github.com/zenozeng/p5.js-svg) can do that as well.
-* This is not a library for computational geometry in p5. For problems like computing offset curves or shape-shape intersections, consider using libraries like [Paper.js](http://paperjs.org/features/#svg-import-and-export) or [Shapely](https://shapely.readthedocs.io/en/stable/). 
+* This is not a library for computational geometry in p5. For problems like computing [offset curves](https://en.wikipedia.org/wiki/Parallel_curve) or shape-shape intersections, consider using libraries like [Paper.js](http://paperjs.org/features/#svg-import-and-export) or [Shapely](https://shapely.readthedocs.io/en/stable/). 
 * This is not a library for *optimizing* vector graphics for plotting or cutting. For example, no utilities are provided for *sorting* the order/direction of exported lines (using a TSP-like algorithm) to reduce your plotting time; for *merging* line segments with common endpoints; for *de-duplicating* multiple lines in the same location; or for *reordering* graphical elements from innermost to outermost for optimal laser-cutting. For such functionality, consider optimizing your SVGs with Antoine Beyeler's [vpype](https://vpype.readthedocs.io/en/latest/) for plotting, and/or [Deepnest](https://deepnest.io/) for laser cutting.
 * This is not a library for *vectorizing* canvases rendered with p5.js. For example, no utilities are provided for hatching or dithering that would "convert" the pixels on the screen into vector strokes. The only marks that get exported to SVG are the ones you specify with p5.js drawing commands like `line()`, `ellipse()`, etc.
 
@@ -121,23 +122,25 @@ These examples show how to generate plotter-friendly SVGs from p5.js using p5.pl
 4. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing.org](https://openprocessing.org/sketch/2455399)
 5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): Records a series of marks drawn by the user. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing.org](https://openprocessing.org/sketch/2478914)
 6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing.org](https://openprocessing.org/sketch/2478945)
+7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor.p5js.org](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing.org](https://openprocessing.org/sketch/2479519)
+
+
 
 *Examples awaiting implementation (more soon!):*
 
 * *plotSvg_flipbook*: A number of frames are arranged onto a page.
 * *plotSvg_hershey*: Displays [Hershey Font](https://en.wikipedia.org/wiki/Hershey_fonts) text using Lingdong Huang's [p5-hershey-js](https://github.com/LingDong-/p5-hershey-js)
-* *plotSvg_simple_fill*: A trick for exporting hatched shapes is demonstrated. 
 
 ---
 ## Usage Notes
 
 ### Color
 
-* SVGs produced with p5.plotSvg have a default stroke color, `black`. This can be altered with `setSvgDefaultStrokeColor()`, which takes valid CSS color strings (e.g., 'red', '#ff0000', 'rgb(255,0,0)').
-* To create SVG paths with non-default colors, simply use the `stroke()` command as usual. Note, however, that any such strokes will have additional style information added to their SVG representation (e.g. `style="stroke:#ff0000;"`). This could lead to potentially large file sizes, depending on your design. To restore the default stroke color, you can use `stroke(getDefaultStrokeColor());`.
-* If you use stroke colors, p5.plotSvg anticipates that you are using so to represent different *logical entities* — such as different color pens in a multi-pen plotter, different tools in a CNC machine, or different cutting settings in a laser cutter. For this reason, alpha (transparency) values are stripped out. I strongly recommend using just a small handful of colors, and selecting easy-to-remember [CSS color keyword names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords) such as `'red'`, `'green'`, `'blue'`, etc. 
+* The p5.plotSvg library ignores p5.js `fill()` commands, and does not export SVG shapes with filled colors. To export filled shapes for a pen-plotter, consider implementing your own hatching method, as in [this example](examples/plotSvg_hatched_shapes/).
+* SVGs produced with p5.plotSvg have a default stroke color, `black`. This can be altered with `setSvgDefaultStrokeColor()`, which takes valid CSS color strings (e.g., `'red'`, `'#ff0000'`, `'rgb(255,0,0)'`).
+* To create SVG paths with non-default colors, simply use the `stroke()` command as usual. Note, however, that any such strokes will have additional style information added to their SVG representation (e.g. `style="stroke:#ff0000;"`); this could lead to potentially large file sizes, depending on your design. To restore the default stroke color, you can use `stroke(getDefaultStrokeColor());`.
+* If you use stroke colors, the working assumption of p5.plotSvg is that you are using so *to label different logical entities* — such as different color pens in a multi-pen plotter, different tools in a CNC machine, or different intensity settings in a laser cutter. For this reason, alpha (transparency) values are stripped out. I strongly recommend using just a small number of colors, and selecting easy-to-remember [CSS color keyword names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords) such as `'red'`, `'green'`, `'blue'`, etc. 
 * This library only accepts p5 `stroke()` commands with the following types of arguments: CSS named colors [in the set of 147 official SVG colors](https://johndecember.com/html/spec/colorsvg.html), hex formatted color strings, or as RGB/gray colors whose values range from 0-255. The p5 `colorMode()` command is not supported by p5.plotSvg, and calls to `colorMode()` may produce unpredictable results in your SVG. 
-* The p5.plotSvg library ignores p5.js `fill()` commands and does not export SVG shapes with filled colors.
 
 ### Graphics Transforms
 
@@ -149,7 +152,7 @@ The p5.plotSvg library offers two different ways of encoding graphics transforma
 
 ### Numeric Precision
 
-p5.plotSvg offers two convenience functions which control how many digits of decimal precision are exported to SVG files. These can have a major impact on SVG file size: 
+p5.plotSvg offers two convenience functions which control how many digits of decimal precision are exported to SVG files. These can have a significant impact on SVG file size: 
 
 * `setSvgCoordinatePrecision()` - The default is 4 digits of precision for path coordinates, e.g. `3.1416`
 * `setSvgTransformPrecision()` - The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
@@ -182,9 +185,17 @@ The following projects may be of interest to creative coders working with SVG fi
 ---
 ## License and Code of Conduct
 
-p5.plotSvg is released under the [MIT License](LICENSE). The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
+[p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) is released under the [MIT License](LICENSE). The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
 
 --- 
 ## Keywords
 
-Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, AxiDraw, open-source software tools for the arts. 
+Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, AxiDraw, open-source software tools for the arts.
+
+--
+## Acknowledgments
+
+This project was made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/).
+
+<img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
+
