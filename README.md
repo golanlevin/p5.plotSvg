@@ -191,7 +191,7 @@ The following projects may be of interest to creative coders working with SVG fi
 
 Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, AxiDraw, open-source software tools for the arts.
 
---
+---
 ## Acknowledgments
 
 This project was made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/).
