@@ -44,7 +44,7 @@ p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin
 ## Quickstart Installation
 
 First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.2/lib/p5.plotSvg.js) or 
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](hhttps://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). This example shows one way to include `p5.plotSvg.js` in your project's `index.html` file: 
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file: 
 
 ```
 <!-- This is the index.html file -->
@@ -64,6 +64,7 @@ Next, make a p5.js file like the one below, called `sketch.js`, in the same dire
 ```
 // This is the sketch.js file.
 // Press 's' to export the SVG.
+
 let bDoExportSvg = false; 
 
 function setup(){
@@ -97,7 +98,7 @@ function draw(){
 ---
 ## What the p5.plotSvg library *IS*: 
 
-* The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. I anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter or an AxiDraw/NextDraw pen-plotter.
+* The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. I anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter, AxiDraw, or [NextDraw](https://store.bantamtools.com/collections/bantam-tools-nextdraw) pen-plotter.
 * The p5.plotSvg library is intended for use with p5.js, and is modeled after the way in which [PDF exporting](https://processing.org/reference/libraries/pdf/index.html) and [SVG exporting](https://processing.org/reference/libraries/svg/index.html) are implemented in [Processing](https://processing.org/) (Java). To use p5.plotSvg, you are expected to manage the timing of a `beginRecordSVG()` and `endRecordSVG()` function.
 * The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored.
 
@@ -105,8 +106,8 @@ function draw(){
 ---
 ## What the p5.plotSvg library *IS NOT*: 
 
-* The p5.plotSvg library is not a general purpose p5-to-SVG exporter; it is intended for the *specific needs of plotter enthusiasts*. Large parts of both the p5 and SVG specifications have been purposefully omitted, even where they are common to both. To ensure plotter compatibility, this library provides no support for exporting SVG files with graphics features that have no analogue in pen-plotting — such as pixel-based images, transparency, filters, shaders, blend modes, gradients, animation, or (even) fills and stroke weights. You may be able to render such things onscreen with p5.js, but they will not appear in the SVG vector files made with this library.
-* p5.plotSvg is not an SVG-based alternative renderer for the web browser. What you see onscreen is a regular p5 canvas. If you want an SVG runtime in the browser as a substitute for p5.js graphics, consider using Zenozeng's [p5.js-svg](https://github.com/zenozeng/p5.js-svg) library.
+* The p5.plotSvg library is not a general purpose p5-to-SVG exporter; it is intended for the *specific needs of plotter enthusiasts*. Large parts of both the p5 and SVG specifications have been purposefully omitted, even where they are common to both. To ensure plotter compatibility, this library provides no support for exporting SVG files with graphics features that have no analogue in pen-plotting — such as pixel-based images, transparency, filters, shaders, blend modes, gradients, animation, or (even) fills and stroke weights. You might be able to render such things onscreen with p5.js, but they will not appear in the SVG vector files made with this library.
+* p5.plotSvg is not an SVG-based alternative renderer for the web browser. What you see onscreen is a standard p5.js canvas, not an SVG. If you want an SVG runtime in the browser as a substitute for p5.js graphics, consider using Zenozeng's [p5.js-svg](https://github.com/zenozeng/p5.js-svg) library instead.
 * This is not a library for loading, parsing, or displaying SVG files in p5.js. Zenozeng's [p5.js-svg](https://github.com/zenozeng/p5.js-svg) can do that as well.
 * This is not a library for computational geometry in p5. For problems like computing [offset curves](https://en.wikipedia.org/wiki/Parallel_curve) or shape-shape intersections, consider using libraries like [Paper.js](http://paperjs.org/features/#svg-import-and-export) or [Shapely](https://shapely.readthedocs.io/en/stable/). 
 * This is not a library for *optimizing* vector graphics for plotting or cutting. For example, no utilities are provided for *sorting* the order/direction of exported lines (using a TSP-like algorithm) to reduce your plotting time; for *merging* line segments with common endpoints; for *de-duplicating* multiple lines in the same location; or for *reordering* graphical elements from innermost to outermost for optimal laser-cutting. For such functionality, consider optimizing your SVGs with Antoine Beyeler's [vpype](https://vpype.readthedocs.io/en/latest/) for plotting, and/or [Deepnest](https://deepnest.io/) for laser cutting.
@@ -118,14 +119,13 @@ function draw(){
 
 These [examples](examples/README.md) show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. Examples are mirrored at [editor.p5js.org](https://editor.p5js.org) and [openProcessing.org](https://openprocessing.org). A visual index of examples is [here](examples/README.md).
 
-1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): ⭐ Full demonstration of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
+1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): ⭐ Full demo of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
 2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/): Simplest possible demo; all art in `setup()` only. [@editor](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing](https://openprocessing.org/sketch/2455362)
 3. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing](https://openprocessing.org/sketch/2455390)
 4. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing](https://openprocessing.org/sketch/2455399)
 5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): Records a series of marks drawn by the user. [@editor](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing](https://openprocessing.org/sketch/2478914)
 6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
 7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
-
 
 *Examples awaiting implementation (more soon!):*
 
@@ -145,9 +145,9 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 
 ### Graphics Transforms
 
-The p5.plotSvg library offers two different ways of encoding graphics transformation operations (such as `rotate()`, `translate()`, `scale()`, `shearX()` and `shearY()`) into your SVG. You can select the option you prefer using one the following functions during `setup()`: 
+The p5.plotSvg library offers two different ways of encoding graphics transformation operations (such as `rotate()`, `translate()`, `scale()`, `shearX()` and `shearY()`) into your SVG file. You can select the option you prefer using one the following functions during `setup()`: 
 
-* `setSvgFlattenTransforms (true)`: The current transformation matrix is encoded into each SVG element. This leads to potentially larger SVG files, but graphical elements will appear with *exactly* the same transformations as they do in the corresponding p5 sketch. 
+* `setSvgFlattenTransforms (true)`: The current transformation matrix is encoded into each SVG element. This leads to potentially larger SVG files, but graphical elements will appear with *exactly* the same transformations as they do in the corresponding p5 sketch. You might want to use this mode if your design concatenates *many* transforms.
 * `setSvgFlattenTransforms (false)` (*default option*): Graphics transforms are encoded into a hierarchy of SVG groups, each containing an atomic transform operation. This may produce smaller SVG files, depending on your design, but there is a possibility that different SVG rendering engines may accumulate the transforms with slightly different results.
 * If no graphics transforms are used in a p5 sketch, none are encoded into the SVG file.
 
@@ -191,7 +191,7 @@ The following projects may be of interest to creative coders working with SVG fi
 --- 
 ## Keywords
 
-Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, AxiDraw, open-source software tools for the arts.
+Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, EMSL AxiDraw, NextDraw, open-source software tools for the arts, #OSSTA.
 
 ---
 ## Acknowledgments
