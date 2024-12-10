@@ -36,11 +36,11 @@ and overrides p5.js drawing functions to capture drawing commands for SVG export
 ## pauseRecordSVG
 
 Pauses or unpauses recording of SVG output for a p5.js sketch,
-depending on whether the bPause argument is true or false.
+depending on whether the `bPause` argument is true or false.
 
 #### Parameters
 
-*   `bPause` &#x20;
+*   `bPause`
 
 ## endRecordSVG
 
@@ -67,7 +67,7 @@ Sets the default stroke color for SVG elements.
 ## setSvgResolutionDPI
 
 Sets the resolution for the exported SVG file in dots per inch (DPI).
-This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output.
+This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output. The default is 96 dpi. 
 
 #### Parameters
 
@@ -88,17 +88,18 @@ The function allows for spaces, tabs, or no indentation.
 ## setSvgFlattenTransforms
 
 Set whether or not to use a stack to encode matrix transforms.
-setSvgFlattenTransforms(true) -- larger SVG files, greater fidelity to original
-setSvgFlattenTransforms(false) -- smaller SVG files, potentially less fidelity
+
+* `setSvgFlattenTransforms(true)` -- larger SVG files, greater fidelity to original
+* `setSvgFlattenTransforms(false)` -- smaller SVG files, potentially less fidelity
 
 #### Parameters
 
-*   `b` &#x20;
+*   `b`
 
 ## setSvgCoordinatePrecision
 
 Sets the output precision for graphics coordinates in SVGs by adjusting
-the number of decimal digits used when formatting values.
+the number of decimal digits used when formatting values. Default is 4 digits. 
 
 #### Parameters
 
@@ -108,7 +109,7 @@ the number of decimal digits used when formatting values.
 ## setSvgTransformPrecision
 
 Sets the output precision for matrix-transform values in SVGs by adjusting
-the number of decimal digits used when formatting rotations, translations, etc.
+the number of decimal digits used when formatting rotations, translations, etc. Default is 6 digits. 
 
 #### Parameters
 
@@ -117,7 +118,7 @@ the number of decimal digits used when formatting rotations, translations, etc.
 
 ## setSvgPointRadius
 
-Sets the radius for points (rendered as tiny circles) in the SVG output.
+Sets the radius for points (rendered as tiny circles) in the SVG output. Default is 0.25 pixels.
 
 #### Parameters
 

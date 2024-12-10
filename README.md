@@ -33,7 +33,9 @@ Version 0.1.2, December 6, 2024 • by Golan Levin ([@golanlevin](https://githu
 ---
 ## About p5.plotSvg
 
-The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with p5.js version [1.11.2](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js). 
+The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through [1.11.2](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js). 
+
+Some advantages of p5.plotSvg are that: it is compatible with current versions of p5.js; it is easy to add to projects; and it does not interfere with graphics performance during animation (except at the precise moment of exporting a file).
 
 p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -57,7 +59,7 @@ First, include `p5.plotSvg.js` in your project. You can do this by linking to an
 </html>
 ```
 
-Next, make a p5.js file like the one below, `sketch.js`, in the same directory as your `index.html`. When you run it, you can press the `s` key to export an SVG file.
+Next, make a p5.js file like the one below, called `sketch.js`, in the same directory as your `index.html`. When you run it in a web browser, you can press the `s` key to export an SVG file.
 
 ```
 // This is the sketch.js file.
@@ -65,7 +67,7 @@ Next, make a p5.js file like the one below, `sketch.js`, in the same directory a
 let bDoExportSvg = false; 
 
 function setup(){
-  // The canvas dimensions are 8.5"x11" at 96 dpi
+  // These canvas dimensions are 8.5"x11" at 96 dpi
   createCanvas(816, 1056); 
 }
 
@@ -97,7 +99,7 @@ function draw(){
 
 * The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. I anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter or an AxiDraw/NextDraw pen-plotter.
 * The p5.plotSvg library is intended for use with p5.js, and is modeled after the way in which [PDF exporting](https://processing.org/reference/libraries/pdf/index.html) and [SVG exporting](https://processing.org/reference/libraries/svg/index.html) are implemented in [Processing](https://processing.org/) (Java). To use p5.plotSvg, you are expected to manage the timing of a `beginRecordSVG()` and `endRecordSVG()` function.
-* The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored. 
+* The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored.
 
 
 ---
@@ -108,13 +110,13 @@ function draw(){
 * This is not a library for loading, parsing, or displaying SVG files in p5.js. Zenozeng's [p5.js-svg](https://github.com/zenozeng/p5.js-svg) can do that as well.
 * This is not a library for computational geometry in p5. For problems like computing [offset curves](https://en.wikipedia.org/wiki/Parallel_curve) or shape-shape intersections, consider using libraries like [Paper.js](http://paperjs.org/features/#svg-import-and-export) or [Shapely](https://shapely.readthedocs.io/en/stable/). 
 * This is not a library for *optimizing* vector graphics for plotting or cutting. For example, no utilities are provided for *sorting* the order/direction of exported lines (using a TSP-like algorithm) to reduce your plotting time; for *merging* line segments with common endpoints; for *de-duplicating* multiple lines in the same location; or for *reordering* graphical elements from innermost to outermost for optimal laser-cutting. For such functionality, consider optimizing your SVGs with Antoine Beyeler's [vpype](https://vpype.readthedocs.io/en/latest/) for plotting, and/or [Deepnest](https://deepnest.io/) for laser cutting.
-* This is not a library for *vectorizing* canvases rendered with p5.js. For example, no utilities are provided for hatching or dithering that would "convert" the pixels on the screen into vector strokes. The only marks that get exported to SVG are the ones you specify with p5.js drawing commands like `line()`, `ellipse()`, etc.
+* p5.plotSvg is not a library for *vectorizing* pixel-based canvases rendered by p5.js. In other words, no utilities are provided for hatching or [dithering](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) that would "convert" the pixels on the screen into vector strokes. The only marks that get exported to SVG are the ones you specify with vector-based p5.js drawing commands like `line()`, `ellipse()`, etc.
 
 
 ---
 ## Example Programs
 
-These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. Examples are mirrored at [editor.p5js.org](https://editor.p5js.org) and [openProcessing.org](https://openprocessing.org).
+These [examples](examples/README.md) show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. Examples are mirrored at [editor.p5js.org](https://editor.p5js.org) and [openProcessing.org](https://openprocessing.org). A visual index of examples is [here](examples/README.md).
 
 1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): ⭐ Full demonstration of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
 2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/): Simplest possible demo; all art in `setup()` only. [@editor](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing](https://openprocessing.org/sketch/2455362)
