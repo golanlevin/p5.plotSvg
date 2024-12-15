@@ -51,3 +51,9 @@ Accumulates the traces of some particles over time.
 A trick for exporting hatched ("filled") SVG shapes. 
 
 [![plotSvg_hatched_shapes](plotSvg_hatched_shapes/plotSvg_hatched_shapes_sm.png)](plotSvg_hatched_shapes/README.md)
+
+### [plotSvg_face_flipbook](https://openprocessing.org/sketch/2488219)
+
+Software which exports an SVG flipbook showing a 2-second recording from a face-tracker.
+
+![plotSvg_face_flipbook](plotSvg_face_flipbook/plotSvg_face_flipbook.gif)

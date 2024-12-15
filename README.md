@@ -126,10 +126,10 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): Records a series of marks drawn by the user. [@editor](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing](https://openprocessing.org/sketch/2478914)
 6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
 7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
+8. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
 
 *Examples awaiting implementation (more soon!):*
 
-* *plotSvg_flipbook*: A number of frames are arranged onto a page.
 * *plotSvg_hershey*: Displays [Hershey Font](https://en.wikipedia.org/wiki/Hershey_fonts) text using Lingdong Huang's [p5-hershey-js](https://github.com/LingDong-/p5-hershey-js)
 
 ---
