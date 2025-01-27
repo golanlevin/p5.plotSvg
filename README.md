@@ -5,7 +5,7 @@
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
-Version 0.1.2, December 6, 2024 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
+Version 0.1.3, January 26, 2025 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 ### Downloads, Mirrors, and Documentation:
 
