@@ -13,7 +13,8 @@ function setup() {
   createCanvas(612, 792);
   
   // Set important values for our SVG exporting: 
-  setSvgResolutionDPI(96); // 96 dpi is default
+  setSVGDocumentSize(612, 792); // 6"x8" @ 96dpi
+  setSvgResolutionDPI(96); // 96 dpi is default. setSvgResolutionDPCM() is also supported. 
   setSvgPointRadius(0.25); // a "point" is a 0.25 circle by default
   setSvgCoordinatePrecision(4); // how many decimal digits; default is 4
   setSvgTransformPrecision(6); // how many decimal digits; default is 6

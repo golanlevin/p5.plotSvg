@@ -231,7 +231,6 @@ function keyPressed() {
     makeThreeNewShapes(); 
   } else if (key == "s") {
     bDoExportSvg = true;
-    save(); // also save a PNG
   } else if (key == "d") {
     bShowDebug = !bShowDebug;
   }
