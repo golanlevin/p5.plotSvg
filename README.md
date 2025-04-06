@@ -98,11 +98,11 @@ function draw(){
 
 ### Instance mode
 
-Alternatively, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode):
+Alternatively, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). Here's a different `sketch.js` file showing a minimal example of this: 
+
 
 ```
 // This is a minimal sketch.js file for instance mode. 
-
 import p5plot from 'p5.plotsvg';
 
 function sketch(context) {
@@ -149,7 +149,7 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
 7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
 8. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
-9. [**plotSvg_instancemode**](examples/plotSvg_instancemode/): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). @editor
+9. [**plotSvg_instancemode**](examples/plotSvg_instancemode/): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
 
 *Examples awaiting implementation (more soon!):*
 
