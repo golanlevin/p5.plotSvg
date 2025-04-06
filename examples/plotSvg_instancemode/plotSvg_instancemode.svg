@@ -1,0 +1,280 @@
+<!-- plotSvg_generative_instance_30880.svg -->
+<!-- Generated using p5.plotSvg: -->
+<!-- A Plotter-Oriented SVG Exporter for p5.js -->
+<!-- Sat Apr 05 2025 23:54:27 GMT-0400 (Eastern Daylight Time) -->
+<!-- DPI: 96 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="6in" height="6in" viewBox="0 0 576 576">
+  <style>
+      circle, ellipse, line, path, polygon, polyline, rect, quad, text {
+        fill: none;
+        stroke: black;
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+      }
+    </style>
+<g vector-effect="non-scaling-stroke">
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(0)">
+        <g transform="translate(-288, -288)">
+          <rect x="72" y="72" width="432" height="432" rx="0" ry="0"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(1.271779)">
+        <g transform="translate(-288, -288)">
+          <rect x="79.5223" y="79.5223" width="416.9554" height="416.9554" rx="2.1074" ry="2.1074"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(2.543557)">
+        <g transform="translate(-288, -288)">
+          <rect x="87.0446" y="87.0446" width="401.9109" height="401.9109" rx="4.2149" ry="4.2149"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(3.815336)">
+        <g transform="translate(-288, -288)">
+          <rect x="94.5668" y="94.5668" width="386.8663" height="386.8663" rx="6.3223" ry="6.3223"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(5.087114)">
+        <g transform="translate(-288, -288)">
+          <rect x="102.0891" y="102.0891" width="371.8217" height="371.8217" rx="8.4297" ry="8.4297"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(6.358893)">
+        <g transform="translate(-288, -288)">
+          <rect x="109.6114" y="109.6114" width="356.7772" height="356.7772" rx="10.5372" ry="10.5372"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(7.630671)">
+        <g transform="translate(-288, -288)">
+          <rect x="117.1337" y="117.1337" width="341.7326" height="341.7326" rx="12.6446" ry="12.6446"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(8.902450)">
+        <g transform="translate(-288, -288)">
+          <rect x="124.6560" y="124.6560" width="326.6880" height="326.6880" rx="14.7520" ry="14.7520"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(10.174228)">
+        <g transform="translate(-288, -288)">
+          <rect x="132.1783" y="132.1783" width="311.6435" height="311.6435" rx="16.8595" ry="16.8595"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(11.446007)">
+        <g transform="translate(-288, -288)">
+          <rect x="139.7005" y="139.7005" width="296.5989" height="296.5989" rx="18.9669" ry="18.9669"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(12.717785)">
+        <g transform="translate(-288, -288)">
+          <rect x="147.2228" y="147.2228" width="281.5543" height="281.5543" rx="21.0743" ry="21.0743"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(13.989564)">
+        <g transform="translate(-288, -288)">
+          <rect x="154.7451" y="154.7451" width="266.5098" height="266.5098" rx="23.1818" ry="23.1818"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(15.261342)">
+        <g transform="translate(-288, -288)">
+          <rect x="162.2674" y="162.2674" width="251.4652" height="251.4652" rx="25.2892" ry="25.2892"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(16.533121)">
+        <g transform="translate(-288, -288)">
+          <rect x="169.7897" y="169.7897" width="236.4206" height="236.4206" rx="27.3966" ry="27.3966"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(17.804899)">
+        <g transform="translate(-288, -288)">
+          <rect x="177.3120" y="177.3120" width="221.3761" height="221.3761" rx="29.5041" ry="29.5041"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(19.076678)">
+        <g transform="translate(-288, -288)">
+          <rect x="184.8342" y="184.8342" width="206.3315" height="206.3315" rx="31.6115" ry="31.6115"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(20.348456)">
+        <g transform="translate(-288, -288)">
+          <rect x="192.3565" y="192.3565" width="191.2869" height="191.2869" rx="33.7189" ry="33.7189"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(21.620235)">
+        <g transform="translate(-288, -288)">
+          <rect x="199.8788" y="199.8788" width="176.2424" height="176.2424" rx="35.8264" ry="35.8264"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(22.892013)">
+        <g transform="translate(-288, -288)">
+          <rect x="207.4011" y="207.4011" width="161.1978" height="161.1978" rx="37.9338" ry="37.9338"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(24.163792)">
+        <g transform="translate(-288, -288)">
+          <rect x="214.9234" y="214.9234" width="146.1532" height="146.1532" rx="40.0412" ry="40.0412"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(25.435570)">
+        <g transform="translate(-288, -288)">
+          <rect x="222.4457" y="222.4457" width="131.1087" height="131.1087" rx="42.1487" ry="42.1487"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(26.707349)">
+        <g transform="translate(-288, -288)">
+          <rect x="229.9679" y="229.9679" width="116.0641" height="116.0641" rx="44.2561" ry="44.2561"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(27.979127)">
+        <g transform="translate(-288, -288)">
+          <rect x="237.4902" y="237.4902" width="101.0195" height="101.0195" rx="46.3635" ry="46.3635"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(29.250906)">
+        <g transform="translate(-288, -288)">
+          <rect x="245.0125" y="245.0125" width="85.9750" height="85.9750" rx="42.9875" ry="42.9875"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(30.522684)">
+        <g transform="translate(-288, -288)">
+          <rect x="252.5348" y="252.5348" width="70.9304" height="70.9304" rx="35.4652" ry="35.4652"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(31.794463)">
+        <g transform="translate(-288, -288)">
+          <rect x="260.0571" y="260.0571" width="55.8858" height="55.8858" rx="27.9429" ry="27.9429"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(33.066241)">
+        <g transform="translate(-288, -288)">
+          <rect x="267.5794" y="267.5794" width="40.8413" height="40.8413" rx="20.4206" ry="20.4206"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(34.338020)">
+        <g transform="translate(-288, -288)">
+          <rect x="275.1016" y="275.1016" width="25.7967" height="25.7967" rx="12.8984" ry="12.8984"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <g>
+    <g transform="translate(288, 288)">
+      <g transform="rotate(35.609798)">
+        <g transform="translate(-288, -288)">
+          <rect x="282.6239" y="282.6239" width="10.7521" height="10.7521" rx="5.3761" ry="5.3761"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</g>
+</svg>

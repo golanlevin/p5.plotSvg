@@ -5,7 +5,7 @@
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
-Version 0.1.3, January 26, 2025 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
+Version 0.1.4, April 6, 2025 • by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 ### Downloads, Mirrors, and Documentation:
 
@@ -38,7 +38,7 @@ The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p
 
 Some advantages of p5.plotSvg are that: it is compatible with current versions of p5.js; it is easy to add to projects; and it does not interfere with graphics performance during animation (except at the precise moment of exporting a file).
 
-p5.plotSvg was developed by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
+p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
 
 ---
@@ -65,6 +65,7 @@ Next, make a p5.js file like the one below, called `sketch.js`, in the same dire
 ```
 // This is the sketch.js file.
 // Press 's' to export the SVG.
+// Note that p5.js is used in 'global mode'. 
 
 let bDoExportSvg = false; 
 
@@ -97,9 +98,11 @@ function draw(){
 
 ### Instance mode
 
-The library can also be used in p5 instance mode.
+Alternatively, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode):
 
 ```
+// This is a minimal sketch.js file for instance mode. 
+
 import p5plot from 'p5.plotsvg';
 
 function sketch(context) {
@@ -146,6 +149,7 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
 7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
 8. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
+9. [**plotSvg_instancemode**](examples/plotSvg_instancemode/): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). @editor
 
 *Examples awaiting implementation (more soon!):*
 
@@ -215,7 +219,6 @@ Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative 
 ---
 ## Acknowledgments
 
-This project was made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/).
+This project was made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Thanks to everyone in the community who has contributed by filing issues and pull requests.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
-

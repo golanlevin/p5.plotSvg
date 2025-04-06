@@ -1,6 +1,6 @@
 # plotSvg_smorgasbord Example
 
-The `plotSvg_smorgasbord` example is intended as a comprehensive test, to ensure that all path-based p5.js drawing commands are successfully exporting vector paths to an SVG file. 
+The `plotSvg_smorgasbord` example is intended as a comprehensive test, to ensure that all path-based p5.js drawing commands are successfully exporting vector paths to an SVG file.
 
 ### Code: 
 
@@ -10,8 +10,7 @@ The `plotSvg_smorgasbord` example is intended as a comprehensive test, to ensure
 
 ![plotSvg_smorgasbord.png](plotSvg_smorgasbord.png)
 
-`plotSvg_smorgasbord` 
-includes tests of the following p5.js drawing commands and options: 
+`plotSvg_smorgasbord` includes tests of the following p5.js drawing commands and options: 
 
 * `arc()` — `OPEN, CHORD, PIE`
 * `bezier()`

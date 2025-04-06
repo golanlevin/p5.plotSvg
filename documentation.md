@@ -12,6 +12,7 @@
 *   [setSvgResolutionDPCM](#setsvgresolutiondpcm)
 *   [setSvgDefaultStrokeWeight](#setsvgdefaultstrokeweight)
 *   [setSvgDefaultStrokeColor](#setsvgdefaultstrokecolor)
+*   [setSvgBackgroundColor](#setSvgBackgroundColor)
 *   [setSvgIndent](#setsvgindent)
 *   [setSvgFlattenTransforms](#setsvgflattentransforms)
 *   [setSvgCoordinatePrecision](#setsvgcoordinateprecision)
@@ -22,6 +23,7 @@
 *   [getDefaultStrokeColor](#getdefaultstrokecolor)
 
 ---
+
 
 
 ## beginRecordSVG
@@ -94,6 +96,15 @@ Sets the default stroke color for SVG elements.
 
 #### Parameters
 *   `col` **[string][27]** The stroke color to set, in valid CSS color format.
+
+
+
+## setSvgBackgroundColor
+Sets an optional background color (as a CSS style) for the SVG. This is independent of the `background()` color of the p5 sketch. 
+This color does not interfere with plotter output and is purely for visualization. Note that this color may not be visible in all SVG viewers. If this function is not called, no background color style is specified in the SVG.
+
+#### Parameters
+*   `col` **[string][27]** The background color to set, in valid CSS color format.
 
 
 
