@@ -95,6 +95,24 @@ function draw(){
 }
 ```
 
+### Instance mode
+
+The library can also be used in p5 instance mode.
+
+```
+import p5plot from 'p5.plotsvg';
+
+function sketch(context) {
+  context.setup = function() {
+    context.createCanvas(400, 400);    
+    p5plot.beginRecordSVG(context, "output.svg");
+    context.circle(200, 200, 200);
+    p5plot.endRecordSVG();
+  };
+};
+
+new p5(sketch, document.getElementById("container"));
+```
 
 ---
 ## What the p5.plotSvg library *IS*: 
