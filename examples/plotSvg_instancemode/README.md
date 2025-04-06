@@ -1,6 +1,6 @@
 # plotSvg_instancemode Example
 
-The `plotSvg_instancemode ` example demonstrates the use of p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). The implementation of this functionality is thanks to the contribution of Lionel Ringenbach (@ucodia).
+The `plotSvg_instancemode` example demonstrates the use of p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). The implementation of this functionality is thanks to the contribution of Lionel Ringenbach ([@ucodia](https://github.com/ucodia)).
 
 p5.js offers two primary modes of operation:
 
@@ -19,9 +19,9 @@ The same import of `p5plot` should not be used for different instances; sketches
 
 ## Minimal instance mode example
 
-This is a complete p5 sketch showing the use of p5.plotSvg in instance mode.
+This is a complete p5 sketch showing the use of p5.plotSvg in instance mode:
 
-```
+```js
 import p5plot from 'p5.plotsvg';
 
 function sketch(context) {
@@ -36,13 +36,13 @@ function sketch(context) {
 new p5(sketch, document.getElementById("container"));
 ```
 
-## Full instance mode example
+## Elaborated instance mode example
 
 ![plotSvg_instancemode.png](plotSvg_instancemode_sm.png)
 
 Code: 
 
-* At editor.p5js.org: [https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
+* At editor.p5js.org: [https://editor.p5js.org/golan/sketches/Ib_myDs3s](https://editor.p5js.org/golan/sketches/Ib_myDs3s)
 * At Github: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_instancemode/sketch.js)
 
 
@@ -87,7 +87,7 @@ function squircle(sketch) {
     sketch.noFill();
 
     if (exportSvg) {
-      beginRecordSVG(sketch, "plotSvg_generative_instance_" + seed + ".svg");
+      beginRecordSVG(sketch, "plotSvg_instancemode_" + seed + ".svg");
     }
 
     // pick random line number and rotation increment

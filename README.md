@@ -47,7 +47,7 @@ p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin
 First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.4/lib/p5.plotSvg.js) or 
 [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file: 
 
-```
+```js
 <!-- This is the index.html file -->
 <html>
   <head>
@@ -62,7 +62,7 @@ First, include `p5.plotSvg.js` in your project. You can do this by linking to an
 
 Next, make a p5.js file like the one below, called `sketch.js`, in the same directory as your `index.html`. When you run it in a web browser, you can press the `s` key to export an SVG file.
 
-```
+```js
 // This is the sketch.js file.
 // Press 's' to export the SVG.
 // Note that p5.js is used in 'global mode'. 
@@ -101,7 +101,7 @@ function draw(){
 Alternatively, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). Here's a different `sketch.js` file showing a minimal example of this: 
 
 
-```
+```js
 // This is a minimal sketch.js file for instance mode. 
 import p5plot from 'p5.plotsvg';
 

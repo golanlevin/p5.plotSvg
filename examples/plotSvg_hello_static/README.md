@@ -10,7 +10,7 @@ Code:
 * At openprocessing.org: [https://openprocessing.org/sketch/2455362](https://openprocessing.org/sketch/2455362)
 * At GitHub: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_hello_static/sketch.js)
 
-```
+```js
 // plotSvg_hello_static Example
 // Extremely simple demo of using p5.plotSvg to export SVG files.
 // Requires https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js

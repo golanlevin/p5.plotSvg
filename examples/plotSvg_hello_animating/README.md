@@ -11,7 +11,7 @@ Code:
 * At Github: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_hello_animating/sketch.js)
 
 
-```
+```js
 // plotSvg_hello_animating Example
 // This sketch demonstrates how to use the p5.plotSvg library 
 // to export SVG files during interaction. Press 's' to export an SVG. 

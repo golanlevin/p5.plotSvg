@@ -12,7 +12,7 @@ Code:
 * At openprocessing.org: [https://openprocessing.org/sketch/2479519](https://openprocessing.org/sketch/2479519)
 * At GitHub: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_hatched_shapes/sketch.js)
 
-```
+```js
 // plotSvg_hatched_shapes Hatched Shapes Example
 // Requires https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js
 // Golan Levin, December 2024

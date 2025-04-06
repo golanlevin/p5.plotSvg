@@ -10,7 +10,7 @@ Code:
 * At openProcessing.org: [https://openprocessing.org/sketch/2455399](https://openprocessing.org/sketch/2455399)
 * At GitHub: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_generative/sketch.js)
 
-```
+```js
 // plotSvg_generative Example
 // Demonstrates how to use the p5.plotSvg library to export 
 // SVG files from a "generative art" sketch in p5.js.

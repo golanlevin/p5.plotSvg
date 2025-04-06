@@ -11,7 +11,7 @@ Code:
 * At Github: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_particle_paths/sketch.js)
 
 
-```
+```js
 // https://github.com/golanlevin/p5.plotSvg (v.0.1.x)
 // A Plotter-Oriented SVG Exporter for p5.js
 // Golan Levin, November 2024

@@ -11,7 +11,7 @@ Code:
 * At Github: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_drawing_recorder/sketch.js)
 
 
-```
+```js
 // plotSvg_drawing_recorder Example
 // This sketch records a series of marks drawn by the user
 // and exports an SVG file when the 's' key is pressed.
