@@ -47,7 +47,7 @@ p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin
 First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@0.1.4/lib/p5.plotSvg.js) or 
 [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file: 
 
-```js
+```html
 <!-- This is the index.html file -->
 <html>
   <head>
