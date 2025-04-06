@@ -34,7 +34,7 @@ Version 0.1.3, January 26, 2025 • by Golan Levin ([@golanlevin](https://githu
 ---
 ## About p5.plotSvg
 
-The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through [1.11.2](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js). 
+The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through [1.11.3](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.js). 
 
 Some advantages of p5.plotSvg are that: it is compatible with current versions of p5.js; it is easy to add to projects; and it does not interfere with graphics performance during animation (except at the precise moment of exporting a file).
 
@@ -51,7 +51,7 @@ First, include `p5.plotSvg.js` in your project. You can do this by linking to an
 <!-- This is the index.html file -->
 <html>
   <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.2/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js"></script>
   </head>
   <body>
@@ -200,4 +200,4 @@ Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative 
 This project was made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/).
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
-
+
