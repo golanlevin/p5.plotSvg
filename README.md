@@ -66,6 +66,7 @@ Next, create a p5.js file like the one below, called `sketch.js`, in the same di
 // Press 's' to export the SVG.
 // Note that p5.js is used in 'global mode'. 
 
+p5.disableFriendlyErrors = true; // hush
 let bDoExportSvg = false; 
 
 function setup(){
