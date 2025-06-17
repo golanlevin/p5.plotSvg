@@ -1,6 +1,6 @@
 # plotSvg_hatched_shapes Example 
 
-The `plotSvg_hatched_shapes` exmaple presents a hack for hatching SVG shapes, i.e. approximating a simple "fill" using a pen plotter. The hatching method allows for both concave and convex shapes. For more ideas about how to "fill" (hatch) shapes for a pen-plotter, consider [these notes](https://github.com/golanlevin/DrawingWithMachines/blob/main/assignments/05_tone/README.md).
+The `plotSvg_hatched_shapes` example presents a hack for hatching SVG shapes, i.e. approximating a simple "fill" using a pen plotter. The hatching method allows for both concave and convex shapes. For more ideas about how to "fill" (hatch) shapes for a pen-plotter, consider [these notes](https://github.com/golanlevin/DrawingWithMachines/blob/main/assignments/05_tone/README.md).
 
 **Note**: this method uses pixel analysis to implement the hatching, and is resolution-dependent. The method works by tracing scanlines in an offscreen buffer. To make the hatching denser or sparser, change the integer variable `HATCH_INTERVAL`. 
 
