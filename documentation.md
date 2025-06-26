@@ -4,7 +4,7 @@
 // but now edited by hand, sorry
 -->
 
-## p5.plotSvg Documentation
+# p5.plotSvg Documentation
 
 ### Table of Contents
 
@@ -22,9 +22,9 @@
 *   [setSvgCoordinatePrecision](#setsvgcoordinateprecision)
 *   [setSvgTransformPrecision](#setsvgtransformprecision)
 *   [setSvgPointRadius](#setsvgpointradius)
+*   [setSvgMergeNamedGroups](#setsvgmergenamedgroups)
 *   [beginSvgGroup](#beginsvggroup)
 *   [endSvgGroup](#endsvggroup)
-*   [setSvgMergeNamedGroups](#setsvgmergenamedgroups)
 *   [getDefaultStrokeColor](#getdefaultstrokecolor)
 
 ---
@@ -45,7 +45,7 @@ and overrides p5.js drawing functions to capture drawing commands for SVG export
 
 ## pauseRecordSVG
 Pauses or unpauses recording of SVG output for a p5.js sketch,
-depending on whether the `bPause` argument is true or false.
+depending on whether the boolean `bPause` argument is `true` or `false`.
 
 #### Parameters
 *   `bPause`
@@ -165,6 +165,16 @@ Sets the radius for points (rendered as tiny circles) in the SVG output. Default
 
 
 
+## setSvgMergeNamedGroups
+Sets whether or not to merge user-defined SVG groups that have the same name. 
+Useful for grouping paths that might be computed at different times, but should be plotted with 
+the same drawing tool.
+
+#### Parameters
+*   `bEnabled` **[boolean][29]** Whether or not groups with the same name should be merged.
+
+
+
 ## beginSvgGroup
 Begins a new user-defined grouping of SVG elements.
 Optionally associates a group name to the SVG group.
@@ -177,15 +187,6 @@ Be sure to call `endSvgGroup()` later or the SVG file will report errors.
 
 ## endSvgGroup
 Ends the current user-defined group of SVG elements.
-
-
-
-## setSvgMergeNamedGroups
-Sets whether or not to merge SVG groups with the same name. Useful for grouping paths that 
-might be computed at different times, but use the same drawing tool.
-
-#### Parameters
-*   `bEnabled` **[boolean][29]** Whether or not groups with the same name should be merged.
 
 
 
