@@ -1,6 +1,6 @@
 {
   "name": "p5.plotsvg",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Plotter-Oriented SVG Exporter for p5.js",
   "main": "lib/p5.plotSvg.js",
   "directories": {
