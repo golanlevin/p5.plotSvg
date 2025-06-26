@@ -29,7 +29,7 @@ function keyPressed(){
 function draw(){
   randomSeed(myRandomSeed);
   background(255); 
-  strokeWeight(2); 
+  strokeWeight(1); 
   
   if (bDoExportSvg){
     beginRecordSVG(this, "post_grouping.svg");
@@ -37,7 +37,8 @@ function draw(){
 
   // Do a drunk walk, alternating horizonal and vertical moves. 
   // Horizonal lines are red, vertical lines are blue.
-  // Ensure that like-colored lines are grouped together.
+  // setSvgMergeNamedGroups(true) ensures that lines inside
+  // the same group are (eventually) grouped together.
   let px = width/2; 
   let py = height/2;
   for (let i=0; i<75; i++){
