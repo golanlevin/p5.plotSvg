@@ -1,6 +1,6 @@
 # Index of p5.plotSvg Examples
 
-These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. All examples are mirrored at editor.p5js.org and openProcessing.org.
+These examples show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. All examples are mirrored in collections at [editor.p5js.org](https://editor.p5js.org/golan/collections/MCA5RvDFX) and [openProcessing.org](https://openprocessing.org/curation/88363).
 
 ---
 
@@ -10,7 +10,7 @@ Full demonstration of all p5.js drawing primitives exported to SVG.
 
 [![plotSvg_smorgasbord](plotSvg_smorgasbord/plotSvg_smorgasbord_sm.png)](plotSvg_smorgasbord/README.md)
 
-
+---
 
 ### [plotSvg_hello_static](plotSvg_hello_static/README.md)
 
@@ -18,7 +18,7 @@ Simplest possible demo, in "static" mode; all art is in `setup()` only.
 
 [![plotSvg_hello_static](plotSvg_hello_static/plotSvg_hello_static_sm.png)](plotSvg_hello_static/README.md)
 
-
+---
 
 ### [plotSvg_hello_animating](plotSvg_hello_animating/README.md)
 
@@ -26,7 +26,7 @@ Simple demo; uses `setup()`, `draw()` and a keypress to capture an SVG during an
 
 [![plotSvg_hello_animating](plotSvg_hello_animating/plotSvg_hello_animating_sm.png)](plotSvg_hello_animating/README.md)
 
-
+---
 
 ### [plotSvg_generative](plotSvg_generative/README.md)
 
@@ -34,7 +34,7 @@ Simple "generative artwork"; press a button to export.
 
 [![plotSvg_generative](plotSvg_generative/plotSvg_generative_sm.png)](plotSvg_generative/README.md)
 
-
+---
 
 ### [plotSvg_drawing_recorder](plotSvg_drawing_recorder/README.md)
 
@@ -42,7 +42,7 @@ Records a series of marks drawn by the user.
 
 [![plotSvg_drawing_recorder](plotSvg_drawing_recorder/plotSvg_drawing_recorder_sm.png)](plotSvg_drawing_recorder/README.md)
 
-
+---
 
 ### [plotSvg_particle_paths](plotSvg_particle_paths/README.md)
 
@@ -50,7 +50,7 @@ Accumulates the traces of some particles over time.
 
 [![plotSvg_particle_paths](plotSvg_particle_paths/plotSvg_particle_paths_sm.png)](plotSvg_particle_paths/README.md)
 
-
+---
 
 ### [plotSvg_hatched_shapes](plotSvg_hatched_shapes/README.md)
 
@@ -58,7 +58,23 @@ A trick for exporting hatched ("filled") SVG shapes.
 
 [![plotSvg_hatched_shapes](plotSvg_hatched_shapes/plotSvg_hatched_shapes_sm.png)](plotSvg_hatched_shapes/README.md)
 
+---
 
+### [plotSvg_instancemode](plotSvg_instancemode/README.md)
+
+An example of using p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode).
+
+[![plotSvg_instancemode](plotSvg_instancemode/plotSvg_instancemode_sm.png)](plotSvg_instancemode/README.md)
+
+---
+
+### [plotSvg_post_grouping](plotSvg_post_grouping/README.md)
+
+How to group paths together (e.g. by color), even if they were computed at different times. 
+
+![post_grouping.png](plotSvg_post_grouping/post_grouping_sm.png)
+
+---
 
 ### [plotSvg_face_flipbook](https://openprocessing.org/sketch/2488219)
 
@@ -66,10 +82,3 @@ Software which exports an SVG flipbook showing a 2-second recording from a face-
 
 ![plotSvg_face_flipbook](plotSvg_face_flipbook/plotSvg_face_flipbook.gif)
 
-
-
-### [plotSvg_instancemode](plotSvg_instancemode/README.md)
-
-An example of using p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode).
-
-[![plotSvg_instancemode](plotSvg_instancemode/plotSvg_instancemode_sm.png)](plotSvg_instancemode/README.md)
