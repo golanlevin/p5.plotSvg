@@ -127,7 +127,7 @@ Set whether or not to use a stack to encode matrix transforms.
 * `setSvgFlattenTransforms(false)` -- smaller SVG files, potentially less fidelity
 
 #### Parameters
-*   `b`
+*   `b` **[boolean][29]** Whether or not to flatten geometric transforms
 
 
 
@@ -175,6 +175,15 @@ Ends the current user-defined group of SVG elements.
 
 
 
+## setSvgMergeNamedGroups
+Sets whether or not to merge SVG groups with the same name. Useful for grouping paths that 
+might be computed at different times, but use the same drawing tool.
+
+#### Parameters
+*   `bEnabled` **[boolean][29]** Whether or not groups with the same name should be merged.
+
+
+
 ## getDefaultStrokeColor
 Retrieves the default stroke color used for SVG rendering.
 Returns **[string][27]** The default stroke color (in hex, RGB, or named CSS color format).
@@ -186,3 +195,5 @@ Returns **[string][27]** The default stroke color (in hex, RGB, or named CSS col
 [27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
 [28]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
