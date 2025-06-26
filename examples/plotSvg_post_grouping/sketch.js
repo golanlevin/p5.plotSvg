@@ -1,5 +1,5 @@
 // plotSvg_post_grouping: lines grouped by their color.
-// Click to re-generate design; press 's' to export SVG.
+// Click to re-generate design; press button to export SVG.
 // Demonstrates post-hoc merging of groups, using
 // setSvgMergeNamedGroups(true). This function is 
 // useful for grouping together lines that are computed
@@ -12,23 +12,24 @@ let bDoExportSvg = false;
 let myRandomSeed = 12345;
 
 function setup(){
-  createCanvas(600, 400);
+  createCanvas(6 * 96, 4 * 96); // 6x4 inches at 96dpi
   setSvgMergeNamedGroups(true); // Groups the lines!
+  
+  let saveButton = createButton("Save SVG");
+  saveButton.position(10, 10);
+  saveButton.mousePressed((event) => {
+    event.stopPropagation();
+    bDoExportSvg = true;
+  });
 }
 
 function mousePressed(){
   myRandomSeed = millis(); 
 }
 
-function keyPressed(){
-  if (key == 's'){ 
-    bDoExportSvg = true; 
-  }
-}
-
 function draw(){
   randomSeed(myRandomSeed);
-  background(255); 
+  background(245); 
   strokeWeight(1); 
   
   if (bDoExportSvg){
@@ -44,12 +45,14 @@ function draw(){
   for (let i=0; i<75; i++){
     let qx = px; 
     let qy = py;
+    
     if (i%2 == 0){
       qx += 40 * random(-1,1); 
       beginSvgGroup("horizontalLines");
       stroke('red'); 
       line(px,py, qx,qy); 
       endSvgGroup(); 
+      
     } else {
       qy += 30 * random(-1,1); 
       beginSvgGroup("verticalLines"); 
@@ -57,6 +60,7 @@ function draw(){
       line(px,py, qx,qy); 
       endSvgGroup(); 
     } 
+    
     px = qx; 
     py = qy; 
   }

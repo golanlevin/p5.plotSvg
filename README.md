@@ -9,11 +9,11 @@ Version 0.1.5, June 26, 2025 • Initiated by Golan Levin ([@golanlevin](https:
 
 ### Downloads, Mirrors, and Documentation:
 
-* [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from GitHub ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
+* [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from this GitHub repo ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
 * p5.plotSvg.js at **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
 * p5.plotSvg.js at **unpkg.com**: [https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * p5.plotSvg.js at **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
-* [**Documentation**](documentation.md)
+* [**DOCUMENTATION**](documentation.md)
 
 
 ### Contents:
@@ -142,15 +142,15 @@ new p5(sketch, document.getElementById("container"));
 
 These [examples](examples/README.md) show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. All examples are mirrored in collections at [editor.p5js.org](https://editor.p5js.org/golan/collections/MCA5RvDFX) and [openProcessing.org](https://openprocessing.org/curation/88363). A visual index of examples is [here](examples/README.md).
 
-1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/): ⭐ Full demo of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
-2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/): Simplest possible demo; all art in `setup()` only. [@editor](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing](https://openprocessing.org/sketch/2455362)
-3. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing](https://openprocessing.org/sketch/2455390)
-4. [**plotSvg_generative**](examples/plotSvg_generative/): Simple "generative artwork"; press button to export. [@editor](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing](https://openprocessing.org/sketch/2455399)
-5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/): Records a series of marks drawn by the user. [@editor](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing](https://openprocessing.org/sketch/2478914)
-6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
-7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
-8. [**plotSvg_instancemode**](examples/plotSvg_instancemode/): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
-9. [**plotSvg_post_grouping**](examples/plotSvg_post_grouping): Merge groups of paths computed at different times. • [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT)
+1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/README.md): ⭐ Full demo of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
+2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/README.md): Simplest possible demo; all art in `setup()` only. [@editor](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing](https://openprocessing.org/sketch/2455362)
+3. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/README.md): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing](https://openprocessing.org/sketch/2455390)
+4. [**plotSvg_generative**](examples/plotSvg_generative/README.md): Simple "generative artwork"; press button to export. [@editor](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing](https://openprocessing.org/sketch/2455399)
+5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/README.md): Records a series of marks drawn by the user. [@editor](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing](https://openprocessing.org/sketch/2478914)
+6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/README.md): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
+7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/README.md): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
+8. [**plotSvg_instancemode**](examples/plotSvg_instancemode/README.md): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
+9. [**plotSvg_post_grouping**](examples/plotSvg_post_grouping/README.md): Merge groups of paths computed at different times. [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
 10. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
 
 *Examples awaiting implementation (more soon!):*
@@ -166,7 +166,8 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 * SVGs produced with p5.plotSvg have a default stroke color, `black`. This can be altered with `setSvgDefaultStrokeColor()`, which takes valid CSS color strings (e.g., `'red'`, `'#ff0000'`, `'rgb(255,0,0)'`).
 * To create SVG paths with non-default colors, simply use the `stroke()` command as usual. Note, however, that any such strokes will have additional style information added to their SVG representation (e.g. `style="stroke:#ff0000;"`); this could lead to potentially large file sizes, depending on your design. To restore the default stroke color, you can use `stroke(getDefaultStrokeColor());`.
 * If you use stroke colors, the working assumption of p5.plotSvg is that you are using so *to label different logical entities* — such as different color pens in a multi-pen plotter, different tools in a CNC machine, or different intensity settings in a laser cutter. For this reason, alpha (transparency) values are stripped out. I strongly recommend using just a small number of colors, and selecting easy-to-remember [CSS color keyword names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords) such as `'red'`, `'green'`, `'blue'`, etc. 
-* This library only accepts p5 `stroke()` commands with the following types of arguments: CSS named colors [in the set of 147 official SVG colors](https://johndecember.com/html/spec/colorsvg.html), hex formatted color strings, or as RGB/gray colors whose values range from 0-255. The p5 `colorMode()` command is not supported by p5.plotSvg, and calls to `colorMode()` may produce unpredictable results in your SVG. 
+* This library only accepts p5 `stroke()` commands with the following types of arguments: CSS named colors [in the set of 147 official SVG colors](https://johndecember.com/html/spec/colorsvg.html), hex formatted color strings, or as RGB/gray colors whose values range from 0-255. The p5 `colorMode()` command is not supported by p5.plotSvg, and calls to `colorMode()` may produce unpredictable results in your SVG.
+* When making multi-color plots, the `setSvgMergeNamedGroups(true)` function may be helpful in grouping paths you want plotted with the same color pen; see [this example](examples/plotSvg_post_grouping/README.md).
 
 ### Graphics Transforms
 
