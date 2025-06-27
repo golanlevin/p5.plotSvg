@@ -233,6 +233,6 @@ Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative 
 
 ## Acknowledgments
 
-This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to @Ucodia, @lewi0622, @mariuswatz, and everyone else in the community who has contributed by filing issues, thoughtful comments, and pull requests.
+This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to @Ucodia, @lewi0622, @mariuswatz, @thrly, and everyone else in the community who has contributed by filing issues, thoughtful comments, and pull requests.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
