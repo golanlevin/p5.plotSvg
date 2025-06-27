@@ -206,16 +206,16 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 
 The following projects may be of interest to creative coders working with SVG files:
 
-* [p5.js-svg](https://github.com/zenozeng/p5.js-svg) by Zenozeng allows for direct SVG rendering in p5.js sketches, offering an alternative SVG-based renderer for the web browser. It supports a wide range of SVG elements but also aims for full compatibility with p5.js drawing functions.
-* [canvas2svg](https://github.com/gliffy/canvas2svg) by Gliffy provides a way to export HTML5 Canvas content to SVG using JavaScript. It works by implementing a virtual canvas that mimics the CanvasRenderingContext2D interface, capturing drawing commands as SVG elements.
-* [p5-svg-test](https://github.com/runemadsen/p5-svg-test) by Rune Madsen is a simple test for SVG generation using p5.js. This repository provides a proof of concept for exporting p5.js graphics to SVG format but is not a fully-featured library.
+* [p5.js-svg](https://github.com/zenozeng/p5.js-svg) by Zenozeng allows for direct SVG rendering in p5.js sketches, offering an alternative SVG-based renderer for the web browser. Replacing the HTML canvas entirely, it supports a wide range of SVG elements but also aims for full compatibility with p5.js drawing functions.
+* [Paper.js](http://paperjs.org/features/#svg-import-and-export) by Jürg Lehni & Jonathan Puckey is a powerful open-source vector graphics scripting framework that runs on top of the HTML5 Canvas. It supports SVG import and export and offers a wide range of vector graphics manipulation features, such as [path simplification](http://paperjs.org/examples/path-simplification/) and [shape-shape intersection](http://paperjs.org/examples/path-intersections/).
+* [vpype](https://vpype.readthedocs.io/en/latest/) by Antoine Beyeler is a powerful command-line tool and Python library for preprocessing and optimizing vector graphics for plotting. It provides utilities for sorting paths, simplifying curves, and optimizing plotting jobs for pen plotters.
 * [Rune.js](https://runemadsen.github.io/rune.js/) by Rune Madsen is a JavaScript library for creative coding, similar to p5.js. While it is not strictly a p5.js SVG exporter, it includes capabilities for working with vector graphics, including SVG import/export.
-* [vpype](https://vpype.readthedocs.io/en/latest/) by Antoine Beyeler is a command-line tool and Python library for preprocessing and optimizing vector graphics for plotting. It provides utilities for sorting paths, simplifying curves, and optimizing plotting jobs for pen plotters.
-* [Paper.js](http://paperjs.org/features/#svg-import-and-export) by Jürg Lehni & Jonathan Puckey is a powerful open-source vector graphics scripting framework that runs on top of the HTML5 Canvas. It supports SVG import and export and offers a wide range of vector graphics manipulation features.
-* [ln](https://github.com/fogleman/ln) by Michael Fogleman is a vector-based 3D renderer written in Go. It is used to produce 2D vector graphics depicting 3D scenes.
+* [p5-svg-test](https://github.com/runemadsen/p5-svg-test) by Rune Madsen is a simple test for SVG generation using p5.js. This repository provides a proof of concept for exporting p5.js graphics to SVG format but is not a fully-featured library.
 * [PEmbroider](https://github.com/CreativeInquiry/PEmbroider) by the Frank-Ratchye STUDIO for Creative Inquiry at Carnegie Mellon University is a library for computational embroidery using Processing (Java). It allows users to generate embroidery stitch paths from their Processing sketches, with support for various embroidery machine formats.
 * [stitch.js](https://github.com/stitchables/stitch.js) by Stitchables is a JavaScript library for rendering SVG-based embroidery patterns. It allows users to convert drawings made with HTML5 Canvas or SVG paths into embroidery stitch paths.
+* [canvas2svg](https://github.com/gliffy/canvas2svg) by Gliffy provides a way to export HTML5 Canvas content to SVG using JavaScript. It works by implementing a virtual canvas that mimics the CanvasRenderingContext2D interface, capturing drawing commands as SVG elements.
 * Bob Cook's [SVG Example](https://jsfiddle.net/bobcook/2p9tqzze/) provides an example demonstrating how to convert canvas-based drawings to SVG using a custom library in a jsFiddle example.
+* [ln](https://github.com/fogleman/ln) by Michael Fogleman is a vector-based 3D renderer written in Go. It is used to produce 2D vector graphics depicting 3D scenes.
 
 ---
 
@@ -233,6 +233,6 @@ Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative 
 
 ## Acknowledgments
 
-This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to @Ucodia, @lewi0622, @mariuswatz, @thrly, and everyone else in the community who has contributed by filing issues, thoughtful comments, and pull requests.
+This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), @Ucodia, @lewi0622, @mariuswatz, @thrly, and everyone else in the community who has contributed by filing issues, thoughtful comments, and pull requests.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
