@@ -88,7 +88,7 @@ Use monoline SVG fonts in your exported designs.<br />
 
 ### [plotSvg_face_flipbook](https://openprocessing.org/sketch/2488219)
 
-Exports a tiny flipbook recording from a face-tracker.<br />[@openProcessing](https://openprocessing.org/sketch/2488219)
+Exports a tiny flipbook recording from a face-tracker.<br />[here](plotSvg_face_flipbook/sketch.js) • [@openProcessing](https://openprocessing.org/sketch/2488219)
 
 ![plotSvg_face_flipbook](plotSvg_face_flipbook/plotSvg_face_flipbook.gif)
 
