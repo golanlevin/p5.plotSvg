@@ -1,5 +1,6 @@
 # p5.plotSvg
 
+
 ## A Plotter-Oriented SVG Exporter for p5.js
 
 ![Plotter](images/bantam_artframe_plotter.jpg)
@@ -32,6 +33,7 @@ Version 0.1.5, June 26, 2025 • Initiated by Golan Levin ([@golanlevin](https:
 * [Acknowledgments](#acknowledgments)
 
 
+---
 
 ## About p5.plotSvg
 
@@ -42,6 +44,7 @@ Note that p5.plotSvg is *not* a general-purpose library for importing, exporting
 p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
 
+---
 
 ## Quickstart Installation
 
@@ -119,6 +122,7 @@ function sketch(context) {
 new p5(sketch, document.getElementById("container"));
 ```
 
+---
 
 ## What the p5.plotSvg library *IS*: 
 
@@ -127,6 +131,7 @@ new p5(sketch, document.getElementById("container"));
 * The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored.
 
 
+---
 
 ## What the p5.plotSvg library *IS NOT*: 
 
@@ -138,6 +143,7 @@ new p5(sketch, document.getElementById("container"));
 * p5.plotSvg is not a library for *vectorizing* pixel-based canvases rendered by p5.js. In other words, no utilities are provided for hatching or [dithering](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) that would "convert" the pixels on the screen into vector strokes. The only marks that get exported to SVG are the ones you specify with vector-based p5.js drawing commands like `line()`, `ellipse()`, etc.
 
 
+---
 
 ## Example Programs
 
@@ -156,6 +162,7 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 11. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
 
 
+---
 
 ## Usage Notes
 
@@ -183,7 +190,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 * `setSvgCoordinatePrecision()` - The default is 4 digits of precision for path coordinates, e.g. `3.1416`
 * `setSvgTransformPrecision()` - The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
 
-
+---
 
 ## Known Issues and Bugs:
 
@@ -193,7 +200,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 * As of p5.plotSvg v.0.1.x, this library is not intended to be used in `WEBGL` mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
 * p5.plotSvg v.0.1.x works with versions of p5.js as old as v.1.4.2. The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to portions of p5.plotSvg v.0.1.x.
 
-
+---
 
 ## Other Libraries and Related Work
 
@@ -210,18 +217,19 @@ The following projects may be of interest to creative coders working with SVG fi
 * [stitch.js](https://github.com/stitchables/stitch.js) by Stitchables is a JavaScript library for rendering SVG-based embroidery patterns. It allows users to convert drawings made with HTML5 Canvas or SVG paths into embroidery stitch paths.
 * Bob Cook's [SVG Example](https://jsfiddle.net/bobcook/2p9tqzze/) provides an example demonstrating how to convert canvas-based drawings to SVG using a custom library in a jsFiddle example.
 
+---
 
 ## License and Code of Conduct
 
 [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) is released under the [MIT License](LICENSE). The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
 
-
+---
 
 ## Keywords
 
 Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, EMSL AxiDraw, NextDraw, open-source software tools for the arts, #OSSTA.
 
-
+---
 
 ## Acknowledgments
 
