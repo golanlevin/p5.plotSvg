@@ -33,6 +33,7 @@ Version 0.1.5, June 26, 2025 • Initiated by Golan Levin ([@golanlevin](https:
 
 
 ---
+
 ## About p5.plotSvg
 
 The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Key advantages of p5.plotSvg are that it does not interfere with graphics performance during animation, and it is easy to add to projects. 
@@ -43,6 +44,7 @@ p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin
 
 
 ---
+
 ## Quickstart Installation
 
 First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) or 
@@ -120,6 +122,7 @@ new p5(sketch, document.getElementById("container"));
 ```
 
 ---
+
 ## What the p5.plotSvg library *IS*: 
 
 * The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. We anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter, AxiDraw, or [NextDraw](https://store.bantamtools.com/collections/bantam-tools-nextdraw) pen-plotter.
@@ -128,6 +131,7 @@ new p5(sketch, document.getElementById("container"));
 
 
 ---
+
 ## What the p5.plotSvg library *IS NOT*: 
 
 * The p5.plotSvg library is not a general purpose p5-to-SVG exporter; it is intended for the *specific needs of plotter enthusiasts*. Large parts of both the p5 and SVG specifications have been purposefully omitted, even where they are common to both. To ensure plotter compatibility, this library provides no support for exporting SVG files with graphics features that have no analogue in pen-plotting — such as pixel-based images, transparency, filters, shaders, blend modes, gradients, animation, or (even) fills and stroke weights. You might be able to render such things onscreen with p5.js, but they will not appear in the SVG vector files made with this library.
@@ -139,6 +143,7 @@ new p5(sketch, document.getElementById("container"));
 
 
 ---
+
 ## Example Programs
 
 These [examples](examples/README.md) show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. All examples are mirrored in collections at [editor.p5js.org](https://editor.p5js.org/golan/collections/MCA5RvDFX) and [openProcessing.org](https://openprocessing.org/curation/88363). A visual index of examples is [here](examples/README.md).
@@ -185,6 +190,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 * `setSvgTransformPrecision()` - The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
 
 ---
+
 ## Known Issues and Bugs:
 
 * As of p5.plotSvg v.0.1.x, non-default vertical `textAlign()` settings are not yet supported; only `BASELINE` currently works correctly.
@@ -194,6 +200,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 * p5.plotSvg v.0.1.x works with versions of p5.js as old as v.1.4.2. The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to portions of p5.plotSvg v.0.1.x.
 
 ---
+
 ## Other Libraries and Related Work
 
 The following projects may be of interest to creative coders working with SVG files:
@@ -210,16 +217,19 @@ The following projects may be of interest to creative coders working with SVG fi
 * Bob Cook's [SVG Example](https://jsfiddle.net/bobcook/2p9tqzze/) provides an example demonstrating how to convert canvas-based drawings to SVG using a custom library in a jsFiddle example.
 
 ---
+
 ## License and Code of Conduct
 
 [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) is released under the [MIT License](LICENSE). The p5.plotSvg project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md) adapted from the [Contributor Covenant](http://contributor-covenant.org), version 1.1.0. 
 
---- 
+---
+
 ## Keywords
 
 Pen plotters, vector output, plotter art, p5.js, SVG, #plotterTwitter, creative coding, generative art, drawing machines, JavaScript library, EMSL AxiDraw, NextDraw, open-source software tools for the arts, #OSSTA.
 
 ---
+
 ## Acknowledgments
 
 This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to @Ucodia, @lewi0622, @mariuswatz, and everyone else in the community who has contributed by filing issues, thoughtful comments, and pull requests.
