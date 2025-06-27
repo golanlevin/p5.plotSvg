@@ -151,13 +151,12 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/README.md): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
 8. [**plotSvg_instancemode**](examples/plotSvg_instancemode/README.md): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
 9. [**plotSvg_post_grouping**](examples/plotSvg_post_grouping/README.md): Merge groups of paths computed at different times. [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
-10. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
+10. [**plotSvg_svg_font_text**](examples/plotSvg_svg_font_text/README.md): Use monoline SVG fonts in your exported designs. [@editor](https://editor.p5js.org/golan/sketches/rIsRh01Vj) • [@openProcessing](https://openprocessing.org/sketch/2684135)
+11. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
 
-*Examples awaiting implementation (more soon!):*
-
-* *plotSvg_hershey*: Displays [Hershey Font](https://en.wikipedia.org/wiki/Hershey_fonts) text using Lingdong Huang's [p5-hershey-js](https://github.com/LingDong-/p5-hershey-js)
 
 ---
+
 ## Usage Notes
 
 ### Color

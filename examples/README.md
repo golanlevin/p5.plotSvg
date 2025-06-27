@@ -77,6 +77,15 @@ Merge groups of paths computed at different times.<br />[here](plotSvg_post_grou
 
 ---
 
+### [plotSvg_svg_font_text](plotSvg_svg_font_text/README.md)
+
+Use monoline SVG fonts in your exported designs.<br />
+[here](plotSvg_svg_font_text/README.md) • [@editor](https://editor.p5js.org/golan/sketches/rIsRh01Vj) • [@openProcessing](https://openprocessing.org/sketch/2684135)
+
+![svg_font_text_sm.png](plotSvg_svg_font_text/svg_font_text_sm.png)
+
+---
+
 ### [plotSvg_face_flipbook](https://openprocessing.org/sketch/2488219)
 
 Exports a tiny flipbook recording from a face-tracker.<br />[@openProcessing](https://openprocessing.org/sketch/2488219)
