@@ -1,6 +1,6 @@
 # plotSvg_instancemode Example
 
-The `plotSvg_instancemode` example demonstrates the use of p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). The implementation of this functionality is thanks to the contribution of Lionel Ringenbach ([@Ucodia](https://github.com/ucodia)).
+The `plotSvg_instancemode` example demonstrates the use of p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). The advantages of instance mode, also called "namespacing", are explained in [this Coding Train tutorial](https://www.youtube.com/watch?v=Su792jEauZg). The implementation of this functionality in p5.plotSvg is thanks to the contribution of Lionel Ringenbach ([@Ucodia](https://github.com/ucodia)). 
 
 p5.js offers two primary modes of operation:
 
