@@ -224,6 +224,10 @@ Retrieves the default stroke color used for SVG rendering.
 Returns **[string][27]** The default stroke color (in hex, RGB, or named CSS color format).
 
 
+## isRecordingSVG
+Retrieves whether or not SVG recording is active.
+Returns **[boolean][29]** True if SVG recording is active, false otherwise.
+
 
 <!-- WORK IN PROGRESS
 ## injectSvgHeaderAttribute  

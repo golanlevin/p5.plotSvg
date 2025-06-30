@@ -4,14 +4,10 @@
 
 ---
 
-Done: 
+Todo: 
 
-* created `_injectedHeaderAttributes`
-* created `injectSvgHeaderAttribute()` and exposed to global namespace 
-* implemented addition of `_injectedHeaderAttributes` to the `<svg>` tag.
-* created `_injectedDefs`
-* created `injectSvgDef()` and exposed to global namespace 
-* implemented addition of `_injectedDefs` to the `<defs>` tag.
-* implemented adding attributes to user-defined groups, e.g. `inkscape:label="Layer 1" inkscape:groupmode="layer"`
-* implemented `setSvgExportPolylinesAsPaths()` and `_bSvgExportPolylinesAsPaths`
-* altered `getSvgStrPoly()` to convert polylines to paths if requested
+* make computeEnvelope implicit within draw/export
+* cache results of computeEnvelope (unless points are dirty)
+* set colors for debug view 
+* stylize envelope with gray fill 
+* GEOMETRY!
