@@ -5,9 +5,10 @@
 // which allows the authoring of Inkscape PowerStroke paths in p5.js.
 // Note: Requires p5.plotSvg.js to be loaded first.
 
-// Reference: 
+// References: 
 // https://gitlab.com/inkscape/inkscape/-/blob/master/src/live_effects/lpe-powerstroke.cpp?ref_type=heads
 // https://gitlab.com/inkscape/inkscape/-/blob/master/src/live_effects/lpe-powerstroke-interpolators.h?ref_type=heads
+// https://wiki.inkscape.org/wiki/PowerStroke implementation by Johan Engelen
 
 /* In all code below, refer to the following minimal example SVG for a PowerStroke path in Inkscape:
     <svg
@@ -31,11 +32,11 @@
         </defs>
 
         <g
-            inkscape:label="MyPowerStrokeLayer"
+            inkscape:label="p5.PowerStroke Layer"
             inkscape:groupmode="layer"
             id="layer1">
             <path
-                style="fill:#000000;stroke:none;stroke-width:0;fill-opacity:0.5"
+                style="fill:#000000;stroke:none;stroke-width:0;fill-opacity:0.25"
                 d="M 50.00000,250.00000 66.64101,261.09400 112.49615,161.66410 148.32050,120.54700 
                     150.00000,100.00000 131.67950,109.45300 107.50385,158.33590 33.35899,238.90600 z"
                 id="myPowerStroke1"
@@ -51,7 +52,7 @@
 (function (global) {
   'use strict';
   
-  // Ensure dependency is present
+  // Ensure p5plotSvg is present
   if (typeof p5plotSvg === 'undefined') {
     console.warn("⚠️ p5.plotSvg.js is required for p5.PowerStroke to export to SVG.");
     return;
@@ -68,7 +69,7 @@
 
     // We ensure that all PowerStroke's have unique IDs, for the SVG.
     static usedIds = new Set(); // To track all previously-used IDs
-    static precision = 5;
+    static PRECISION = 5;
 
     constructor(id = null) {
       this.id = this.resolveId(id);
@@ -77,22 +78,38 @@
       this.envelopePts = [];
       this.powerStrokeWeight = 20.0;
       this.interpolatorType = 'Linear'; // "Linear" or "Bezier"
+      this.envelopeFillColor = { r:0, g:0, b:0, a:51 };
+      this._envelopeIsComputed = false;
     }
 
-    clear(){
-      this.init();
-    }
 
+    clear(){ this.init(); }
     init() {
       this.spinePts = [];
       this.offsetPts = [];
       this.envelopePts = [];
     }
 
+
+    /**
+     * @public
+     * Add a point to the spine of the PowerStroke.
+     * @param {*} px 
+     * @param {*} py 
+     */
     addSpinePt(px, py) {
       this.spinePts.push({ x:px, y:py });
+      this._envelopeIsComputed = false;
     }
 
+
+    /**
+     * @public
+     * Add an offset point to the PowerStroke.
+     * This point defines the envelope half-width at a given parametric position `t`.
+     * @param {*} paramT 
+     * @param {*} paramR 
+     */
     addOffsetPt(paramT, paramR) {
       // t in [0, 1] is the normalized parameter or parametric position.
       // r is the offset from centerline, or envelope half-width at t.
@@ -112,11 +129,14 @@
         this.offsetPts.push(newOffsetPt);
       }
 
-      // Sort the array by increasing t
+      // Sort the offsetPts array by increasing t
       this.offsetPts.sort((a, b) => a.t - b.t);
+      this._envelopeIsComputed = false;
     }
 
+
     /**
+     * @public
      * Set the weight of the PowerStroke, which will be used to scale the offset points.
      * This is a multiplier for the envelope half-width. It's used for visualizing the PowerStroke.
      * @param {*} weight 
@@ -125,8 +145,10 @@
       this.powerStrokeWeight = Math.max(weight, 0.1);
     }
 
+
     /**
-     * Sets the type of interpolation for the PowerStroke.
+     * @public
+     * Sets the type of interpolation for the PowerStroke's envelope.
      * Only accepts "Linear" or "Bezier" (case-sensitive).
      * @param {string} type - The interpolation type to use.
      */
@@ -138,6 +160,17 @@
       }
     }
 
+    //----------------------------------------------------------------------
+
+
+    /**
+     * @private
+     * Computes the envelope polygon for the PowerStroke.
+     * This method generates the points that define the boundary of the PowerStroke path,
+     * based on the spine points and offset points.
+     * The computed envelope points are stored in `this.envelopePts`.
+     * This method should be called before drawing the PowerStroke or exporting it to SVG.
+     */
     computeEnvelope(){
       // Compute the polygon boundary for the path
       this.envelopePts = [];
@@ -163,9 +196,19 @@
           let py = tpt.y - nv.y * r * this.powerStrokeWeight;
           this.envelopePts.push({ x: px, y: py });
         }
+        this._envelopeIsComputed = true;
       }
     }
 
+
+    /**
+     * @private
+     * Computes a point on the spine at a given parameter `t`, where `t` is in the range [0, 1].
+     * This method assumes that the spine is defined by at least two points.
+     * @param {Array} pts - The array of spine points.
+     * @param {number} t - The parameter defining the position along the spine (0 to 1).
+     * @returns {Object} - An object representing the point on the spine, with properties `x` and `y`.
+     */
     getPointAtPercent(pts, t) {
       // replace this with a much more sophisticated polyline resampler.
       let x0 = pts[0].x;
@@ -177,6 +220,15 @@
       return { x: px, y: py };
     }
 
+
+    /**
+     * @private
+     * Computes the normal vector at a given point on the spine, defined by the parameter `t`.
+     * @param {Array} pts - The array of spine points.
+     * @param {number} t - The parameter defining the position along the spine (0 to 1).
+     * @returns {Object} - An object representing the normalized normal vector at the given point, 
+     * with properties `x` and `y`.
+     */
     getNormalAtPercent(pts, t) {
       // replace this with a much more sophisticated computation.
       let x0 = pts[0].x;
@@ -189,6 +241,13 @@
       return { x: 0 - dy / dh, y: dx / dh };
     }
 
+    //----------------------------------------------------------------------
+
+
+    /**
+     * @public
+     * Prints a report of the current state of the PowerStroke, for debugging.
+     */
     printReport() {
       // For debugging: print a report of the current state of the PowerStroke
       console.log(`PowerStroke Report (${this.id}):`);
@@ -198,9 +257,22 @@
     }
 
 
+    /**
+     * @public
+     * Draws the PowerStroke for debugging purposes.
+     * This method draws the spine points, offset points, and envelope polygon.
+     * It can also emit the chosen features to the SVG file if `bEmitDebugViewToSvg` is true.
+     * @param {boolean} bDrawSpinePts - Whether to draw the spine points.
+     * @param {boolean} bDrawOffsetPts - Whether to draw the offset points.
+     * @param {boolean} bDrawEnvelope - Whether to draw the envelope polygon.
+     * @param {boolean} bEmitDebugViewToSvg - Whether to emit the debug view to an SVG file.
+     */
     drawDebug (bDrawSpinePts, bDrawOffsetPts, bDrawEnvelope, bEmitDebugViewToSvg=false) {
-      const debugId = "debug-" + this.id;
+      if (!this._envelopeIsComputed) {
+        this.computeEnvelope();
+      }
 
+      const debugId = "debug-" + this.id;
       if (!p5plotSvg || !Array.isArray(p5plotSvg._commands)) {
         ; // _commands not initialized
       } else if (bEmitDebugViewToSvg) {
@@ -222,25 +294,32 @@
       const bShouldPause = bWasRecording && !bEmitDebugViewToSvg;
       if (bShouldPause) p5plotSvg.pauseRecordSVG(true);
 
+      // Stash the current colors, so we can restore it later.
+      let currentStrokeColor = this.getCurrentColor('stroke'); 
+      this.envelopeFillColor = this.getCurrentColor('fill'); 
+
       p5plotSvg.beginSvgGroup("debug-powerstroke-layer"); 
       p5plotSvg.beginSvgGroup(debugId);
       
       if (bDrawEnvelope === true){
-        noStroke(); 
-        fill(0,0,0, 60); 
+        noStroke();
+        let fc = this.envelopeFillColor;
+        fill(fc.r,fc.g,fc.b,fc.a); 
         this.drawEnvelope();
       }
       if (bDrawSpinePts === true){
         noFill();
-        stroke(0);
-        strokeWeight(1);
+        strokeWeight(1.0);
+        let sc = currentStrokeColor;
+        stroke(sc.r,sc.g,sc.b,sc.a); 
         this.drawSpinePts();
       }
       if (bDrawOffsetPts === true){
         p5plotSvg.beginSvgGroup(debugId + "-offsets");
         noFill();
-        stroke(0);
         strokeWeight(0.5);
+        let sc = currentStrokeColor;
+        stroke(sc.r,sc.g,sc.b,sc.a); 
         this.drawOffsetPts();
         p5plotSvg.endSvgGroup();
       }
@@ -250,6 +329,14 @@
       if (bShouldPause) p5plotSvg.pauseRecordSVG(false);
     }
 
+    //----------------------------------------------------------------------
+
+
+    /**
+     * @private
+     * Draws the spine points of the PowerStroke.
+     * Meant to be called from `drawDebug()`.
+     */
     drawSpinePts() {
       if (this.spinePts.length > 0) {
         beginShape();
@@ -262,6 +349,12 @@
       }
     }
 
+
+    /**
+     * @private
+     * Draws the offset points of the PowerStroke.
+     * Meant to be called from `drawDebug()`.
+     */
     drawOffsetPts() {
       if (this.spinePts.length > 0 && this.offsetPts.length > 0) {
         for (let i = 0; i < this.offsetPts.length; i++) {
@@ -277,8 +370,17 @@
       }
     }
 
+
+    /**
+     * @private
+     * Draws the envelope of the PowerStroke.
+     * Meant to be called from `drawDebug()`.
+     */
     drawEnvelope() {
-      // draw width-envelope polygon. Assumes that this.envelopePts is populated!
+      // draw width-envelope polygon.
+      if (!this._envelopeIsComputed) {
+        this.computeEnvelope();
+      }
       if (this.envelopePts.length > 0) {
         beginShape();
         for (let i = 0; i < this.envelopePts.length; i++) {
@@ -290,8 +392,70 @@
       }
     }
 
+    //----------------------------------------------------------------------
+
 
     /**
+     * @private
+     * Returns the current fill or stroke color as an RGBA object.
+     */
+    getCurrentColor(fillOrStroke) {
+      if (fillOrStroke !== 'fill' && fillOrStroke !== 'stroke') {
+        console.warn("[PowerStroke] Invalid argument for getCurrentColor; must be 'fill' or 'stroke'.");
+        return { r: 0, g: 0, b: 0, a: 255 };
+      }
+      // Returns RGBA object of the current fill or stroke color.
+      try {
+        if (typeof drawingContext === 'undefined'){
+          return { r: 0, g: 0, b: 0, a: 255 };
+        }
+        if (fillOrStroke === 'fill' && !drawingContext.fillStyle) { 
+          return { r: 0, g: 0, b: 0, a: 255 };
+        } else if (fillOrStroke === 'stroke' && !drawingContext.strokeStyle) {
+          return { r: 0, g: 0, b: 0, a: 255 };
+        }
+
+        const style = (fillOrStroke === 'fill') ? drawingContext.fillStyle : drawingContext.strokeStyle;
+        // If it's a hex string, parse as RGB
+        if (typeof style === 'string' && style.startsWith('#')) {
+          let hex = style.slice(1);
+          if (hex.length === 3) {
+            hex = hex.split('').map(c => c + c).join('');
+          }
+          const r = parseInt(hex.slice(0, 2), 16);
+          const g = parseInt(hex.slice(2, 4), 16);
+          const b = parseInt(hex.slice(4, 6), 16);
+          return { r, g, b, a: 255 };
+        }
+        // If it's an rgb(...) or rgba(...) string
+        const match = style.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)/i);
+        if (match) {
+          const r = parseInt(match[1], 10);
+          const g = parseInt(match[2], 10);
+          const b = parseInt(match[3], 10);
+          const a = 255.0 * (match[4] !== undefined ? parseFloat(match[4]) : 1.0);
+          return { r, g, b, a };
+        }
+        return { r: 0, g: 0, b: 0, a: 255 };
+      } catch (e) {
+        return { r: 0, g: 0, b: 0, a: 255 };
+      }
+    }
+
+
+    /**
+     * @private
+     * Utility to converts RGB values to a hex color string.
+     */
+    rgbToHex(r, g, b) {
+      return "#" + [r, g, b].map(n => n.toString(16).padStart(2, '0')).join('');
+    }
+
+    //----------------------------------------------------------------------
+
+
+    /**
+     * @public
      * Adds the PowerStroke path to the current SVG recording.
      * This method constructs the SVG command object and injects it into the p5plotSvg._commands array.
      * It ensures that the SVG recording is active before adding the command.
@@ -312,8 +476,14 @@
         return;
       }
 
+      // Ensure the envelope is computed before generating the SVG command.
+      if (!this._envelopeIsComputed) {
+        this.computeEnvelope();
+      }
+
       // Construct p5plotSvg command object and check for validity, 
       // including whether it has enough segments and attributes.
+      this.envelopeFillColor = this.getCurrentColor('fill'); 
       const cmd = this.generatePlotSvgCommand();
       const isValid =
         cmd &&
@@ -327,6 +497,11 @@
       if (!isValid) {
         console.warn("[PowerStroke] Invalid PowerStroke; not added.");
         return;
+      }
+
+      const styleAttrs = cmd.attributes.filter(a => a.name === 'style');
+      if (styleAttrs.length > 1) {
+        console.warn('[SVG] Multiple style attributes detected. This will break your SVG!');
       }
 
       // Ensure _commands array exists
@@ -376,17 +551,23 @@
         console.warn("[PowerStroke] Cannot generate SVG command: not enough envelope points.");
         return null;
       }
+      let fc = this.envelopeFillColor;
+      let envelopeStyle = `fill:${this.rgbToHex(fc.r, fc.g, fc.b)}; stroke:none; stroke-width:0; fill-opacity:${fc.a / 255}`;
       return {
         type: 'path',
         closed: true, /* for the envelope, not the spine! */
         segments: this.envelopePts.map(pt => ({ type: 'vertex', x: pt.x, y: pt.y })),
         attributes: [
           { name: 'id', value: this.id },
+          { name: 'style', value: envelopeStyle },
           { name: 'inkscape:path-effect', value: '#pe-' + this.id },
           { name: 'inkscape:original-d', value: this.generateOriginalD() }, /* the spine */
         ]
       };
     }
+
+    //----------------------------------------------------------------------
+
 
     /**
      * @private
@@ -409,7 +590,6 @@
       return def;
     }
 
-    //----------------------------------------------------------------------
 
     /**
      * @private
@@ -419,9 +599,10 @@
      * @returns {string} - The SVG path data string for the original stroke.
      */
     generateOriginalD() {
-      const PP = PowerStroke.precision;
+      const PP = PowerStroke.PRECISION;
       return 'M ' + this.spinePts.map(pt => `${nf(pt.x, 1,PP)},${nf(pt.y, 1,PP)}`).join(' ');
     }
+
 
     /**
      * @private
@@ -436,11 +617,12 @@
         console.warn(`[PowerStroke] No offset points defined for ${this.id}`);
         return "";
       }
-      const PP = PowerStroke.precision;
+      const PP = PowerStroke.PRECISION;
       return this.offsetPts.map(pt => `${nf(pt.t, 1,PP)},${nf(pt.r, 1,PP)}`).join(' | ');
     }
 
     //----------------------------------------------------------------------
+
 
     resolveId(baseId) {
       if (typeof baseId === 'string' && baseId.length > 0) {
@@ -457,6 +639,7 @@
       }
     }
 
+
     generateUniqueId() {
       let index = 0;
       let candidate;
@@ -468,6 +651,7 @@
       return candidate;
     }
 
+    
     static resetIdTracking() {
       PowerStroke.usedIds.clear();
     }
