@@ -1,0 +1,53 @@
+<!-- plotSvg_powerstroke.svg -->
+<!-- Generated using p5.plotSvg v.0.1.5: -->
+<!-- A Plotter-Oriented SVG Exporter for p5.js -->
+<!-- Thu Jul 03 2025 12:31:24 GMT-0400 (Eastern Daylight Time) -->
+<!-- DPI: 96 -->
+<svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" 
+    version="1.1" 
+    inkscape:version="1.4 (e7c3feb1, 2024-10-09)" 
+    width="6in" height="4in" 
+    viewBox="0 0 576 384">
+  <defs>
+    <inkscape:path-effect 
+      id="pe-powerstroke-00000" 
+      effect="powerstroke" 
+      is_visible="true" 
+      lpeversion="1.3" 
+      scale_width="40" 
+      interpolator_type="Linear" 
+      start_linecap_type="zerowidth" 
+      end_linecap_type="zerowidth" 
+      offset_points="0.00000,1.00000 | 0.60000,0.15000 | 0.90000,0.50000"/>
+  </defs>
+  <style>
+      circle, ellipse, line, path, polygon, polyline, rect, quad, text {
+        fill: none;
+        stroke: black;
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+      }
+    </style>
+<g vector-effect="non-scaling-stroke">
+  <g id="debug-powerstroke-layer">
+    <g id="debug-powerstroke-00000">
+      <path d="M 50,250 L 150,100" style="stroke:#ff0000;"/>
+      </g>
+    </g>
+  <g 
+    id="powerstroke-layer" 
+    inkscape:label="p5.PowerStroke Layer" 
+    inkscape:groupmode="layer">
+      <path 
+        id="powerstroke-00000" 
+        style="fill:#000000; stroke:none; stroke-width:0; fill-opacity:0.2" 
+        inkscape:path-effect="#pe-powerstroke-00000" 
+        inkscape:original-d="M 50.00000,250.00000 150.00000,100.00000" 
+        d="M 50,250 L 83.2820,272.1880 L 114.9923,163.3282 L 156.6410,126.0940 L 150,100 L 123.3590,103.9060 L 105.0077,156.6718 L 16.7180,227.8120 Z"/>
+    </g>
+</g>
+</svg>
