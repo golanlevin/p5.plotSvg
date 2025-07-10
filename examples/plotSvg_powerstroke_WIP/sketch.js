@@ -32,6 +32,19 @@ function setup() {
   aPowerStroke.init(); // Initialize the PowerStroke instance
   aPowerStroke.setPowerStrokeWeight(40.0);
   aPowerStroke.setInterpolatorType("Linear");
+
+
+  OFFSET_POINT_ADD_MODE = OFFSET_POINT_ADD_CO_HOC;
+  let np = 20; 
+  for (let i = 0; i < np; i++) {
+    let px = map(pow(map(i, 0,np-1, 0,1), 2.0), 0,1, 50,width-50);
+    let py = 400; 
+    let xt = map(px, 50,width-50, 0, 1); 
+    let pr = map(  sin(2 * TWO_PI * xt), -1,1, 0.2,1.0);
+    aPowerStroke.addSpineAndOffsetPt(px, py, pr); // Add spine
+  }
+
+  /*
   aPowerStroke.addSpinePt(10, 360);
   aPowerStroke.addSpinePt(470, 360);
   aPowerStroke.addOffsetPt(0.00, 1.00);
@@ -39,6 +52,7 @@ function setup() {
   aPowerStroke.addOffsetPt(0.35, 0.80); 
   aPowerStroke.addOffsetPt(0.60, 0.20); 
   aPowerStroke.addOffsetPt(0.90, 0.60); 
+  */
 
   myPowerStrokes.push(aPowerStroke); // Add the PowerStroke to the array
   currentPowerStrokeIndex = 0; // Set the current PowerStroke index to the first one
@@ -108,15 +122,16 @@ function updatePowerStrokes() {
     aPowerStroke.computeRadii(step); 
     aPowerStroke.computeEnvelope();
 
-    aPowerStroke.setEnvEmphasis(envEmphasisSlider.value());
-    aPowerStroke.setEnvContrast(envContrastSlider.value());
-    aPowerStroke.setEnvScale(envScaleSlider.value());
-    aPowerStroke.setEnvOffset(envOffsetSlider.value());
+    let e = envEmphasisSlider.value();
+    let c = envContrastSlider.value();
+    let s = envScaleSlider.value();
+    let o = envOffsetSlider.value();
+    aPowerStroke.setShapingParams(e,c,s,o); 
     
     if (ENV_INTERP_MODE == ENV_INTERP_LINEAR){
       aPowerStroke.setInterpolatorType("Linear");
     } else {
-      aPowerStroke.setInterpolatorType("Bezier")
+      aPowerStroke.setInterpolatorType("CubicBezierJohan")
     }
   }
 }

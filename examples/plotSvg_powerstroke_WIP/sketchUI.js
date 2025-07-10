@@ -38,7 +38,7 @@ function createSpineModeRadio(){
   spineModeRadio.position(7, 10);
   spineModeRadio.size(300);
   spineModeRadio.option(SPINE_MODE_LINEAR, 'Polyline');  
-  spineModeRadio.option(SPINE_MODE_BEZIER, 'Poly-Bézier');  
+  spineModeRadio.option(SPINE_MODE_BEZIER, 'PolyBezier');  
   spineModeRadio.selected(String(SPINE_MODE_LINEAR));
   spineModeRadio.elt.addEventListener('mousedown', (e) => e.stopPropagation());
   spineModeRadio.changed(() => {
@@ -57,8 +57,8 @@ function createEnvelopeModeRadio() {
   envModeRadio.position(7, 30);
   envModeRadio.size(300); 
   envModeRadio.option(ENV_INTERP_LINEAR, 'Linear');  
-  envModeRadio.option(ENV_INTERP_BEZIER_JOHAN, 'Bézier');  
-  envModeRadio.selected(String(ENV_INTERP_BEZIER_JOHAN));
+  envModeRadio.option(ENV_INTERP_BEZIER_JOHAN, 'CubicBezierJohan');  
+  envModeRadio.selected(String(ENV_INTERP_LINEAR));
   envModeRadio.elt.addEventListener('mousedown', (e) => e.stopPropagation());
   envModeRadio.changed(() => {
     ENV_INTERP_MODE = Number(envModeRadio.value());
@@ -180,7 +180,7 @@ function createButtons(){
   clearButton.mousePressed(() => {
     clearCurrentPowerStroke();
   });
-  
+
   resetButton.mousePressed(() => {
     envStepSlider.value(3); 
     maxThicknessSlider.value(50); 

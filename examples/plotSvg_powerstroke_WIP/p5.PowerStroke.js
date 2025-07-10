@@ -19,6 +19,16 @@
 // etc. 
 
 
+// NOTES: 
+// offsetPts contains an array of // [parametric position t, radius r] pairs. 
+// HOWEVER, the parametric position t does NOT go from 0 to 1. 
+// Instead, it goes from 0 to N, where N is the number of spine points.
+// The expectation is that an offset point at t=5 is the offset for the 5th spine point.
+// There may not be an offset point for every spine point. 
+// It is also possible to have offset points at fractional t values. 
+// For example, an offset point at t=2.5 would be the offset for the point halfway between the 2nd and 3rd spine points.
+
+
 /* In all code below, refer to the following minimal example SVG for a PowerStroke path in Inkscape:
     <svg
         width="210mm"
@@ -70,10 +80,14 @@
   // === Constants ===
   const ENV_INTERP_LINEAR = 1; 
   const ENV_INTERP_BEZIER_JOHAN = 2; 
-  let ENV_INTERP_MODE = ENV_INTERP_BEZIER_JOHAN;
+  let ENV_INTERP_MODE = ENV_INTERP_LINEAR;
   const SPINE_MODE_LINEAR = 1; 
   const SPINE_MODE_BEZIER = 2; 
-  let SPINE_MODE = SPINE_MODE_LINEAR; 
+  let SPINE_MODE = SPINE_MODE_LINEAR;
+  const OFFSET_POINT_ADD_POST_HOC = 1; // Add offset points after the spine is drawn
+  const OFFSET_POINT_ADD_PRE_HOC = 2; // Add offset points before the spine is drawn
+  const OFFSET_POINT_ADD_CO_HOC = 3; // Add offset points at the same time as the spine is drawn
+  let OFFSET_POINT_ADD_MODE = OFFSET_POINT_ADD_CO_HOC; // Default mode
 
   // Export these to make them visible in sketch.js:
   global.ENV_INTERP_LINEAR = ENV_INTERP_LINEAR;
@@ -82,6 +96,10 @@
   global.SPINE_MODE_LINEAR = SPINE_MODE_LINEAR;
   global.SPINE_MODE_BEZIER = SPINE_MODE_BEZIER;
   global.SPINE_MODE = SPINE_MODE;
+  global.OFFSET_POINT_ADD_POST_HOC = OFFSET_POINT_ADD_POST_HOC; // Add offset points after the spine is drawn
+  global.OFFSET_POINT_ADD_PRE_HOC = OFFSET_POINT_ADD_PRE_HOC; // Add offset points before the spine is drawn
+  global.OFFSET_POINT_ADD_CO_HOC = OFFSET_POINT_ADD_CO_HOC; // Add offset points at the same time as the spine is drawn
+  global.OFFSET_POINT_ADD_MODE = OFFSET_POINT_ADD_CO_HOC; // Default mode
 
   // These run exactly once, right when the script is loaded:
   // Ensure polylines are exported as paths for PowerStroke compatibility:
@@ -103,8 +121,8 @@
       // offsetPoints (specifying the half-width of the envelope)
       // envelopePts (storing the polygon)
       this.spinePts = [];
-      this.offsetPts = [[0.0,0.0], [1.0,0.0]]; // ALWAYS begin with [[0,0],[1,0]]
-      this.shapedOffsetPoints = [[0.0,0.0], [1.0,0.0]]; // offsetPts, reshaped
+      this.offsetPts = []; //[[0.0,0.0], [1.0,0.0]]; // ALWAYS begin with [[0,0],[1,0]]
+      this.shapedOffsetPoints = []; //[[0.0,0.0], [1.0,0.0]]; // offsetPts, reshaped
       this.envelopePts = [];
 
       // Secondary data products computed from the polyline spine
@@ -120,9 +138,9 @@
 
       // Helper data that represents the computed envelope surrounding the spine. 
       this.radii = null;
-      this.beta = 0.333;
+      this.interpolatorBeta = 0.333;
       this.powerStrokeWeight = 50.0; 
-      this.interpolatorType = "Linear"; // "Linear" or "Bezier"
+      this.interpolatorType = "Linear"; // "Linear" or "CubicBezierJohan"
 
       // Data used to represent the poly-bezier approximation of the spine.
       this.fitCurveMaxError = 4; 
@@ -168,7 +186,7 @@
      * @param {*} py 
      */
     // REVISED
-    addSpinePt(x, y, movedThresh = this.drawingDistThresh) {
+    addSpinePt(x, y) {
       // Store the new point if it's further than thresh away from prev.
       this._envelopeIsComputed = false;
       const N = this.spinePts.length;
@@ -183,7 +201,7 @@
         let dx = x - pp[0];
         let dy = y - pp[1];
         let moved = sqrt(dx * dx + dy * dy);
-        if (moved > movedThresh) {
+        if (moved > this.drawingDistThresh) {
           this.spinePts.push([x, y]);
           let nClens = this.cumulativePolylineLengths.length;
           let clen = this.cumulativePolylineLengths[nClens - 1];
@@ -192,6 +210,48 @@
         }
       }
     }
+
+    addSpineAndOffsetPt(px, py, pr) {
+      // Add a point to the spine and an offset point at the same time.
+      // Exclusively for when offsetPointAddMode is OFFSET_POINT_ADD_CO_HOC.
+      if (OFFSET_POINT_ADD_MODE == OFFSET_POINT_ADD_CO_HOC){
+        this._envelopeIsComputed = false;
+        const N = this.spinePts.length;
+
+        if (N === 0) {
+          // Push the first point
+          this.spinePts.push([px, py]);
+          this.cumulativePolylineLengths.push(0);
+          this.totalPolylineLength = 0;
+          pr = constrain(pr, 0, 1);
+          this.offsetPts.push([0, pr]);
+
+        } else {
+          let pp = this.spinePts[N - 1];
+          let dx = px - pp[0];
+          let dy = py - pp[1];
+          let moved = Math.sqrt(dx*dx + dy*dy);
+          if (moved > this.drawingDistThresh) {
+
+            this.spinePts.push([px, py]);
+            this.offsetPts.push([N, pr]);
+
+            let nClens = this.cumulativePolylineLengths.length;
+            let clen = this.cumulativePolylineLengths[nClens - 1];
+            this.totalPolylineLength = clen + moved;
+            this.cumulativePolylineLengths.push(this.totalPolylineLength);
+          }
+        }
+
+        // Copy the offset points to the shapedOffsetPoints. They'll need to be shaped later.
+        this.shapedOffsetPoints = [];
+        this.shapedOffsetPoints = this.offsetPts.map(([t, r]) => [t, r]);
+      } else {
+        console.warn(`[PowerStroke] Cannot add spine and offset point together in mode ${this.offsetPointAddMode}.`);
+      }
+    }
+
+
 
     //--------------------------------------------------
     /**
@@ -206,7 +266,7 @@
       // t in [0, 1] is the normalized parameter or parametric position.
       // r is the offset from centerline, or envelope half-width at t.
       // r is in [0, 1] because it will be used to govern Z-height.
-      const t = constrain(paramT, 0, 1);
+      const t = constrain(paramT, 0, this.spinePts.length - 1);
       const r = constrain(paramR, 0, 1);
 
       // Check if a point with the same `t` already exists
@@ -222,13 +282,19 @@
       this.offsetPts.sort((a, b) => a[0] - b[0]);
       this._envelopeIsComputed = false;
       
+      // Copy the offset points to the shapedOffsetPoints. They'll need to be shaped later.
       this.shapedOffsetPoints = [];
       this.shapedOffsetPoints = this.offsetPts.map(([t, r]) => [t, r]);
     }
 
     //--------------------------------------------------
     setSpineMode(spim){
-      this.spineMode = spim; 
+      // Set the mode for the spine: SPINE_MODE_LINEAR or SPINE_MODE_BEZIER
+      if (spim === SPINE_MODE_LINEAR || spim === SPINE_MODE_BEZIER) {
+        this.spineMode = spim;
+      } else {
+        console.warn(`[PowerStroke] Invalid spine mode: ${spim}`);
+      }
     }
 
     /**
@@ -248,7 +314,7 @@
      * @param {string} type - The interpolation type to use.
      */
     setInterpolatorType(type) {
-      if (type === 'Linear' || type === 'Bezier') {
+      if (type === 'Linear' || type === 'CubicBezierJohan') {
         this.interpolatorType = type;
       } else {
         console.warn(`[PowerStroke] Invalid interpolator type.`);
@@ -256,7 +322,7 @@
     }
 
     setBezierInterpBeta(bib){
-      this.beta = bib;
+      this.interpolatorBeta = bib;
     }
     setFitCurveMaxError(fcme){
       this.fitCurveMaxError = fcme;
@@ -294,9 +360,11 @@
     }
 
     //--------------------------------------------------
-    // Stores the PowerStroke radii (i.e. envelope half-widths). 
+    // Stores the PowerStroke radii (i.e. envelope half-widths) at dense samples along the spine.
+    // This is used to compute the envelope polygon.
+    // The radii are computed based on the offset points and the interpolation type.
     // Uses one of the Envelope smoothing types: Linear or BezierJohan. 
-    // Computed values are [0..1] as functions of t.
+    // Computed values are [0..1] as functions of t in [0..1].
     computeRadii(stepLen = 3){
       let bProceed = (this.spinePts.length > 0);
       if (bProceed && (this.spineMode == SPINE_MODE_BEZIER)){
@@ -321,7 +389,7 @@
               const t = i * nSamplesm1inv;
               radii[i] = getRLin(t);
             }
-        } else if (this.interpolatorType === 'Bezier'){
+        } else if (this.interpolatorType === 'CubicBezierJohan'){
           const getRBez = this.getStrokeRadiusAtPercentBezierJohan.bind(this);
           for (let i = 0; i < nSamples; i++) {
             const t = i * nSamplesm1inv;
@@ -353,6 +421,14 @@
     setEnvOffset(o){
       this.envOffset = constrain(o, -1,1);
       this.updateShapedOffsetPoints(); 
+    }
+    setShapingParams(e, c, s, o){
+      // Set all shaping parameters at once.
+      this.envEmphasis = constrain(e, -1,1);
+      this.envContrast = constrain(c, 0,1);
+      this.envScale = constrain(s, 0,2);
+      this.envOffset = constrain(o, -1,1);
+      this.updateShapedOffsetPoints();
     }
     shapeValue(r){
       const e = map(this.envEmphasis,-1,1, 0,1); 
@@ -482,32 +558,137 @@
     //=======================================================================
     getStrokeRadiusAtPercentLinear(t) {
       // POLYLINE VERSION; uses this.spinePts
-      // NOTE: assumes this.offsetPts begins and end with [0,0] and [1,0]:
-      if (this.spinePts.length < 2){
-        return 0; 
-      }
-      
+      // Recreation of Inkscape Powerstroke INTERP_LINEAR. 
+      // Linear refers to the linear interpolation of the offset points, at the dense samples.
+      // t is in [0, 1] and represents the parametric position along the spine.
+
+      t = max(0, min(1, t));
       const osp = this.shapedOffsetPoints;
-      t = Math.max(0, Math.min(1, t));
-      if (!osp || osp.length === 0) {
-        return t === 0 || t === 1 ? 0 : 1; // fallback to full width
+      if (t === 0) return osp[0][1];
+      if (t === 1) return osp[osp.length - 1][1];
+
+      const indexf = this.getPolylineIndexAtPercent(t);
+      return this.getPolylineRadiusAtIndex(indexf);
+    }
+
+    //--------------------------------------------------
+    getPolylineRadiusAtIndex(indexf) {
+      // Assumes this.shapedOffsetPoints is an array of [t, r] pairs,
+      // where t ranges from 0 to N-1 (same range as indexf)
+      const points = this.shapedOffsetPoints;
+      const n = points.length;
+
+      if (n === 0) return 0;  // No radius data
+      if (n === 1) return points[0][1]; // Single radius value
+
+      // Clamp indexf to valid range
+      const t = max(0, min(this.spinePts.length - 1, indexf));
+
+      // If t is outside the shapedOffsetPoints domain, return edge values
+      if (t <= points[0][0]) return points[0][1];
+      if (t >= points[n - 1][0]) return points[n - 1][1];
+
+      // Find the two shapedOffsetPoints that bracket t
+      for (let i = 0; i < n - 1; i++) {
+        const [t0, r0] = points[i];
+        const [t1, r1] = points[i + 1];
+
+        if (t >= t0 && t <= t1) {
+          const alpha = (t - t0) / (t1 - t0);  // interpolation weight
+          return r0 + (r1 - r0) * alpha;       // linear interpolation
+        }
+      }
+      // Should never reach here if input is valid and sorted
+      console.warn("⚠️ getPolylineRadiusAtIndex: t not bracketed.");
+      return 0;
+    }
+
+    //--------------------------------------------------
+    getPolylineLengthAtPercent(t) {
+      // Returns the arc length at parametric percentage t in [0,1]
+      // POLYLINE VERSION, uses this.spinePts and this.cumulativePolylineLengths
+
+      const lengths = this.cumulativePolylineLengths;
+      const n = lengths.length;
+
+      if (n === 0) return 0;
+      if (n === 1) return lengths[0];
+      t = max(0, min(1, t));
+
+      const totalLength = this.totalPolylineLength;
+      const targetLength = t * totalLength;
+
+      // Binary search for the segment in which targetLength lies
+      let lo = 0;
+      let hi = n - 1;
+
+      while (lo < hi - 1) {
+        const mid = floor((lo + hi) / 2);
+        if (lengths[mid] < targetLength) {
+          lo = mid;
+        } else {
+          hi = mid;
+        }
       }
 
-      // Find segment that contains t
-      for (let i = 0; i < osp.length - 1; i++) {
-        const t0 = osp[i  ][0]; 
-        const t1 = osp[i+1][0]; 
-        
-        if (t >= t0 && t <= t1) {
-          const r0 = osp[i  ][1]; 
-          const r1 = osp[i+1][1]; 
-          const u = (t - t0) / (t1 - t0);  // normalize to [0,1]
-          return (1 - u) * r0 + u * r1;    // linear interpolation
+      // Interpolate between lengths[lo] and lengths[hi]
+      const len1 = lengths[lo];
+      const len2 = lengths[hi];
+      const segLen = len2 - len1;
+      let segT = 0;
+      if (segLen > 0) {
+        segT = (targetLength - len1) / segLen;
+      }
+
+      // Return the actual arc length at that interpolated location
+      return len1 + segT * segLen;
+    }
+
+    //--------------------------------------------------
+    getStrokeRadiusAtPercentBezierJohan(t) {
+      // POLYLINE VERSION; uses this.spinePts
+      
+      if (this.spinePts.length < 2) return 0;
+
+      const osp = this.shapedOffsetPoints;
+      const nosp = osp.length;
+      t = Math.max(0, Math.min(1, t));
+      if (!osp || nosp === 0) {
+        return (t === 0 || t === 1) ? 0 : 1; // fallback to full width
+      }
+
+      const beta = this.interpolatorBeta;
+      if (beta <= 0.01) {
+        return this.getStrokeRadiusAtPercentLinear(t);
+      }
+
+      const Bez = this.Bez.bind(this);
+      const solveBezForT = this.solveBezForT.bind(this);
+      for (let i = 1; i < nosp; i++) {
+        const p0 = osp[i - 1];
+        const p3 = osp[i];
+
+        // Convert indexf to percent-of-length
+        const t0_indexf = p0[0];
+        const t3_indexf = p3[0];
+        const t0 = this.getPolylineLengthAtIndex(t0_indexf) / this.totalPolylineLength;
+        const t3 = this.getPolylineLengthAtIndex(t3_indexf) / this.totalPolylineLength;
+
+        if ((t >= t0) && (t <= t3)) {
+          const beta_d30_0 = (t3 - t0) * beta;
+          const p1 = [t0 + beta_d30_0, p0[1]];
+          const p2 = [t3 - beta_d30_0, p3[1]];
+          const t1 = Bez(t0, p1[0], p2[0], t3, beta);
+          const t2 = Bez(t0, p1[0], p2[0], t3, 1 - beta);
+          const newT = solveBezForT(t, t0, t1, t2, t3);
+          const r = Bez(p0[1], p1[1], p2[1], p3[1], newT);
+          return r;
         }
       }
       return 0; // Should never happen
     }
-  
+      
+    /*
     //--------------------------------------------------
     getStrokeRadiusAtPercentBezierJohan(t) {
       // POLYLINE VERSION; uses this.spinePts
@@ -518,9 +699,8 @@
       // live_effects/lpe-powerstroke.cpp?ref_type=heads
       // https://gitlab.com/inkscape/inkscape/-/blame/master/src/
       // live_effects/lpe-powerstroke-interpolators.h?ref_type=heads#L109
-      
       // NOTE: This works best with 'tame' values of beta, ~0.0...0.5
-      // NOTE: assumes this.offsetPts begins and end with [0,0] and [1,0]:
+
       
       if (this.spinePts.length < 2){
         return 0; 
@@ -532,7 +712,7 @@
         return t === 0 || t === 1 ? 0 : 1; // fallback to full width
       }
       
-      const beta = this.beta;
+      const beta = this.interpolatorBeta;
       if (beta <= 0.01){
         return this.getStrokeRadiusAtPercentLinear(t); 
       }
@@ -561,6 +741,7 @@
       }
       return 0; // Should never happen
     }
+    */
     
     Bez(y0, y1, y2, y3, t) {
       const mt = 1 - t;
@@ -610,18 +791,37 @@
       
       let tpl = 0; 
       const points = this.spinePts;
-      const cumLens = this.cumulativePolylineLengths;
-      cumLens.push(tpl); 
+      const cumulativeLengths = this.cumulativePolylineLengths;
+      cumulativeLengths.push(tpl); 
       for (let i=1; i<nPoints; i++){
         const p = points[i-1];
         const q = points[i  ];
         const dx = q[0] - p[0];
         const dy = q[1] - p[1];
         tpl += sqrt(dx * dx + dy * dy); 
-        cumLens.push(tpl); 
+        cumulativeLengths.push(tpl); 
       }
       this.totalPolylineLength = tpl; 
     }
+
+    //--------------------------------------------------
+    getPolylineLengthAtIndex(findex) {
+      // POLYLINE VERSION, uses this.points
+      const nSpinePts = this.spinePts.length;
+      if (nSpinePts < 2) {
+        return 0;
+      } else if (findex < 0) {
+        return 0;
+      } else if (findex >= (nSpinePts - 1)) {
+        return this.totalPolylineLength;
+      }
+
+      let i1 = floor(findex);
+      let i2 = min(i1 + 1, nSpinePts - 1);
+      let t = findex - i1;
+      return lerp(this.cumulativePolylineLengths[i1], 
+                  this.cumulativePolylineLengths[i2], t);
+  }
   
     //--------------------------------------------------
     getPolylineIndexAtLength(len) {
@@ -1148,6 +1348,12 @@
       this.drawSpinePts();
       p5plotSvg.endSvgGroup();
 
+      // Export the offset points as a series of circles.
+      p5plotSvg.beginSvgGroup(debugId + "-offsets");
+      this.drawOffsetPts();
+      p5plotSvg.endSvgGroup();
+
+
       p5plotSvg.endSvgGroup();
       p5plotSvg.endSvgGroup();
       if (bShouldPause) p5plotSvg.pauseRecordSVG(false);
@@ -1290,6 +1496,8 @@
      * Draws the offset points of the PowerStroke.
      * Meant to be called from `drawDebug()`.
      */
+    
+    /*
     drawOffsetPts() {
       // n.b.: -- Actually draws the shaped offset points
       let bProceed = (this.spinePts.length > 0);
@@ -1313,6 +1521,66 @@
         }
       }
     }
+      */
+
+
+    drawOffsetPts() {
+      // n.b.: -- Actually draws the shaped offset points
+      let bProceed = (this.spinePts.length > 0);
+      bProceed = bProceed && (this.shapedOffsetPoints.length > 0);
+      if (this.spineMode == SPINE_MODE_BEZIER){
+        bProceed = bProceed && (this.bezierSegments.length > 0); }
+      if (bProceed) {
+        const getPandN = (this.spineMode == SPINE_MODE_LINEAR)? 
+              this.getPolylinePointAndNormalAtPercent.bind(this): 
+              this.getPointAndNormalAtS.bind(this);
+          
+        const maxTh = this.powerStrokeWeight; 
+        for (let i=0; i<this.shapedOffsetPoints.length; i++){
+          const op = this.shapedOffsetPoints[i]; 
+          const indexf = op[0]; // in [0, N-1]
+          const lenAtIndex = this.getPolylineLengthAtIndex(indexf);
+          const pct = lenAtIndex / this.totalPolylineLength;
+
+          const r = op[1] * maxTh; 
+          const { point: p, normal: n } = getPandN(pct);
+          const ox = p[0] - r * n[0];
+          const oy = p[1] - r * n[1];
+          circle(ox, oy, 7); 
+        }
+      }
+    }
+      
+    /*
+    drawOffsetPts() {
+      // Actually draws the shaped offset points
+      const hasSpine = this.spinePts.length > 0;
+      const hasOffsets = this.shapedOffsetPoints.length > 0;
+      const hasBezier = (this.spineMode !== SPINE_MODE_LINEAR && this.bezierSegments.length > 0);
+
+      if (!hasSpine || !hasOffsets || (this.spineMode === SPINE_MODE_BEZIER && !hasBezier)) return;
+
+      const getPandN = (this.spineMode === SPINE_MODE_LINEAR)
+        ? this.getPolylinePointAndNormalAtPercent.bind(this)
+        : this.getPointAndNormalAtS.bind(this); // for Bezier mode
+
+      const maxTh = this.powerStrokeWeight;
+
+      for (let i = 0; i < this.shapedOffsetPoints.length; i++) {
+        const op = this.shapedOffsetPoints[i];
+        const indexf = op[0];              // in [0, N-1]
+        const r = op[1] * maxTh;           // scale radius
+
+        const lenAtIndex = this.getPolylineLengthAtIndex(indexf);
+        const pct = lenAtIndex / this.totalPolylineLength;
+
+        const { point: p, normal: n } = getPandN(pct);
+        const ox = p[0] - r * n[0];
+        const oy = p[1] - r * n[1];
+        circle(ox, oy, 7);
+      }
+    }
+      */
 
 
     /**
@@ -1598,6 +1866,8 @@
         interpolator_type: this.interpolatorType,
         start_linecap_type: 'zerowidth',
         end_linecap_type: 'zerowidth',
+        linejoin_type: 'bevel',
+        interpolator_beta: this.interpolatorBeta,
         offset_points: this.generateOffsetPointsAttr()
       };
       return def;
