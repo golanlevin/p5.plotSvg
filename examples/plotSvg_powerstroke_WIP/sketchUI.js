@@ -112,7 +112,7 @@ function createSliders(){
   fitCurveSliderLabel.position(220, sy);
   sy += dy; 
   
-  betaSlider = createSlider(0,1, 0.333333, 0.005);
+  betaSlider = createSlider(0,1, 0.25, 0.005);
   betaSlider.position(10, sy);
   betaSlider.size(200);
   betaSlider.elt.addEventListener(
@@ -130,7 +130,7 @@ function createSliders(){
   envEmphasisSliderLabel.position(220, sy);
   sy += dy; 
 
-  envContrastSlider = createSlider(0,1, 0.0, 0.005);
+  envContrastSlider = createSlider(-1,1, 0.0, 0.005);
   envContrastSlider.position(10, sy);
   envContrastSlider.size(200);
   envContrastSlider.elt.addEventListener(
@@ -167,6 +167,7 @@ function createButtons(){
   clearButton.position(60,  80);
   resetButton.position(110, 80); 
   
+
   filterButton.elt.addEventListener(
     'mousedown', (e) => e.stopPropagation());
   clearButton.elt.addEventListener(
@@ -180,15 +181,15 @@ function createButtons(){
   clearButton.mousePressed(() => {
     clearCurrentPowerStroke();
   });
-
   resetButton.mousePressed(() => {
     envStepSlider.value(3); 
     maxThicknessSlider.value(50); 
     fitCurveSlider.value(4); 
-    betaSlider.value(0.33333); 
+    betaSlider.value(0.25); 
     envEmphasisSlider.value(0);
     envContrastSlider.value(0); 
     envScaleSlider.value(1); 
     envOffsetSlider.value(0); 
   }); 
 }
+

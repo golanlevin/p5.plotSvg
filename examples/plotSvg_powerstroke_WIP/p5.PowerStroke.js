@@ -26,7 +26,7 @@
 // The expectation is that an offset point at t=5 is the offset for the 5th spine point.
 // There may not be an offset point for every spine point. 
 // It is also possible to have offset points at fractional t values. 
-// For example, an offset point at t=2.5 would be the offset for the point halfway between the 2nd and 3rd spine points.
+// For example, an offset point at t=2.5 would be the offset for the point halfway between spine points [2] and [3].
 
 
 /* In all code below, refer to the following minimal example SVG for a PowerStroke path in Inkscape:
@@ -81,13 +81,13 @@
   const ENV_INTERP_LINEAR = 1; 
   const ENV_INTERP_BEZIER_JOHAN = 2; 
   let ENV_INTERP_MODE = ENV_INTERP_LINEAR;
-  const SPINE_MODE_LINEAR = 1; 
-  const SPINE_MODE_BEZIER = 2; 
+  const SPINE_MODE_LINEAR = 0; 
+  const SPINE_MODE_BEZIER = 1; 
   let SPINE_MODE = SPINE_MODE_LINEAR;
-  const OFFSET_POINT_ADD_POST_HOC = 1; // Add offset points after the spine is drawn
-  const OFFSET_POINT_ADD_PRE_HOC = 2; // Add offset points before the spine is drawn
-  const OFFSET_POINT_ADD_CO_HOC = 3; // Add offset points at the same time as the spine is drawn
-  let OFFSET_POINT_ADD_MODE = OFFSET_POINT_ADD_CO_HOC; // Default mode
+  const OFFSET_POINT_ADD_NULL = 0; // Mode has not been set yet.
+  const OFFSET_POINT_ADD_SYNC = 1; // Add offset points at the same time as the spine is drawn
+  const OFFSET_POINT_ADD_ASYNC = 2; // Add offset points at some other time
+  
 
   // Export these to make them visible in sketch.js:
   global.ENV_INTERP_LINEAR = ENV_INTERP_LINEAR;
@@ -96,10 +96,10 @@
   global.SPINE_MODE_LINEAR = SPINE_MODE_LINEAR;
   global.SPINE_MODE_BEZIER = SPINE_MODE_BEZIER;
   global.SPINE_MODE = SPINE_MODE;
-  global.OFFSET_POINT_ADD_POST_HOC = OFFSET_POINT_ADD_POST_HOC; // Add offset points after the spine is drawn
-  global.OFFSET_POINT_ADD_PRE_HOC = OFFSET_POINT_ADD_PRE_HOC; // Add offset points before the spine is drawn
-  global.OFFSET_POINT_ADD_CO_HOC = OFFSET_POINT_ADD_CO_HOC; // Add offset points at the same time as the spine is drawn
-  global.OFFSET_POINT_ADD_MODE = OFFSET_POINT_ADD_CO_HOC; // Default mode
+  global.OFFSET_POINT_ADD_NULL = OFFSET_POINT_ADD_NULL; // Mode has not been set yet.
+  global.OFFSET_POINT_ADD_SYNC = OFFSET_POINT_ADD_SYNC; // Add offset points at the same time as the spine is drawn
+  global.OFFSET_POINT_ADD_ASYNC = OFFSET_POINT_ADD_ASYNC; // Add offset points at some other time
+  
 
   // These run exactly once, right when the script is loaded:
   // Ensure polylines are exported as paths for PowerStroke compatibility:
@@ -114,51 +114,60 @@
     static usedIds = new Set(); // To track all previously-used IDs
     static NF_PRECISION = 5;
 
-    constructor(id = null) {
+    constructor(offsetPointAddingMode, id = null) {
       this.id = this.resolveId(id);
 
-      // CORE data for the PowerStroke: points (the raw polyline spine) 
-      // offsetPoints (specifying the half-width of the envelope)
-      // envelopePts (storing the polygon)
-      this.spinePts = [];
-      this.offsetPts = []; //[[0.0,0.0], [1.0,0.0]]; // ALWAYS begin with [[0,0],[1,0]]
-      this.shapedOffsetPoints = []; //[[0.0,0.0], [1.0,0.0]]; // offsetPts, reshaped
-      this.envelopePts = [];
+      // CORE data for the PowerStroke
+      this.spinePts = []; // the raw polyline spine
+      this.offsetPts = []; // specifying the half-width of the envelope
+      this.shapedOffsetPts = []; // offsetPts, reshaped
+      this.envelopePts = []; //envelopePts (storing the polygon)
 
       // Secondary data products computed from the polyline spine
       this.polylineApprox = [];
       this.cumulativePolylineLengths = [];
       this.totalPolylineLength = 0; 
 
+      // Helper data that represents the computed envelope surrounding the spine. 
+      this.radii = null;
+      this._envelopeIsComputed = false;
+
+      // Data used to represent the poly-bezier approximation of the spine.
+      this.bezierSegments = []; 
+      this.bezierSegmentLengths = []; 
+      this.cumulativePolyBezierLengths = [0];
+      this.totalPolyBezierLength = 0; 
+
+      this.envInterpolatorType = "Linear"; // "Linear" or "CubicBezierJohan"
+      this.interpolatorBeta = 0.25;
+      this.powerStrokeWeight = 50.0; 
+      
       // Parameters and data for shaping functions that (may) affect the offsetPoints.
       this.envEmphasis = 0; 
       this.envContrast = 0;
       this.envScale = 1; 
       this.envOffset = 0; 
 
-      // Helper data that represents the computed envelope surrounding the spine. 
-      this.radii = null;
-      this.interpolatorBeta = 0.333;
-      this.powerStrokeWeight = 50.0; 
-      this.interpolatorType = "Linear"; // "Linear" or "CubicBezierJohan"
-
-      // Data used to represent the poly-bezier approximation of the spine.
-      this.fitCurveMaxError = 4; 
-      this.bezierSegments = []; 
-      this.bezierSegmentLengths = []; 
-      this.cumulativePolyBezierLengths = [0];
-      this.totalPolyBezierLength = 0; 
-
       // Miscellaneous information about this PowerStroke
       this.spineMode = SPINE_MODE_LINEAR; 
       this.envelopeFillColor = { r:0, g:0, b:0, a:51 };
       this.drawingDistThresh = 0.5;
-      this._envelopeIsComputed = false;
+      this.fitCurveMaxError = 4; 
+
+      if (offsetPointAddingMode === OFFSET_POINT_ADD_SYNC || 
+          offsetPointAddingMode === OFFSET_POINT_ADD_ASYNC) {
+        this.offsetPointAddMode = offsetPointAddingMode;
+      } else {
+        this.offsetPointAddMode = OFFSET_POINT_ADD_NULL; 
+        console.warn(`[PowerStroke] Invalid offset point adding mode: ${offsetPointAddingMode}`);
+      }
     }
 
     clear(){ this.init(); }
     init() {
       this.spinePts = [];
+      this.offsetPts = [];
+      this.shapedOffsetPts = [];
       this.envelopePts = [];
 
       this.polylineApprox = [];
@@ -172,10 +181,6 @@
       this.totalPolyBezierLength = 0; 
       
       this._envelopeIsComputed = false;
-
-      // this.offsetPts = [];
-      // Not currently wiping offsetPoints or shapedOffsetPoints
-      // in this version of the sketch. 
     }
 
     //--------------------------------------------------
@@ -213,8 +218,8 @@
 
     addSpineAndOffsetPt(px, py, pr) {
       // Add a point to the spine and an offset point at the same time.
-      // Exclusively for when offsetPointAddMode is OFFSET_POINT_ADD_CO_HOC.
-      if (OFFSET_POINT_ADD_MODE == OFFSET_POINT_ADD_CO_HOC){
+      // Exclusively for when offsetPointAddMode is OFFSET_POINT_ADD_SYNC.
+      if (this.offsetPointAddMode == OFFSET_POINT_ADD_SYNC){
         this._envelopeIsComputed = false;
         const N = this.spinePts.length;
 
@@ -243,14 +248,13 @@
           }
         }
 
-        // Copy the offset points to the shapedOffsetPoints. They'll need to be shaped later.
-        this.shapedOffsetPoints = [];
-        this.shapedOffsetPoints = this.offsetPts.map(([t, r]) => [t, r]);
+        // Copy the offset points to the shapedOffsetPts. They'll need to be shaped later.
+        this.shapedOffsetPts = [];
+        this.shapedOffsetPts = this.offsetPts.map(([t, r]) => [t, r]);
       } else {
         console.warn(`[PowerStroke] Cannot add spine and offset point together in mode ${this.offsetPointAddMode}.`);
       }
     }
-
 
 
     //--------------------------------------------------
@@ -263,7 +267,7 @@
      */
     // REVISED
     addOffsetPt(paramT, paramR) {
-      // t in [0, 1] is the normalized parameter or parametric position.
+      // t in [0, N] is the parametric index, up to the number of spine points.
       // r is the offset from centerline, or envelope half-width at t.
       // r is in [0, 1] because it will be used to govern Z-height.
       const t = constrain(paramT, 0, this.spinePts.length - 1);
@@ -282,9 +286,52 @@
       this.offsetPts.sort((a, b) => a[0] - b[0]);
       this._envelopeIsComputed = false;
       
-      // Copy the offset points to the shapedOffsetPoints. They'll need to be shaped later.
-      this.shapedOffsetPoints = [];
-      this.shapedOffsetPoints = this.offsetPts.map(([t, r]) => [t, r]);
+      // Copy the offset points to the shapedOffsetPts. They'll need to be shaped later.
+      this.shapedOffsetPts = [];
+      this.shapedOffsetPts = this.offsetPts.map(([t, r]) => [t, r]);
+    }
+
+
+    /**
+     * @public
+     * Add an offset point to the PowerStroke, normalized to the polyline length.
+     * @param {*} paramT01 - A normalized parameter t in [0, 1] representing the position along the polyline.
+     * @param {*} paramR - A normalized radius r in [0, 1]
+     */
+    addNormalizedOffsetPt(paramT01, paramR) {
+      // Constrain input
+      const t01 = constrain(paramT01, 0, 1);
+      const r = constrain(paramR, 0, 1);
+
+      // Convert t ∈ [0,1] → floating indexf ∈ [0, N-1]
+      const indexf = this.getPolylineIndexAtPercent(t01);
+
+      // Check if a point with the same t already exists (use a tolerance due to float comparisons)
+      const EPSILON = 1e-6;
+      const index = this.offsetPts.findIndex(pt => Math.abs(pt[0] - indexf) < EPSILON);
+
+      const newOffsetPt = [indexf, r];
+      if (index !== -1) {
+        this.offsetPts[index] = newOffsetPt;
+      } else {
+        this.offsetPts.push(newOffsetPt);
+      }
+
+      // Sort and update
+      this.offsetPts.sort((a, b) => a[0] - b[0]);
+      this._envelopeIsComputed = false;
+      this.shapedOffsetPts = this.offsetPts.map(([t, r]) => [t, r]);
+    }
+
+
+    /**
+     * @public
+     * Set the weight of the PowerStroke, which will be used to scale the offset points.
+     * This is a multiplier for the envelope half-width. It's used for visualizing the PowerStroke.
+     * @param {*} mxth 
+     */
+    setPowerStrokeWeight(mxth){
+      this.powerStrokeWeight = Math.max(mxth, 0.1);
     }
 
     //--------------------------------------------------
@@ -299,23 +346,13 @@
 
     /**
      * @public
-     * Set the weight of the PowerStroke, which will be used to scale the offset points.
-     * This is a multiplier for the envelope half-width. It's used for visualizing the PowerStroke.
-     * @param {*} mxth 
-     */
-    setPowerStrokeWeight(mxth){
-      this.powerStrokeWeight = Math.max(mxth, 0.1);
-    }
-
-    /**
-     * @public
      * Sets the type of interpolation for the PowerStroke's envelope.
      * Only accepts "Linear" or "Bezier" (case-sensitive).
      * @param {string} type - The interpolation type to use.
      */
-    setInterpolatorType(type) {
+    setEnvInterpolatorType(type) {
       if (type === 'Linear' || type === 'CubicBezierJohan') {
-        this.interpolatorType = type;
+        this.envInterpolatorType = type;
       } else {
         console.warn(`[PowerStroke] Invalid interpolator type.`);
       }
@@ -331,7 +368,7 @@
 
     //--------------------------------------------------
     fitPolyBezierToPolyline(){
-      // Fit a sequence of Bezier splines to a provided polyline. 
+      // Fit a sequence of Bezier splines to this.spinePts
       
       // Use the `fitCurve` function from fit-curve.js,
       // https://github.com/soswow/fit-curve/blob/master/src/fit-curve.js
@@ -383,13 +420,13 @@
         this.radii = new Float32Array(nSamples);
         const radii = this.radii;
   
-        if (this.interpolatorType === 'Linear'){
+        if (this.envInterpolatorType === 'Linear'){
             const getRLin = this.getStrokeRadiusAtPercentLinear.bind(this); 
             for (let i = 0; i < nSamples; i++) {
               const t = i * nSamplesm1inv;
               radii[i] = getRLin(t);
             }
-        } else if (this.interpolatorType === 'CubicBezierJohan'){
+        } else if (this.envInterpolatorType === 'CubicBezierJohan'){
           const getRBez = this.getStrokeRadiusAtPercentBezierJohan.bind(this);
           for (let i = 0; i < nSamples; i++) {
             const t = i * nSamplesm1inv;
@@ -400,10 +437,10 @@
     }
 
     updateShapedOffsetPoints(){
-      for (let i=0; i<this.shapedOffsetPoints.length; i++){
+      for (let i=0; i<this.shapedOffsetPts.length; i++){
         let rawR = this.offsetPts[i][1];
         let newR = this.shapeValue(rawR); 
-        this.shapedOffsetPoints[i][1] = newR;
+        this.shapedOffsetPts[i][1] = newR;
       }
     }
     setEnvEmphasis(e){
@@ -411,7 +448,7 @@
       this.updateShapedOffsetPoints(); 
     }
     setEnvContrast(c){
-      this.envContrast = constrain(c, 0,1);
+      this.envContrast = constrain(c, -1,1);
       this.updateShapedOffsetPoints(); 
     }
     setEnvScale(s){
@@ -424,11 +461,21 @@
     }
     setShapingParams(e, c, s, o){
       // Set all shaping parameters at once.
-      this.envEmphasis = constrain(e, -1,1);
-      this.envContrast = constrain(c, 0,1);
-      this.envScale = constrain(s, 0,2);
-      this.envOffset = constrain(o, -1,1);
-      this.updateShapedOffsetPoints();
+      let prevE = this.envEmphasis;
+      let prevC = this.envContrast;
+      let prevS = this.envScale;
+      let prevO = this.envOffset;
+
+      if ((e != prevE) || (c != prevC) ||
+          (s != prevS) || (o != prevO)) {
+        // If any of the parameters have changed, update them.
+        // Update the parameters, clamping them to their valid ranges.
+        this.envEmphasis = constrain(e, -1,1);
+        this.envContrast = constrain(c, -1,1);
+        this.envScale = constrain(s, 0,2);
+        this.envOffset = constrain(o, -1,1);
+        this.updateShapedOffsetPoints();
+      } 
     }
     shapeValue(r){
       const e = map(this.envEmphasis,-1,1, 0,1); 
@@ -441,8 +488,12 @@
       if (Math.abs(e - 0.5) > thr){
         r = this.exponentialEmphasis(r, e);
       }
-      if (c > thr){
-        r = this.exponentialContrast(r, c);
+      if (true){ //Math.abs(c) > thr){
+        if (c < 0){
+          r = this.exponentialDecontrast(r, 0-c);
+        } else if (c > 0){
+          r = this.exponentialContrast(r, c);
+        }
       }
       if (Math.abs(s - 1.0) > thr){
         bDoClamp = true; 
@@ -471,6 +522,22 @@
       } 
       else {
         y = 1.0 - (Math.pow(2.0*(1.0-x), 1.0/a))/2.0;
+      }
+      return y;
+    }
+
+    exponentialDecontrast ( x, a){
+      const eps = 0.00001;
+      const min_param_a = 0.0 + eps;
+      const max_param_a = 1.0 - eps;
+      a = constrain(a, min_param_a, max_param_a); 
+
+      let y = 0;
+      if (x<=0.5){
+        y = (pow(2.0*x, 1-a))/2.0;
+      } 
+      else {
+        y = 1.0 - (pow(2.0*(1.0-x), 1-a))/2.0;
       }
       return y;
     }
@@ -554,28 +621,36 @@
       }
     }
 
-
+  
     //=======================================================================
     getStrokeRadiusAtPercentLinear(t) {
-      // POLYLINE VERSION; uses this.spinePts
+      // Returns linearly interpolated stroke radius at percent t ∈ [0, 1]
+      // Works with both LINEAR and BEZIER spine modes.
       // Recreation of Inkscape Powerstroke INTERP_LINEAR. 
       // Linear refers to the linear interpolation of the offset points, at the dense samples.
       // t is in [0, 1] and represents the parametric position along the spine.
 
       t = max(0, min(1, t));
-      const osp = this.shapedOffsetPoints;
+      const osp = this.shapedOffsetPts;
       if (t === 0) return osp[0][1];
       if (t === 1) return osp[osp.length - 1][1];
 
-      const indexf = this.getPolylineIndexAtPercent(t);
+      let indexf = 0; 
+      if (this.spineMode === SPINE_MODE_BEZIER) {
+        const targetBezierLen = t * this.totalPolyBezierLength;
+        const polylinePct = targetBezierLen / this.totalPolyBezierLength;
+        indexf = this.getPolylineIndexAtPercent(polylinePct);
+      } else {
+        indexf = this.getPolylineIndexAtPercent(t);
+      }
       return this.getPolylineRadiusAtIndex(indexf);
     }
 
     //--------------------------------------------------
     getPolylineRadiusAtIndex(indexf) {
-      // Assumes this.shapedOffsetPoints is an array of [t, r] pairs,
+      // Assumes this.shapedOffsetPts is an array of [t, r] pairs,
       // where t ranges from 0 to N-1 (same range as indexf)
-      const points = this.shapedOffsetPoints;
+      const points = this.shapedOffsetPts;
       const n = points.length;
 
       if (n === 0) return 0;  // No radius data
@@ -584,11 +659,11 @@
       // Clamp indexf to valid range
       const t = max(0, min(this.spinePts.length - 1, indexf));
 
-      // If t is outside the shapedOffsetPoints domain, return edge values
+      // If t is outside the shapedOffsetPts domain, return edge values
       if (t <= points[0][0]) return points[0][1];
       if (t >= points[n - 1][0]) return points[n - 1][1];
 
-      // Find the two shapedOffsetPoints that bracket t
+      // Find the two shapedOffsetPts that bracket t
       for (let i = 0; i < n - 1; i++) {
         const [t0, r0] = points[i];
         const [t1, r1] = points[i + 1];
@@ -646,102 +721,44 @@
 
     //--------------------------------------------------
     getStrokeRadiusAtPercentBezierJohan(t) {
-      // POLYLINE VERSION; uses this.spinePts
-      
-      if (this.spinePts.length < 2) return 0;
-
-      const osp = this.shapedOffsetPoints;
+      const osp = this.shapedOffsetPts;
       const nosp = osp.length;
-      t = Math.max(0, Math.min(1, t));
-      if (!osp || nosp === 0) {
-        return (t === 0 || t === 1) ? 0 : 1; // fallback to full width
-      }
+      if (this.spinePts.length < 2 || !osp || nosp === 0) return 0;
+      t = constrain(t, 0, 1);
 
       const beta = this.interpolatorBeta;
-      if (beta <= 0.01) {
-        return this.getStrokeRadiusAtPercentLinear(t);
-      }
+      if (beta <= 0.01) return this.getStrokeRadiusAtPercentLinear(t);
 
       const Bez = this.Bez.bind(this);
       const solveBezForT = this.solveBezForT.bind(this);
+
+      const getLenAtIndex = (this.spineMode === SPINE_MODE_BEZIER)
+        ? this.getBezierLengthAtIndex.bind(this)
+        : this.getPolylineLengthAtIndex.bind(this);
+
+      const totalLen = (this.spineMode === SPINE_MODE_BEZIER)
+        ? this.totalPolyBezierLength
+        : this.totalPolylineLength;
+
       for (let i = 1; i < nosp; i++) {
         const p0 = osp[i - 1];
         const p3 = osp[i];
+        const t0 = getLenAtIndex(p0[0]) / totalLen;
+        const t3 = getLenAtIndex(p3[0]) / totalLen;
 
-        // Convert indexf to percent-of-length
-        const t0_indexf = p0[0];
-        const t3_indexf = p3[0];
-        const t0 = this.getPolylineLengthAtIndex(t0_indexf) / this.totalPolylineLength;
-        const t3 = this.getPolylineLengthAtIndex(t3_indexf) / this.totalPolylineLength;
-
-        if ((t >= t0) && (t <= t3)) {
+        if (t >= t0 && t <= t3) {
           const beta_d30_0 = (t3 - t0) * beta;
           const p1 = [t0 + beta_d30_0, p0[1]];
           const p2 = [t3 - beta_d30_0, p3[1]];
           const t1 = Bez(t0, p1[0], p2[0], t3, beta);
           const t2 = Bez(t0, p1[0], p2[0], t3, 1 - beta);
           const newT = solveBezForT(t, t0, t1, t2, t3);
-          const r = Bez(p0[1], p1[1], p2[1], p3[1], newT);
-          return r;
+          return Bez(p0[1], p1[1], p2[1], p3[1], newT);
         }
       }
-      return 0; // Should never happen
+      return 0; // Fallback
     }
-      
-    /*
-    //--------------------------------------------------
-    getStrokeRadiusAtPercentBezierJohan(t) {
-      // POLYLINE VERSION; uses this.spinePts
-      
-      // Recreation of Inkscape Powerstroke INTERP_CUBICBEZIER_JOHAN
-      // By Johan B.C. Engelen. See: 
-      // https://gitlab.com/inkscape/inkscape/-/blob/master/src/
-      // live_effects/lpe-powerstroke.cpp?ref_type=heads
-      // https://gitlab.com/inkscape/inkscape/-/blame/master/src/
-      // live_effects/lpe-powerstroke-interpolators.h?ref_type=heads#L109
-      // NOTE: This works best with 'tame' values of beta, ~0.0...0.5
 
-      
-      if (this.spinePts.length < 2){
-        return 0; 
-      }
-      const osp = this.shapedOffsetPoints;
-      const nosp = osp.length;
-      t = Math.max(0, Math.min(1, t));
-      if (!osp || nosp === 0) {
-        return t === 0 || t === 1 ? 0 : 1; // fallback to full width
-      }
-      
-      const beta = this.interpolatorBeta;
-      if (beta <= 0.01){
-        return this.getStrokeRadiusAtPercentLinear(t); 
-      }
-
-      // Find segment that contains t.
-      const Bez = this.Bez.bind(this);
-      const solveBezForT = this.solveBezForT.bind(this);
-      
-      for (let i = 1; i < nosp; i++) {
-        const p0 = osp[i-1];
-        const p3 = osp[i  ];
-        const t0 = p0[0]; 
-        const t3 = p3[0]; 
-        
-        if ((t >= t0) && (t <= t3)){
-          const beta_d30_0 = (t3 - t0) * beta; 
-          const p1 = [ t0 + beta_d30_0, p0[1] ];
-          const p2 = [ t3 - beta_d30_0, p3[1] ];
-          const t1 = Bez (t0, p1[0], p2[0], t3, beta);
-          const t2 = Bez (t0, p1[0], p2[0], t3, 1-beta); 
-          
-          const newT = solveBezForT(t, t0, t1, t2, t3);
-          const r = Bez (p0[1], p1[1], p2[1], p3[1], newT);
-          return r; 
-        }
-      }
-      return 0; // Should never happen
-    }
-    */
     
     Bez(y0, y1, y2, y3, t) {
       const mt = 1 - t;
@@ -751,6 +768,22 @@
             3 * mt2 * t * y1 +
             3 * mt * t2 * y2 +
             t2 * t * y3;
+    }
+
+    getBezierLengthAtIndex(indexf) {
+      const N = this.spinePts.length;
+      if (N < 2) return 0;
+      if (indexf <= 0) return 0;
+      if (indexf >= N - 1) return this.totalPolyBezierLength;
+
+      // 1. Get true polyline length at fractional indexf (accurate, not assuming uniformity)
+      const targetPolylineLen = this.getPolylineLengthAtIndex(indexf);
+
+      // 2. Compute proportion of total polyline length
+      const polylinePct = targetPolylineLen / this.totalPolylineLength;
+
+      // 3. Return matching length along Bezier spine
+      return polylinePct * this.totalPolyBezierLength;
     }
 
     solveBezForT(yTarget, y0, y1, y2, y3, tolerance = 0.001, maxIter = 8) {
@@ -779,6 +812,60 @@
         iter++;
       }
       return 0.5 * (t0 + t1);  // best guess
+    }
+
+    resamplePolylineFromBezierAndReindexOffsetPts(stepLen = 3) {
+      // Resample the polyline from the Bezier segments and reindex offsetPts accordingly.
+      // Destructively clobbers this.spinePts and this.offsetPts.
+      if (this.spineMode !== SPINE_MODE_BEZIER) {
+        console.warn(`[PowerStroke] Cannot resample polyline from Bezier segments in SPINE_MODE_LINEAR.`);
+        return;
+      }
+      if (this.bezierSegments.length === 0) {
+        return;
+      }
+
+      // STEP 1: Save a copy of offsetPts as arc-length percentages [t ∈ 0..1] in offsetPtsT01
+      const offsetPtsT01 = [];
+      const osp = this.offsetPts;
+      this.recalculatePolylineLengths(); // ensure spinePts is current
+      for (let i = 0; i < osp.length; i++) {
+        const indexf = osp[i][0];
+        const radius = osp[i][1];
+        const lenAtIndex = this.getPolylineLengthAtIndex(indexf);
+        const pct = lenAtIndex / this.totalPolylineLength;
+        offsetPtsT01.push([pct, radius]);
+      }
+
+      // STEP 2: Resample the polyline from the Bezier segments
+      this.fitPolyBezierToPolyline(); // ensure bezierSegments is current
+      this.polylineApprox = [];
+      const nSamples = max(2, int(this.totalPolyBezierLength / stepLen));
+      const nSamplesm1inv = 1.0/(nSamples-1); 
+
+      for (let i = 0; i < nSamples; i++) {
+        const t = i * nSamplesm1inv;
+        const point = this.getPointAndNormalAtS(t).point;
+        this.polylineApprox.push(point);
+      }
+      // Update the spinePts with the new polyline approximation
+      this.spinePts = this.polylineApprox.slice(); // shallow copy
+
+      // STEP 3: Reproject offsetPtsT01 to floating indexf in the updated spinePts
+      this.recalculatePolylineLengths();
+      const newOffsetPts = [];
+      for (let i = 0; i < offsetPtsT01.length; i++) {
+        const pct = offsetPtsT01[i][0];
+        const radius = offsetPtsT01[i][1];
+        const len = pct * this.totalPolylineLength;
+        const indexf = this.getPolylineIndexAtLength(len);
+        newOffsetPts.push([indexf, radius]);
+      }
+
+      // STEP 4: Reindex offsetPts based on the new polyline approximation
+      this.offsetPts = newOffsetPts;
+      this.shapedOffsetPts = []; 
+      this.shapedOffsetPts = this.offsetPts.map(p => [p[0], this.shapeValue(p[1])]);
     }
 
     //--------------------------------------------------
@@ -1051,29 +1138,61 @@
       };
     }
   
+
     //======================================================
     filterSpine(){
-      // NOTE: Destructive; clobbers this.spinePts!
-      
-      // Compute Visvalingam-Whyatt approximation
+      // NOTE: Destructive; clobbers this.spinePts and this.offsetPts!
+      //
+      // STEP 1: Save offsetPts as arc-length percentages [t ∈ 0..1]
+      const offsetPtsT01 = [];
+      const osp = this.offsetPts;
+      this.recalculatePolylineLengths(); // ensure spinePts is current
+      for (let i = 0; i < osp.length; i++) {
+        const indexf = osp[i][0];
+        const radius = osp[i][1];
+        const lenAtIndex = this.getPolylineLengthAtIndex(indexf);
+        const pct = lenAtIndex / this.totalPolylineLength;
+        offsetPtsT01.push([pct, radius]);
+      }
+
+      // STEP 2: Modify spinePts destructively
+      // 2A. Compute Visvalingam-Whyatt approximation
       this.polylineApprox = [];
       this.polylineApprox = this.approxPolylineVW(this.spinePts, 8.0);
       this.spinePts = this.polylineApprox.map(p => [p[0], p[1]]);
-      
-      // Subsample segments that are too long. 
+
+      // 2B. Subsample segments that are too long. 
       this.recalculatePolylineLengths(); 
-      let regularizedPts = this.regularizePolylineBySubdividingLongSegments(
+      const regularizedPts = this.regularizePolylineBySubdividingLongSegments(
         this.spinePts, this.cumulativePolylineLengths, 5);
       this.spinePts = regularizedPts.map(p => [p[0], p[1]]);
-      
-      // Apply a bilateral smoothing filter.
+
+      // 2C. Apply a bilateral smoothing filter.
       this.spinePts = this.getPolylineBilateralSmooth(
         this.spinePts, {
           spatialSigma:3.0, 
           angleSigma:radians(90), 
           windowSize:3}); 
-      this.recalculatePolylineLengths(); 
+      
+      // STEP 3: Reproject offsetPtsT01 to floating indexf in updated spinePts
+      this.recalculatePolylineLengths();
+      const newOffsetPts = [];
+      for (let i = 0; i < offsetPtsT01.length; i++) {
+        const pct = offsetPtsT01[i][0];
+        const radius = offsetPtsT01[i][1];
+        const len = pct * this.totalPolylineLength;
+        const indexf = this.getPolylineIndexAtLength(len);
+        newOffsetPts.push([indexf, radius]);
+      }
+
+      // STEP 4: Save
+      this.offsetPts = newOffsetPts;
+      this.shapedOffsetPts = []; 
+      this.shapedOffsetPts = this.offsetPts.map(p => [p[0], this.shapeValue(p[1])]);
     }
+
+
+
   
     //--------------------------------------------------
     regularizePolylineBySubdividingLongSegments(
@@ -1292,7 +1411,27 @@
     }
 
 
-    drawDebugMini (bEmitDebugViewToSvg) {
+    /**
+     * @public
+     * Draws the PowerStroke for debugging purposes.
+     * This method draws the spine points, offset points, and envelope polygon.
+     * It can also emit the chosen features to the SVG file if `bEmitDebugViewToSvg` is true.
+     * @param {boolean} bEmitDebugViewToSvg - IMPORTANT: Whether to emit the DEBUG VIEW to an SVG file.
+     * NOTE THAT EMITTING THE DEBUGVIEW TO SVG IS NOT THE SAME THING AS SAVING THE POWERSTROKE TO SVG.
+     * @param {boolean} bDrawEnvelope - Whether to draw the envelope polygon.
+     * @param {boolean} bDrawEnvelopeSpans - Whether to draw the envelope spans.
+     * @param {boolean} bDrawSpineLine - Whether to draw the spine line
+     * @param {boolean} bDrawSpinePts - Whether to draw the spine points.
+     * @param {boolean} bDrawShapedOffsetPts - Whether to draw the offset points.
+     */
+    drawDebugView (
+      bEmitDebugViewToSvg,
+      bDrawEnvelope = true,
+      bDrawEnvelopeSpans = true,
+      bDrawSpineLine = true,
+      bDrawSpinePts = true, 
+      bDrawShapedOffsetPts = true) {
+
       const debugId = "debug-" + this.id;
 
       // Safety checks
@@ -1316,129 +1455,75 @@
         }
       }
 
-      // pauseRecordSVG might be desired if we don't want the debug view to be exported to SVG.
-      // This is useful for debugging without cluttering the SVG output.
+      //--------------------
+      // 'pausing' is our mechanism to prevent recording the debug view to the SVG file.
       const bWasRecording = p5plotSvg.isRecordingSVG();
       const bShouldPause = bWasRecording && !bEmitDebugViewToSvg;
       if (bShouldPause) p5plotSvg.pauseRecordSVG(true);
 
       p5plotSvg.beginSvgGroup("debug-powerstroke-layer"); 
       p5plotSvg.beginSvgGroup(debugId);
-
-      // Export the envelope as a polygon, and also as a series of spans.
-      stroke(0);
-      let fc = this.envelopeFillColor;
-      fill(fc.r,fc.g,fc.b,fc.a); 
-      this.drawEnvelopeOutline();
-      p5plotSvg.beginSvgGroup(debugId + "-spans");
-      this.drawEnvelopeSpans();
-      p5plotSvg.endSvgGroup();
-
-      // Set up the stroke color for the spine. 
-      noFill();
-      strokeWeight(0.5);
-      let currentStrokeColor = this.getCurrentColor('stroke'); 
-      this.envelopeFillColor = this.getCurrentColor('fill'); 
-      let sc = currentStrokeColor;
-      stroke(sc.r,sc.g,sc.b,sc.a);
-
-      // Export the spine as a line, and also as a series of points.
-      this.drawSpineLine();
-      p5plotSvg.beginSvgGroup(debugId + "-spine-pts");
-      this.drawSpinePts();
-      p5plotSvg.endSvgGroup();
-
-      // Export the offset points as a series of circles.
-      p5plotSvg.beginSvgGroup(debugId + "-offsets");
-      this.drawOffsetPts();
-      p5plotSvg.endSvgGroup();
-
-
-      p5plotSvg.endSvgGroup();
-      p5plotSvg.endSvgGroup();
-      if (bShouldPause) p5plotSvg.pauseRecordSVG(false);
-    }
-
-
-
-    /**
-     * @public
-     * Draws the PowerStroke for debugging purposes.
-     * This method draws the spine points, offset points, and envelope polygon.
-     * It can also emit the chosen features to the SVG file if `bEmitDebugViewToSvg` is true.
-     * @param {boolean} bDrawSpinePts - Whether to draw the spine points.
-     * @param {boolean} bDrawOffsetPts - Whether to draw the offset points.
-     * @param {boolean} bDrawEnvelope - Whether to draw the envelope polygon.
-     * @param {boolean} bEmitDebugViewToSvg - Whether to emit the debug view to an SVG file.
-     */
-    drawDebug (bDrawSpine, bDrawOffsetPts, bDrawEnvelope, bEmitDebugViewToSvg=false) {
-      if (!this._envelopeIsComputed && bDrawEnvelope) {
-        this.computeEnvelope();
-      }
-
-      const debugId = "debug-" + this.id;
-      if (!p5plotSvg || !Array.isArray(p5plotSvg._commands)) {
-        ; // _commands not initialized
-      } else if (bEmitDebugViewToSvg) {
-        const bAlreadyExists = p5plotSvg._commands.some(c =>
-          c.type === 'beginGroup' &&
-          (
-            c.gname === debugId || // If `gname` is set
-            (Array.isArray(c.attributes) &&
-              c.attributes.some(attr => attr.name === 'id' && attr.value === debugId))
-          )
-        );
-        if (bAlreadyExists) {
-          console.warn(`[PowerStroke] Debug PowerStroke with id "${debugId}" already exists; skipping.`);
-          return;
-        }
-      }
-
-      const bWasRecording = p5plotSvg.isRecordingSVG();
-      const bShouldPause = bWasRecording && !bEmitDebugViewToSvg;
-      if (bShouldPause) p5plotSvg.pauseRecordSVG(true);
 
       // Stash the current colors, so we can restore it later.
-      let currentStrokeColor = this.getCurrentColor('stroke'); 
+      const currentStrokeColor = this.getCurrentColor('stroke'); 
       this.envelopeFillColor = this.getCurrentColor('fill'); 
+      const sc = currentStrokeColor;
+      const fc = this.envelopeFillColor;
+      strokeWeight(0.5);
 
-      p5plotSvg.beginSvgGroup("debug-powerstroke-layer"); 
-      p5plotSvg.beginSvgGroup(debugId);
-      
-      if (bDrawEnvelope === true){
-        stroke(0);
-        let fc = this.envelopeFillColor;
-        fill(fc.r,fc.g,fc.b,fc.a); 
+      //--------------------
+      // Export the envelope as a filled polygon with black outline.
+      if (bDrawEnvelope){
+        stroke(0,0,0, 255);
+        fill(fc.r,fc.g,fc.b,fc.a);
+        p5plotSvg.beginSvgGroup(debugId + "-envelope");
         this.drawEnvelopeOutline();
+        p5plotSvg.endSvgGroup();
+      }
+      // Export the envelope spans as a series of spanning lines
+      if (bDrawEnvelopeSpans){
+        noFill(); 
+        stroke(sc.r,sc.g,sc.b,sc.a);
         p5plotSvg.beginSvgGroup(debugId + "-spans");
         this.drawEnvelopeSpans();
         p5plotSvg.endSvgGroup();
       }
-      
-      if (bDrawSpine === true){
+  
+      //--------------------
+      // Export the spine as a line
+      if (bDrawSpineLine){
         noFill();
-        strokeWeight(1.0);
-        let sc = currentStrokeColor;
-        stroke(sc.r,sc.g,sc.b,sc.a); 
+        stroke(sc.r,sc.g,sc.b,sc.a);
+        p5plotSvg.beginSvgGroup(debugId + "-spine-polyline");
         this.drawSpineLine();
+        p5plotSvg.endSvgGroup();
+        if (this.spineMode == SPINE_MODE_BEZIER){
+          stroke(0,0,0, 255); 
+          p5plotSvg.beginSvgGroup(debugId + "-spine-polybezier");
+          this.drawPolyBezierSpine(); 
+          p5plotSvg.endSvgGroup();
+        }
+      }
+      // Export the spine points as a series of points.
+      if (bDrawSpinePts) {
+        noFill();
+        stroke(sc.r,sc.g,sc.b,sc.a);
         p5plotSvg.beginSvgGroup(debugId + "-spine-pts");
         this.drawSpinePts();
         p5plotSvg.endSvgGroup();
-        if (this.spineMode == SPINE_MODE_BEZIER){
-          this.drawPolyBezier(); 
-        }
       }
 
-      if (bDrawOffsetPts === true){
+      //--------------------
+      // Export the (shaped) offset points as a series of circles.
+      if (bDrawShapedOffsetPts){
         noFill();
-        strokeWeight(0.5);
-        let sc = currentStrokeColor;
-        stroke(sc.r,sc.g,sc.b,sc.a); 
-        p5plotSvg.beginSvgGroup(debugId + "-offsets");
-        this.drawOffsetPts();
+        stroke(sc.r,sc.g,sc.b,sc.a);
+        p5plotSvg.beginSvgGroup(debugId + "-offset-pts");
+        this.drawShapedOffsetPts();
         p5plotSvg.endSvgGroup();
       }
-      
+
+      //--------------------
       p5plotSvg.endSvgGroup();
       p5plotSvg.endSvgGroup();
       if (bShouldPause) p5plotSvg.pauseRecordSVG(false);
@@ -1476,17 +1561,23 @@
       }
     }
 
-
-
-
-    drawPolyBezier() {
+    drawPolyBezierSpine() {
       if(this.spineMode == SPINE_MODE_BEZIER){
+        const segs = this.bezierSegments;
+        const nSegs = segs.length;
+        if (nSegs === 0) return;
         noFill(); 
-        for (let i = 0; i < this.bezierSegments.length; i++) {
-          let bs = this.bezierSegments[i];
-          bs.draw();
-          // bs.drawEndpoints();
+        beginShape();
+        let P0 = segs[0].points[0];
+        vertex(P0[0], P0[1]);
+        for (let i = 0; i < nSegs; i++) {
+          const bsp = segs[i].points;
+          const P1 = bsp[1];
+          const P2 = bsp[2];
+          const P3 = bsp[3];
+          bezierVertex(P1[0],P1[1], P2[0],P2[1], P3[0],P3[1]);
         }
+        endShape(); 
       }
     }
 
@@ -1501,7 +1592,7 @@
     drawOffsetPts() {
       // n.b.: -- Actually draws the shaped offset points
       let bProceed = (this.spinePts.length > 0);
-      bProceed = bProceed && (this.shapedOffsetPoints.length > 0);
+      bProceed = bProceed && (this.shapedOffsetPts.length > 0);
       if (this.spineMode == SPINE_MODE_BEZIER){
         bProceed = bProceed && (this.bezierSegments.length > 0); }
       if (bProceed) {
@@ -1510,8 +1601,8 @@
               this.getPointAndNormalAtS.bind(this);
           
         const maxTh = this.powerStrokeWeight; 
-        for (let i=0; i<this.shapedOffsetPoints.length; i++){
-          const op = this.shapedOffsetPoints[i]; 
+        for (let i=0; i<this.shapedOffsetPts.length; i++){
+          const op = this.shapedOffsetPts[i]; 
           const t = op[0];
           const r = op[1] * maxTh; 
           const { point: p, normal: n } = getPandN(t);
@@ -1524,10 +1615,9 @@
       */
 
 
-    drawOffsetPts() {
-      // n.b.: -- Actually draws the shaped offset points
+    drawShapedOffsetPts() {
       let bProceed = (this.spinePts.length > 0);
-      bProceed = bProceed && (this.shapedOffsetPoints.length > 0);
+      bProceed = bProceed && (this.shapedOffsetPts.length > 0);
       if (this.spineMode == SPINE_MODE_BEZIER){
         bProceed = bProceed && (this.bezierSegments.length > 0); }
       if (bProceed) {
@@ -1536,8 +1626,8 @@
               this.getPointAndNormalAtS.bind(this);
           
         const maxTh = this.powerStrokeWeight; 
-        for (let i=0; i<this.shapedOffsetPoints.length; i++){
-          const op = this.shapedOffsetPoints[i]; 
+        for (let i=0; i<this.shapedOffsetPts.length; i++){
+          const op = this.shapedOffsetPts[i]; 
           const indexf = op[0]; // in [0, N-1]
           const lenAtIndex = this.getPolylineLengthAtIndex(indexf);
           const pct = lenAtIndex / this.totalPolylineLength;
@@ -1550,56 +1640,7 @@
         }
       }
     }
-      
-    /*
-    drawOffsetPts() {
-      // Actually draws the shaped offset points
-      const hasSpine = this.spinePts.length > 0;
-      const hasOffsets = this.shapedOffsetPoints.length > 0;
-      const hasBezier = (this.spineMode !== SPINE_MODE_LINEAR && this.bezierSegments.length > 0);
-
-      if (!hasSpine || !hasOffsets || (this.spineMode === SPINE_MODE_BEZIER && !hasBezier)) return;
-
-      const getPandN = (this.spineMode === SPINE_MODE_LINEAR)
-        ? this.getPolylinePointAndNormalAtPercent.bind(this)
-        : this.getPointAndNormalAtS.bind(this); // for Bezier mode
-
-      const maxTh = this.powerStrokeWeight;
-
-      for (let i = 0; i < this.shapedOffsetPoints.length; i++) {
-        const op = this.shapedOffsetPoints[i];
-        const indexf = op[0];              // in [0, N-1]
-        const r = op[1] * maxTh;           // scale radius
-
-        const lenAtIndex = this.getPolylineLengthAtIndex(indexf);
-        const pct = lenAtIndex / this.totalPolylineLength;
-
-        const { point: p, normal: n } = getPandN(pct);
-        const ox = p[0] - r * n[0];
-        const oy = p[1] - r * n[1];
-        circle(ox, oy, 7);
-      }
-    }
-      */
-
-
-    /**
-     * @private
-     * Draws the envelope of the PowerStroke.
-     * Meant to be called from `drawDebug()`.
-     */
-    //--------------------------------------------------
-    drawEnvelope( bDrawEnvOutline = true, bDrawEnvSpans = true){
-      // Draw envelope polygon
-      if (bDrawEnvOutline){
-        drawEnvelopeOutline();
-      }
-      // Draw spanning width-lines
-      if (bDrawEnvSpans){
-        drawEnvelopeSpans();
-      }
-    }
-
+    
 
     drawEnvelopeOutline(){
       // render the envelope around this.spinePts, from the radii 
@@ -1863,7 +1904,7 @@
         is_visible: 'true',
         lpeversion: '1.3',
         scale_width: this.powerStrokeWeight,
-        interpolator_type: this.interpolatorType,
+        interpolator_type: this.envInterpolatorType,
         start_linecap_type: 'zerowidth',
         end_linecap_type: 'zerowidth',
         linejoin_type: 'bevel',
@@ -1934,19 +1975,6 @@
       return candidate;
     }
 
-    /*
-    generateUniqueId() {
-      let index = 0;
-      let candidate;
-      do {
-        candidate = `powerstroke-${nf(index, 5)}`;
-        index++;
-      } while (PowerStroke.usedIds.has(candidate));
-      PowerStroke.usedIds.add(candidate);
-      return candidate;
-    }
-    */
-
     
     static resetIdTracking() {
       PowerStroke.usedIds.clear();
@@ -1999,7 +2027,7 @@
         effects['#' + id] = {
           offsetPoints: parseOffsetPoints(extractAttr(line, 'offset_points')),
           scaleWidth: parseFloat(extractAttr(line, 'scale_width')),
-          interpolatorType: extractAttr(line, 'interpolator_type')
+          envInterpolatorType: extractAttr(line, 'interpolator_type')
         };
       }
     }
@@ -2016,9 +2044,9 @@
       if (!id || !origD || !lpeRef) continue;
       if (!effects[lpeRef]) continue;  // no matching effect found
 
-      let ps = new PowerStroke(id);
+      let ps = new PowerStroke(OFFSET_POINT_ADD_ASYNC, id);
       ps.setPowerStrokeWeight(effects[lpeRef].scaleWidth);
-      ps.setInterpolatorType(effects[lpeRef].interpolatorType);
+      ps.setEnvInterpolatorType(effects[lpeRef].envInterpolatorType);
 
       let spinePts = parsePathToPoints(origD);
       for (let [x, y] of spinePts) {
@@ -2087,7 +2115,6 @@
     }
     return pts;
   }
-
 
 
   //-------------------------------------------------------------------------

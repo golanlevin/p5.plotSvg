@@ -6,5 +6,6 @@
 
 Todo: 
 
-* GEOMETRY!
 * Wacom
+
+
