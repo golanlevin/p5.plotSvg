@@ -129,7 +129,7 @@ function mouseDragged() {
     oldP = th; 
   
     let pr = th; 
-    pr = map(sin(millis()/50.0), -1,1, 0.2, 1.0); // Example radius based on time
+     // pr = map(sin(millis()/50.0), -1,1, 0.2, 1.0); // Example radius based on time
     myPowerStroke.addSpineAndOffsetPt(px, py, pr); 
   }
 }
