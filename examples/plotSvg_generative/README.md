@@ -4,6 +4,8 @@
 
 The `plotSvg_generative` example shows one possible way that p5.plotSvg could be used for generative plotter art. In this sketch, pressing the `Regenerate` button changes the design's random seed; the user can then press the `Export SVG` button when they are satisfied with the results.
 
+This sketch uses the `setSvgGroupByStrokeColor(true)` command, which ensures that strokes of the same color are grouped together in the SVG file.
+
 Code:
 
 * At editor.p5js.org: [https://editor.p5js.org/golan/sketches/LRTXmDg2q](https://editor.p5js.org/golan/sketches/LRTXmDg2q)
@@ -11,7 +13,6 @@ Code:
 * At GitHub: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_generative/sketch.js)
 
 ```js
-// plotSvg_generative Example
 // Demonstrates how to use the p5.plotSvg library to export 
 // SVG files from a "generative art" sketch in p5.js.
 
@@ -59,9 +60,19 @@ function draw(){
     beginRecordSVG(this, "plotSvg_generative_" + myRandomSeed + ".svg");
   }
 
-  // Draw 100 random lines.
+  
+  // Set the SVG group by stroke color to `true`, so that strokes 
+  // of the same color are grouped together in the SVG file. 
+  setSvgGroupByStrokeColor(true); 
+
+  // Draw 100 random lines: some red, some black.
   let nLines = 100; 
   for (let i=0; i<nLines; i++){
+    if (random() < 0.2){
+      stroke('red'); // Red
+    } else {
+      stroke('black'); // Black
+    }
     let x1 = width  * random(0.1, 0.9); 
     let y1 = height * random(0.1, 0.9); 
     let x2 = width  * random(0.1, 0.9); 

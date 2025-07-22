@@ -51,7 +51,7 @@ function draw(){
   setSvgGroupByStrokeColor(true); 
 
   // Draw 100 random lines: some red, some black.
-  let nLines = 20; 
+  let nLines = 100; 
   for (let i=0; i<nLines; i++){
     if (random() < 0.2){
       stroke('red'); // Red
