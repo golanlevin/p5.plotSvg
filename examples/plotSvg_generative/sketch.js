@@ -45,9 +45,19 @@ function draw(){
     beginRecordSVG(this, "plotSvg_generative_" + myRandomSeed + ".svg");
   }
 
-  // Draw 100 random lines.
-  let nLines = 100; 
+  
+  // Set the SVG group by stroke color to `true`, so that strokes 
+  // of the same color are grouped together in the SVG file. 
+  setSvgGroupByStrokeColor(true); 
+
+  // Draw 100 random lines: some red, some black.
+  let nLines = 20; 
   for (let i=0; i<nLines; i++){
+    if (random() < 0.2){
+      stroke('red'); // Red
+    } else {
+      stroke('black'); // Black
+    }
     let x1 = width  * random(0.1, 0.9); 
     let y1 = height * random(0.1, 0.9); 
     let x2 = width  * random(0.1, 0.9); 

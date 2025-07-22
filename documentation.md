@@ -1,7 +1,7 @@
 <!-- 
 // previously generated documentation using: 
 // npx documentation build p5.plotSvg.js -f md -o docs --shallow
-// but now edited by hand, sorry
+// ...but now edited by hand, sorry
 -->
 
 # p5.plotSvg Documentation
@@ -22,15 +22,19 @@
 *   [setSvgCoordinatePrecision](#setsvgcoordinateprecision)
 *   [setSvgTransformPrecision](#setsvgtransformprecision)
 *   [setSvgPointRadius](#setsvgpointradius)
+*   [setSvgGroupByStrokeColor](#setsvggroupbystrokecolor)
 *   [setSvgMergeNamedGroups](#setsvgmergenamedgroups)
 *   [beginSvgGroup](#beginsvggroup)
 *   [endSvgGroup](#endsvggroup)
 *   [getDefaultStrokeColor](#getdefaultstrokecolor)
+
+
 <!-- WORK IN PROGRESS
 *   [setSvgExportPolylinesAsPaths](#setsvgexportpolylinesaspaths)
 *   [injectSvgHeaderAttribute](#injectsvgheaderattribute)
 *   [injectSvgDef](#injectsvgdef) 
 -->
+
 
 ---
 
@@ -53,7 +57,7 @@ Pauses or unpauses recording of SVG output for a p5.js sketch,
 depending on whether the boolean `bPause` argument is `true` or `false`.
 
 #### Parameters
-*   `bPause`
+*   `bPause ` **[boolean][29]**
 
 
 
@@ -162,7 +166,7 @@ the number of decimal digits used when formatting rotations, translations, etc. 
 
 
 ## setSvgPointRadius
-Sets the radius for points (rendered as tiny circles) in the SVG output. Default is 0.25 pixels.
+Sets the radius for "points" (which are rendered as tiny circles) in the SVG output. Default is 0.25 pixels.
 
 #### Parameters
 *   `radius` **[number][28]** The desired radius for points, specified as a positive number.
@@ -170,9 +174,19 @@ Sets the radius for points (rendered as tiny circles) in the SVG output. Default
 
 
 
+## setSvgGroupByStrokeColor
+
+Sets whether or not to group SVG elements by stroke color. When true, elements with the same stroke color, at the same level, will be grouped together.
+
+#### Parameters
+
+*   `bEnabled` **[boolean][29]** Enable or disables grouping of elements by stroke color. The default is `false`.
+
+
+
 ## setSvgMergeNamedGroups
 Sets whether or not to merge user-defined SVG groups that have the same name. 
-Useful for grouping paths that might be computed at different times, but should be plotted with the same drawing tool. Default is `true`, meaning that groups with the same name (which are at the same hierarchical level) will be merged.
+Useful for grouping paths that might be computed at different times, but which are part of the same compositional design element, and should be plotted with the same drawing tool. The default is `true`, meaning that groups with the same name (which are at the same hierarchical level) will be merged.
 
 #### Parameters
 *   `bEnabled` **[boolean][29]** Whether or not groups with the same name should be merged.
