@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>p5.plotSvg Drawing Recorder Example</title>
-    <meta name="description" content="p5.plotSvg Drawing Recorder Example" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.8/p5.js" type="text/javascript"></script>
-    <script src="../../lib/p5.plotSvg.js" type="text/javascript"></script>
-    <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
-  </head>
-  <body>
-    <main>
-    </main>
-    <script src="sketch.js" type="text/javascript"></script>
-    <p>Draw some marks. Press 's' to save SVG.</p>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.9/lib/p5.js"></script>
+  <script src="../../lib/p5.plotSvg.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <style> 
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent scrolling */
+      touch-action: none; /* Prevent touch scrolling */
+      -webkit-user-select: none; /* Prevent selection on iOS */
+      -ms-user-select: none; /* Prevent selection on IE */
+      user-select: none; /* Prevent selection on other browsers */
+    }
+    canvas {
+      display: block;
+      touch-action: none; /* Prevent default gestures on canvas */
+    }
+  </style>
+</head>
+
+<body class="prevent-select">
+  <main></main>
+  <script src="sketch.js"></script>
+</body>
 </html>

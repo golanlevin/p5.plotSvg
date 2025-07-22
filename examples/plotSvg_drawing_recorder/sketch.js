@@ -1,27 +1,35 @@
-// https://github.com/golanlevin/p5.plotSvg (v.0.1.x)
+// This sketch records a series of marks drawn by the user
+// and exports an SVG file when the button is pressed.
+// This sketch is mobile-friendly.
+//
+// Uses https://github.com/golanlevin/p5.plotSvg (v.0.1.x)
 // A Plotter-Oriented SVG Exporter for p5.js
 // Golan Levin, November 2024
-//
-// This sketch records a series of marks drawn by the user
-// and exports an SVG file when the 's' key is pressed.
-// 
-// Requires: https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js
-// See: https://github.com/golanlevin/p5.plotSvg
 
 p5.disableFriendlyErrors = true; 
+let exportSvgButton;
+let clearButton;
 let bDoExportSvg = false; 
-
 let marks = [];
 let currentMark = []; 
 
 function setup() {
-  // Postcard size: 6"x4" at 96 dpi
-  createCanvas(576, 384);
+  createCanvas(375, 500); // phone-safe size
+  exportSvgButton = createButton('Export SVG');
+  exportSvgButton.position(10, 10);
+  exportSvgButton.mousePressed(() => bDoExportSvg = true);
+  clearButton = createButton('Clear');
+  clearButton.position(100, 10);
+  clearButton.mousePressed(() => {
+    marks = [];
+    currentMark = [];
+  });
 }
 
+//-------------------------------------
 function keyPressed(){
   if (key == 's'){
-    // Initiate SVG exporting
+    // Another way to initiate SVG exporting
     bDoExportSvg = true; 
   } else if (key == ' '){
     // Clear recordings with spacebar
@@ -30,6 +38,7 @@ function keyPressed(){
   }
 }
 
+//-------------------------------------
 function mousePressed(){
   currentMark = [];
   currentMark.push(createVector(mouseX, mouseY)); 
@@ -42,7 +51,26 @@ function mouseReleased(){
     marks.push(currentMark); 
   }
 }
+function touchStarted(event) {
+  if (event.target.tagName === 'CANVAS') {
+    mousePressed();
+    return false;
+  }
+}
+function touchMoved(event) {
+  if (event.target.tagName === 'CANVAS') {
+    mouseDragged();
+    return false;
+  }
+}
+function touchEnded(event) {
+  if (event.target.tagName === 'CANVAS') {
+    mouseReleased();
+    return false;
+  }
+}
 
+//-------------------------------------
 function draw(){
   background(245); 
   strokeWeight(1);
@@ -50,8 +78,8 @@ function draw(){
   noFill();
   
   if (bDoExportSvg){
-    // Begin exporting, if requested
-    beginRecordSVG(this, "plotSvg_drawing_recorder.svg");
+    let svgFilename = "plotSvg_recording_" + frameCount; 
+    beginRecordSVG(this, svgFilename + ".svg");
   }
 
   // Draw each of the stored marks
@@ -69,7 +97,6 @@ function draw(){
   }
   endShape(); 
 
-  
   if (bDoExportSvg){
     // End exporting, if doing so
     endRecordSVG();
