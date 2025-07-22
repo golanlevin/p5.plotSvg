@@ -7,7 +7,7 @@ These examples show how to generate plotter-friendly SVGs from p5.js using p5.pl
 
 ### ⭐ [plotSvg_smorgasbord](plotSvg_smorgasbord/README.md) ⭐ 
 
-Full demonstration of all p5.js drawing primitives exported to SVG.<br />[here](plotSvg_smorgasbord/README.md) • [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
+**Full demonstration of all p5.js drawing primitives exported to SVG.**<br />[here](plotSvg_smorgasbord/README.md) • [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
 
 [![plotSvg_smorgasbord](plotSvg_smorgasbord/plotSvg_smorgasbord_sm.png)](plotSvg_smorgasbord/README.md)
 
