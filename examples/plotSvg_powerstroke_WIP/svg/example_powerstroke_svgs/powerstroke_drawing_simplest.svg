@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1336"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   sodipodi:docname="powerstroke_drawing_simplest.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1338"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="0.84096521"
+     inkscape:cx="369.81316"
+     inkscape:cy="652.8213"
+     inkscape:window-width="1688"
+     inkscape:window-height="1031"
+     inkscape:window-x="112"
+     inkscape:window-y="44"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="0"
+       originy="0"
+       spacingx="10"
+       spacingy="9.9999997"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="10"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1333">
+    <inkscape:path-effect
+       effect="powerstroke"
+       message=""
+       id="path-effect2"
+       is_visible="true"
+       lpeversion="1.3"
+       scale_width="0.99009901"
+       interpolator_type="Linear"
+       interpolator_beta="0"
+       start_linecap_type="zerowidth"
+       end_linecap_type="zerowidth"
+       offset_points="0,19.608653 | 0.54467143,1.3791102 | 0.90769231,11.204945"
+       linejoin_type="round"
+       miter_limit="4"
+       not_jump="true"
+       sort_points="true" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#000000;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-dasharray:none"
+       d="m -12.95872,195.94003 16.1538467,10.76923 39.4494253,-91.71252 44.396731,-49.056704 -1e-6,-20 -18.461539,7.692306 -28.207447,59.849558 -69.484863,71.6889 z"
+       id="path1"
+       inkscape:path-effect="#path-effect2"
+       inkscape:original-d="M -12.95872,195.94003 87.041282,45.940036"
+       transform="translate(62.958721,54.059961)"
+       sodipodi:nodetypes="cc" />
+  </g>
+</svg>
