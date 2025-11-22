@@ -27,6 +27,7 @@
 *   [beginSvgGroup](#beginsvggroup)
 *   [endSvgGroup](#endsvggroup)
 *   [getDefaultStrokeColor](#getdefaultstrokecolor)
+*   [isRecordingSVG](#isRecordingSVG)
 
 
 <!-- WORK IN PROGRESS
@@ -39,20 +40,22 @@
 ---
 
 
-
 ## beginRecordSVG
+
 Begins recording SVG output for a p5.js sketch.
 Initializes recording state, validates and sets the output filename,
 and overrides p5.js drawing functions to capture drawing commands for SVG export.
 
 #### Parameters
 *   `p5Instance` **[object][26]** A reference to the current p5.js sketch (e.g. `this`).
-*   `fn` **[string][27]?** Optional filename for the output SVG file.
-    Defaults to "output.svg" if not provided or invalid.
-
+*   `fn` **[string][27]?** Optional filename for the output SVG file. The *explicit* use of `null` will prevent a file from being saved. Behavior: 
+	* `beginRecordSVG(this, "file.svg"); // saves to "file.svg"`
+	* `beginRecordSVG(this); // saves to "output.svg" (default)`
+	* `beginRecordSVG(this, null); // DOES NOT save any file!`
 
 
 ## pauseRecordSVG
+
 Pauses or unpauses recording of SVG output for a p5.js sketch,
 depending on whether the boolean `bPause` argument is `true` or `false`.
 
@@ -60,15 +63,13 @@ depending on whether the boolean `bPause` argument is `true` or `false`.
 *   `bPause ` **[boolean][29]**
 
 
-
 ## endRecordSVG
-Ends recording of SVG output for a p5.js sketch.
-Calls the export function to generate the SVG output
-and restores the original p5.js functions.
 
+Ends recording of SVG output for a p5.js sketch. Calls the export function to generate the SVG output and restores the original p5.js functions. Returns the complete text of the SVG file as a string.
 
 
 ## setSVGDocumentSize
+
 Sets the dimensions of the SVG document in pixels/dots. 
 Note that graphics are not scaled to fit this size; they may extend beyond the specified dimensions. 
 If this is not set, the system will default to the main canvas dimensions (i.e. from `createCanvas()`).
@@ -78,8 +79,8 @@ If this is not set, the system will default to the main canvas dimensions (i.e. 
 *   `h` **[number][28]** The SVG document height in pixels/dots. Must be a positive number.
 
 
-
 ## setSvgResolutionDPI
+
 Sets the resolution for the exported SVG file in dots per inch (DPI).
 This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output. The default is 96 dpi. 
 
@@ -87,8 +88,8 @@ This value is used to determine the scaling of units (pixels to physical dimensi
 *   `dpi` **[number][28]** The resolution in dots per inch. Must be a positive number.
 
 
-
 ## setSvgResolutionDPCM
+
 Sets the resolution for the exported SVG file in dots per centimeter (DPCM).
 This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output. The default resolution is 243.84 dpcm (equivalent to 96 dpi). 
 
@@ -96,24 +97,24 @@ This value is used to determine the scaling of units (pixels to physical dimensi
 *   `dpcm` **[number][28]** The resolution in dots per centimeter. Must be a positive number.
 
 
-
 ## setSvgDefaultStrokeWeight
+
 Sets the default stroke weight for SVG elements.
 
 #### Parameters
 *   `wei` **[number][28]** The stroke weight to set.
 
 
-
 ## setSvgDefaultStrokeColor
+
 Sets the default stroke color for SVG elements.
 
 #### Parameters
 *   `col` **[string][27]** The stroke color to set, in valid CSS color format.
 
 
-
 ## setSvgBackgroundColor
+
 Sets an optional background color (as a CSS style) for the SVG. This is independent of the `background()` color of the p5 sketch. 
 This color does not interfere with plotter output and is purely for visualization. Note that this color may not be visible in all SVG viewers. If this function is not called, no background color style is specified in the SVG.
 
@@ -121,8 +122,8 @@ This color does not interfere with plotter output and is purely for visualizatio
 *   `col` **[string][27]** The background color to set, in valid CSS color format.
 
 
-
 ## setSvgIndent
+
 Sets the type and amount of indentation used for formatting SVG output.
 The function allows for spaces, tabs, or no indentation.
 
@@ -133,8 +134,8 @@ The function allows for spaces, tabs, or no indentation.
     Must be a non-negative integer if provided. Defaults to 2 for spaces and 1 for tabs.
 
 
-
 ## setSvgFlattenTransforms
+
 Set whether or not to use a stack to encode matrix transforms.
 
 * `setSvgFlattenTransforms(true)` -- larger SVG files, greater fidelity to original
@@ -144,8 +145,8 @@ Set whether or not to use a stack to encode matrix transforms.
 *   `b` **[boolean][29]** Whether or not to flatten geometric transforms
 
 
-
 ## setSvgCoordinatePrecision
+
 Sets the output precision for graphics coordinates in SVGs by adjusting
 the number of decimal digits used when formatting values. Default is 4 digits. 
 
@@ -154,8 +155,8 @@ the number of decimal digits used when formatting values. Default is 4 digits.
     Must be a non-negative integer. If an invalid value is provided, a warning is issued.
 
 
-
 ## setSvgTransformPrecision
+
 Sets the output precision for matrix-transform values in SVGs by adjusting
 the number of decimal digits used when formatting rotations, translations, etc. Default is 6 digits. 
 
@@ -164,14 +165,13 @@ the number of decimal digits used when formatting rotations, translations, etc. 
     Must be a non-negative integer. If an invalid value is provided, a warning is issued.
 
 
-
 ## setSvgPointRadius
+
 Sets the radius for "points" (which are rendered as tiny circles) in the SVG output. Default is 0.25 pixels.
 
 #### Parameters
 *   `radius` **[number][28]** The desired radius for points, specified as a positive number.
     If an invalid value (non-positive or non-number) is provided, a warning is issued.
-
 
 
 ## setSvgGroupByStrokeColor
@@ -183,8 +183,8 @@ Sets whether or not to group SVG elements by stroke color. When true, elements w
 *   `bEnabled` **[boolean][29]** Enable or disables grouping of elements by stroke color. The default is `false`.
 
 
-
 ## setSvgMergeNamedGroups
+
 Sets whether or not to merge user-defined SVG groups that have the same name. 
 Useful for grouping paths that might be computed at different times, but which are part of the same compositional design element, and should be plotted with the same drawing tool. The default is `true`, meaning that groups with the same name (which are at the same hierarchical level) will be merged.
 
@@ -219,6 +219,7 @@ Be sure to call `endSvgGroup()` later or the SVG file will report errors.
 -->
 
 ## beginSvgGroup
+
 Begins a new user-defined grouping of SVG elements.
 Optionally associates a group name to the SVG group.
 Be sure to call `endSvgGroup()` later or the SVG file will report errors.
@@ -229,16 +230,18 @@ Be sure to call `endSvgGroup()` later or the SVG file will report errors.
 
 
 ## endSvgGroup
+
 Ends the current user-defined group of SVG elements.
 
 
-
 ## getDefaultStrokeColor
+
 Retrieves the default stroke color used for SVG rendering.
 Returns **[string][27]** The default stroke color (in hex, RGB, or named CSS color format).
 
 
 ## isRecordingSVG
+
 Retrieves whether or not SVG recording is active.
 Returns **[boolean][29]** True if SVG recording is active, false otherwise.
 
