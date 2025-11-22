@@ -163,7 +163,7 @@ function draw(){
   updatePowerStrokes(); // Update the PowerStroke instances based on slider values
 
   if (bDoExportSvg){
-    beginRecordSVG(this, "plotSvg_powerstroke.svg");
+    beginRecordSvg(this, "plotSvg_powerstroke.svg");
   }
 
   fill(200,200,200, 120); 
@@ -189,7 +189,7 @@ function draw(){
   }
 
   if (bDoExportSvg){
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

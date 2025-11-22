@@ -33,7 +33,7 @@ function draw(){
   strokeWeight(1); 
   
   if (bDoExportSvg){
-    beginRecordSVG(this, "post_grouping.svg");
+    beginRecordSvg(this, "post_grouping.svg");
   }
 
   // Do a drunk walk, alternating horizonal and vertical moves. 
@@ -66,7 +66,7 @@ function draw(){
   }
 
   if (bDoExportSvg){
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

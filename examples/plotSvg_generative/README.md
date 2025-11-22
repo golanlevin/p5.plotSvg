@@ -57,7 +57,7 @@ function draw(){
   noFill();
   
   if (bDoExportSvg){
-    beginRecordSVG(this, "plotSvg_generative_" + myRandomSeed + ".svg");
+    beginRecordSvg(this, "plotSvg_generative_" + myRandomSeed + ".svg");
   }
 
   
@@ -81,7 +81,7 @@ function draw(){
   }
 
   if (bDoExportSvg){
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

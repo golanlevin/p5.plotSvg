@@ -78,7 +78,7 @@ function draw() {
 
   if (bDoExportSvg) {
     let svgFilename = "plotSvg_hatched_shapes" + nf(exportCount,3) + ".svg";
-    beginRecordSVG(this, svgFilename);
+    beginRecordSvg(this, svgFilename);
     exportCount++; 
   }
   
@@ -87,7 +87,7 @@ function draw() {
   drawShapeHatchlines();
 
   if (bDoExportSvg) {
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   } 
 }

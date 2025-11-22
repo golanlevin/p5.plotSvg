@@ -15,10 +15,10 @@ function setup() {
   background(245); 
   noFill();
 
-  beginRecordSVG(this, "plotSvg_hello1.svg");
+  beginRecordSvg(this, "plotSvg_hello1.svg");
   circle(width/2, height/2, 300); 
   ellipse(width/2-60, height/2-40, 30, 50);
   ellipse(width/2+60, height/2-40, 30, 50);
   arc(width/2, height/2+30, 150, 100, 0, PI);
-  endRecordSVG();
+  endRecordSvg();
 }

@@ -93,7 +93,7 @@ function draw(){
   
   if (bDoExportSvg){
     let svgFilename = "plotSvg_recording_" + frameCount; 
-    beginRecordSVG(this, svgFilename + ".svg");
+    beginRecordSvg(this, svgFilename + ".svg");
   }
 
   // Draw each of the stored marks
@@ -113,7 +113,7 @@ function draw(){
 
   if (bDoExportSvg){
     // End exporting, if doing so
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

@@ -23,7 +23,7 @@ function draw(){
   stroke(0); 
 
   if (bDoExportSvg){
-    beginRecordSVG(this, "hershey_text.svg");
+    beginRecordSvg(this, "hershey_text.svg");
   }
 
   drawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 50,70, 1.0); 
@@ -33,7 +33,7 @@ function draw(){
   drawString("Hello World", 50,230, 1.0); 
 
   if (bDoExportSvg){
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

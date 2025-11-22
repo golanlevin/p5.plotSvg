@@ -66,7 +66,7 @@ function draw(){
   } else if (frameCount == nRecordingFrames) {
     // Initiate SVG output
     bDoExportSvg = true; 
-    beginRecordSVG(this, "plotSvg_particle_paths.svg");
+    beginRecordSvg(this, "plotSvg_particle_paths.svg");
   }
   
   // Draw each of the particle histories
@@ -85,7 +85,7 @@ function draw(){
   
   if (bDoExportSvg){
     // Terminate SVG output
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

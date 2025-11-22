@@ -43,7 +43,7 @@ function squircle(sketch) {
     sketch.noFill();
 
     if (exportSvg) {
-      beginRecordSVG(sketch, "plotSvg_instancemode_" + seed + ".svg");
+      beginRecordSvg(sketch, "plotSvg_instancemode_" + seed + ".svg");
     }
 
     // pick random line number and rotation increment
@@ -68,7 +68,7 @@ function squircle(sketch) {
     }
 
     if (exportSvg) {
-      endRecordSVG();
+      endRecordSvg();
       exportSvg = false;
     }
   };

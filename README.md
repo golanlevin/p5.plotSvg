@@ -39,7 +39,7 @@ Version 0.1.6, July 21, 2025 • Initiated by Golan Levin ([@golanlevin](https:
 
 The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Key advantages of p5.plotSvg are that it does not interfere with graphics performance during animation, and it is easy to add to projects. 
 
-Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.9. Compatibility with p5.js version 2.x is forthcoming in 2026. 
+Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.10. Compatibility with p5.js version 2.x is forthcoming in 2026. 
 
 p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -55,7 +55,7 @@ First, include `p5.plotSvg.js` in your project. You can do this by linking to an
 <!-- This is the index.html file -->
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.9/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js"></script>
   </head>
   <body>
@@ -88,14 +88,14 @@ function keyPressed(){
 function draw(){
   background(255); 
   if (bDoExportSvg){
-    beginRecordSVG(this, "myOutput.svg");
+    beginRecordSvg(this, "myOutput.svg");
   }
 
   // Draw stuff here, such as:
   line(0,0, mouseX, mouseY); 
 
   if (bDoExportSvg){
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }
@@ -103,7 +103,7 @@ function draw(){
 
 ### Instance mode
 
-Alternatively, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). Here's a different `sketch.js` file showing a minimal example of this: 
+Alternatively, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). Here's an alternative `sketch.js` file showing a minimal example of this: 
 
 
 ```js
@@ -113,9 +113,9 @@ import p5plot from 'p5.plotsvg';
 function sketch(context) {
   context.setup = function() {
     context.createCanvas(400, 400);    
-    p5plot.beginRecordSVG(context, "output.svg");
+    p5plot.beginRecordSvg(context, "output.svg");
     context.circle(200, 200, 200);
-    p5plot.endRecordSVG();
+    p5plot.endRecordSvg();
   };
 };
 
@@ -127,7 +127,7 @@ new p5(sketch, document.getElementById("container"));
 ## What the p5.plotSvg library *IS*: 
 
 * The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. We anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter, AxiDraw, or [NextDraw](https://store.bantamtools.com/collections/bantam-tools-nextdraw) pen-plotter.
-* The p5.plotSvg library is intended for use with p5.js, and is modeled after the way in which [PDF exporting](https://processing.org/reference/libraries/pdf/index.html) and [SVG exporting](https://processing.org/reference/libraries/svg/index.html) are implemented in [Processing](https://processing.org/) (Java). To use p5.plotSvg, you are expected to manage the timing of a `beginRecordSVG()` and `endRecordSVG()` function in your code.
+* The p5.plotSvg library is intended for use with p5.js, and is modeled after the way in which [PDF exporting](https://processing.org/reference/libraries/pdf/index.html) and [SVG exporting](https://processing.org/reference/libraries/svg/index.html) are implemented in [Processing](https://processing.org/) (Java). To use p5.plotSvg, you are expected to manage the timing of a `beginRecordSvg()` and `endRecordSvg()` function in your code.
 * The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored.
 
 
@@ -233,6 +233,6 @@ Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://
 
 ## Acknowledgments
 
-This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), @Ucodia, @lewi0622, @mariuswatz, @thrly, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, and pull requests.
+This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), @lewi0622, @mariuswatz, @thrly, @Ucodia, @v3ga, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, and pull requests.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">

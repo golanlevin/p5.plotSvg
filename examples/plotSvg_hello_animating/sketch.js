@@ -29,7 +29,7 @@ function draw(){
   
   if (bDoExportSvg){
     // Begin exporting, if requested
-    beginRecordSVG(this, "plotSvg_hello_animating.svg");
+    beginRecordSvg(this, "plotSvg_hello_animating.svg");
   }
 
   
@@ -49,7 +49,7 @@ function draw(){
 
   if (bDoExportSvg){
     // End exporting, if doing so
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

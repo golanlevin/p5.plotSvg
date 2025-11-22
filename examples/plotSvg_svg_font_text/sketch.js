@@ -35,7 +35,7 @@ function draw() {
   stroke(0);
 
   if (bDoExportSvg){
-    beginRecordSVG(this, "svg_font_text.svg");
+    beginRecordSvg(this, "svg_font_text.svg");
   }
               
   let sca = 30; 
@@ -47,7 +47,7 @@ function draw() {
   mySvgFont.drawString("Hello World!", 40, 280, sca);
 
   if (bDoExportSvg){
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

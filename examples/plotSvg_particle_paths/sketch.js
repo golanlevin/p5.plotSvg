@@ -26,7 +26,7 @@ function setup() {
   bDoExportSvg = true;
   if (bDoExportSvg){
     setSvgCoordinatePrecision(2); // keep file size small
-    beginRecordSVG(this, "plotSvg_particle_paths.svg");
+    beginRecordSvg(this, "plotSvg_particle_paths.svg");
   }
   
   for (let i=0; i<100; i++){
@@ -54,7 +54,7 @@ function draw(){
   
   if (frameCount === nRecordingFrames && bDoExportSvg){
     // Export the SVG file.
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }

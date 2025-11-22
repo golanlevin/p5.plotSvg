@@ -1,6 +1,6 @@
 // Software which exports an SVG flipbook showing a 
 // two-second recording from a face-tracker, using
-// p5.js v.1.11.8 + MediaPipe v.0.10.17 + p5.plotSvg v.0.1.5
+// p5.js v.1.11.10 + MediaPipe v.0.10.17 + p5.plotSvg v.0.1.5
  
 //------------------------------------------
 let myFaceLandmarker;
@@ -87,7 +87,7 @@ function draw() {
 	text("Press a key to restart recording.",10,30);
 	
 	if (bDoExportSvg){
-    beginRecordSVG(this, "plotSvg_face_flipbook.svg");
+    beginRecordSvg(this, "plotSvg_face_flipbook.svg");
   }
 
   drawVideoBackground();
@@ -95,7 +95,7 @@ function draw() {
 	drawFlipbookPages();
 	
 	if (bDoExportSvg){
-    endRecordSVG();
+    endRecordSvg();
     bDoExportSvg = false;
   }
 }
