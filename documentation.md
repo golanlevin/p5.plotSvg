@@ -8,10 +8,10 @@
 
 ### Table of Contents
 
-*   [beginRecordSVG](#beginrecordsvg)
-*   [pauseRecordSVG](#pauserecordsvg)
-*   [endRecordSVG](#endrecordsvg)
-*   [setSVGDocumentSize](#setsvgdocumentsize)
+*   [beginRecordSvg](#beginrecordsvg)
+*   [pauseRecordSvg](#pauserecordsvg)
+*   [endRecordSvg](#endrecordsvg)
+*   [setSvgDocumentSize](#setsvgdocumentsize)
 *   [setSvgResolutionDPI](#setsvgresolutiondpi)
 *   [setSvgResolutionDPCM](#setsvgresolutiondpcm)
 *   [setSvgDefaultStrokeWeight](#setsvgdefaultstrokeweight)
@@ -40,7 +40,7 @@
 ---
 
 
-## beginRecordSVG
+## beginRecordSvg
 
 Begins recording SVG output for a p5.js sketch.
 Initializes recording state, validates and sets the output filename,
@@ -49,12 +49,12 @@ and overrides p5.js drawing functions to capture drawing commands for SVG export
 #### Parameters
 *   `p5Instance` **[object][26]** A reference to the current p5.js sketch (e.g. `this`).
 *   `fn` **[string][27]?** Optional filename for the output SVG file. The *explicit* use of `null` will prevent a file from being saved. Behavior: 
-	* `beginRecordSVG(this, "file.svg"); // saves to "file.svg"`
-	* `beginRecordSVG(this); // saves to "output.svg" (default)`
-	* `beginRecordSVG(this, null); // DOES NOT save any file!`
+	* `beginRecordSvg(this, "file.svg"); // saves to "file.svg"`
+	* `beginRecordSvg(this); // saves to "output.svg" (default)`
+	* `beginRecordSvg(this, null); // DOES NOT save any file!`
 
 
-## pauseRecordSVG
+## pauseRecordSvg
 
 Pauses or unpauses recording of SVG output for a p5.js sketch,
 depending on whether the boolean `bPause` argument is `true` or `false`.
@@ -63,12 +63,12 @@ depending on whether the boolean `bPause` argument is `true` or `false`.
 *   `bPause ` **[boolean][29]**
 
 
-## endRecordSVG
+## endRecordSvg
 
 Ends recording of SVG output for a p5.js sketch. Calls the export function to generate the SVG output and restores the original p5.js functions. Returns the complete text of the SVG file as a string.
 
 
-## setSVGDocumentSize
+## setSvgDocumentSize
 
 Sets the dimensions of the SVG document in pixels/dots. 
 Note that graphics are not scaled to fit this size; they may extend beyond the specified dimensions. 
