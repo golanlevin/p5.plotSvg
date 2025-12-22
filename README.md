@@ -194,7 +194,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 
 ## Known Issues and Bugs:
 
-* p5.plotSvg does not yet convert TTF/OTF text to outlines (though, this is planned). Additionally, p5.plotSvg does not embed TTF/OTF font data into SVGs; it refers to fonts by name and assumes they are installed on your host computer. You may need to perform additional operations on your SVGs (e.g. in Inkscape) to achieve desired typography. Alternatively, for quick typography with plotters, consider using [single stroke fonts](https://github.com/golanlevin/p5-single-line-font-resources).
+* p5.plotSvg does not yet convert TTF/OTF text to outlines (though, this is planned). Additionally, p5.plotSvg does not embed TTF/OTF font data into SVGs; it refers to fonts by name and assumes they are installed on your host computer. You may need to perform additional operations on your SVGs (e.g. in Inkscape) to achieve desired typography. As an alternative, for quick typography with plotters, consider using [single stroke fonts](https://github.com/golanlevin/p5-single-line-font-resources).
 * As of p5.plotSvg v.0.1.x, non-default vertical `textAlign()` settings are not yet supported; only `BASELINE` currently works correctly.
 * As of p5.plotSvg v.0.1.x, *multi-contour* shapes (made with `beginContour()` / [`endContour()`](https://p5js.org/reference/p5/endContour/) etc.) are not yet unsupported. For the time being, users should encode each contour in its own `beginShape()` / `endShape()` block instead. 
 * As of p5.plotSvg v.0.1.x, there is a small discrepancy in the SVG output of polylines rendered with `curveVertex()`. Specifically, there is an error with the starting orientation of the first point of the polyline. 
@@ -234,6 +234,6 @@ Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://
 
 ## Acknowledgments
 
-This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), @lewi0622, @mariuswatz, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, and pull requests.
+This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), @lewi0622, @mariuswatz, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, and pull requests.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
