@@ -89,7 +89,7 @@ Intended for simple typography needs, this demonstration program uses an inlined
 
 ### [plotSvg_svg_font_text](plotSvg_svg_font_text/README.md)
 
-Load and incorporate monoline SVG fonts into your exported designs. (For a large archive of monoline typefaces, see [this repository](https://github.com/golanlevin/p5-single-line-font-resources/tree/main/p5_single_line_svg_fonts).)<br />
+Load and incorporate monoline SVG fonts into your exported designs. (For a large archive of monoline typefaces, see [this repository](https://github.com/golanlevin/p5-single-line-font-resources/).)<br />
 [here](plotSvg_svg_font_text/README.md) • [@editor](https://editor.p5js.org/golan/sketches/rIsRh01Vj) • [@openProcessing](https://openprocessing.org/sketch/2684135)
 
 ![svg_font_text_sm.png](plotSvg_svg_font_text/svg_font_text_sm.png)
