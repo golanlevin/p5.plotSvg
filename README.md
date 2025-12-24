@@ -147,7 +147,7 @@ new p5(sketch, document.getElementById("container"));
 
 ## Example Programs
 
-These [examples](examples/README.md) show how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. All examples are mirrored in collections at [editor.p5js.org](https://editor.p5js.org/golan/collections/MCA5RvDFX) and [openProcessing.org](https://openprocessing.org/curation/88363). A visual index of examples is [here](examples/README.md).
+[This collection of examples](examples/README.md) shows how to generate plotter-friendly SVGs from p5.js using p5.plotSvg. All examples are mirrored in collections at [editor.p5js.org](https://editor.p5js.org/golan/collections/MCA5RvDFX) and [openProcessing.org](https://openprocessing.org/curation/88363). A visual index of examples is [here](examples/README.md).
 
 1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/README.md): ⭐ Full demo of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
 2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/README.md): Simplest possible demo; all art in `setup()` only. [@editor](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing](https://openprocessing.org/sketch/2455362)

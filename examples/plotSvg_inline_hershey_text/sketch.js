@@ -9,7 +9,7 @@ let charCount = 0;
 
 function setup() {
   createCanvas(640, 280);
-  setSvgMergeNamedGroups(false); // don't group paths from like letters
+  setSvgMergeNamedGroups(false); // maintain separate groups for like letters
 
   let saveButton = createButton("Save SVG");
   saveButton.position(10, 10);
@@ -25,7 +25,7 @@ function draw(){
   stroke(0); 
 
   if (bDoExportSvg){
-    beginRecordSvg(this, "hershey_text.svg");
+    beginRecordSvg(this, "inline_hershey_text.svg");
     charCount = 0; 
   }
 

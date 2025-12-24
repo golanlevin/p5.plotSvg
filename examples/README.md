@@ -77,9 +77,19 @@ Merge groups of paths computed at different times. Demonstrates per-color "layer
 
 ---
 
+### [plotSvg_inline_hershey_text](plotSvg_inline_hershey_text/)
+
+Intended for simple typography needs, this demonstration program uses an inlined sens-serif Hershey font. No external files are loaded.<br />
+[here](plotSvg_inline_hershey_text/sketch.js) • [@editor](https://editor.p5js.org/golan/sketches/vjQxbigFg) 
+
+![inline_hershey_text_sm.png](plotSvg_inline_hershey_text/inline_hershey_text_sm.png)
+
+
+---
+
 ### [plotSvg_svg_font_text](plotSvg_svg_font_text/README.md)
 
-Use monoline SVG fonts in your exported designs.<br />
+Load and incorporate monoline SVG fonts into your exported designs. (For a large archive of monoline typefaces, see [this repository](https://github.com/golanlevin/p5-single-line-font-resources/tree/main/p5_single_line_svg_fonts).)<br />
 [here](plotSvg_svg_font_text/README.md) • [@editor](https://editor.p5js.org/golan/sketches/rIsRh01Vj) • [@openProcessing](https://openprocessing.org/sketch/2684135)
 
 ![svg_font_text_sm.png](plotSvg_svg_font_text/svg_font_text_sm.png)
