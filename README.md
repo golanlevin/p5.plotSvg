@@ -39,7 +39,7 @@ Version 0.1.7, November 22, 2025 • Initiated by Golan Levin ([@golanlevin](ht
 
 The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Key advantages of p5.plotSvg are that it does not interfere with graphics performance during animation, and it is easy to add to projects. 
 
-Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.10. Compatibility with p5.js version 2.x is forthcoming in 2026. 
+Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.11. Compatibility with p5.js version 2.x is forthcoming in 2026. 
 
 p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -48,14 +48,14 @@ p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin
 
 ## Quickstart Installation
 
-First, include `p5.plotSvg.js` in your project. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) or 
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file:
+First, include `p5.plotSvg.js` in your project, alongside p5.js. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) or 
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your project's `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file:
 
 ```html
 <!-- This is the index.html file -->
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js"></script>
   </head>
   <body>
@@ -157,7 +157,7 @@ These [examples](examples/README.md) show how to generate plotter-friendly SVGs 
 6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/README.md): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
 7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/README.md): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
 8. [**plotSvg_instancemode**](examples/plotSvg_instancemode/README.md): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
-9. [**plotSvg_post_grouping**](examples/plotSvg_post_grouping/README.md): Merge groups of paths computed at different times. [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
+9. [**plotSvg_post_grouping**](examples/plotSvg_post_grouping/README.md): Merge groups of paths ("layers") computed at different times. [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
 10. [**plotSvg_svg_font_text**](examples/plotSvg_svg_font_text/README.md): Use monoline SVG fonts in your exported designs. [@editor](https://editor.p5js.org/golan/sketches/rIsRh01Vj) • [@openProcessing](https://openprocessing.org/sketch/2684135)
 11. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
 
@@ -187,8 +187,8 @@ The p5.plotSvg library offers two different ways of encoding graphics transforma
 
 p5.plotSvg offers two convenience functions which control how many digits of decimal precision are exported to SVG files. These can have a significant impact on SVG file size: 
 
-* `setSvgCoordinatePrecision()` - The default is 4 digits of precision for path coordinates, e.g. `3.1416`
-* `setSvgTransformPrecision()` - The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
+* `setSvgCoordinatePrecision()` – The default is 4 digits of precision for path coordinates, e.g. `3.1416`
+* `setSvgTransformPrecision()` – The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
 
 ---
 
@@ -200,6 +200,7 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 * As of p5.plotSvg v.0.1.x, there is a small discrepancy in the SVG output of polylines rendered with `curveVertex()`. Specifically, there is an error with the starting orientation of the first point of the polyline. 
 * As of p5.plotSvg v.0.1.x, this library is not intended to be used in `WEBGL` mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
 * p5.plotSvg v.0.1.x works with versions of p5.js as old as v.1.4.2. The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to portions of p5.plotSvg v.0.1.x.
+* Other bugs and issues as listed [here](https://github.com/golanlevin/p5.plotSvg/issues).
 
 ---
 
@@ -234,6 +235,6 @@ Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://
 
 ## Acknowledgments
 
-This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), @lewi0622, @mariuswatz, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, and pull requests.
+This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), the students in my [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines/) course at CMU, @lewi0622, @mariuswatz, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, and pull requests.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
