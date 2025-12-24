@@ -63,7 +63,7 @@ A trick for exporting hatched ("filled") SVG shapes.<br />[here](plotSvg_hatched
 
 ### [plotSvg_instancemode](plotSvg_instancemode/README.md)
 
-Using p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode).<br />[here](plotSvg_instancemode/README.md) • [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
+Using p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode).<br />[here](plotSvg_instancemode/README.md) • [@editor](https://editor.p5js.org/golan/sketches/Ib_myDs3s)
 
 [![plotSvg_instancemode](plotSvg_instancemode/plotSvg_instancemode_sm.png)](plotSvg_instancemode/README.md)
 
