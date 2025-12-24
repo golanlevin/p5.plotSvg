@@ -20,6 +20,7 @@ function setup(){
   saveButton.mousePressed((event) => {
     event.stopPropagation();
     bDoExportSvg = true;
+    // save("post_grouping.png"); 
   });
 }
 

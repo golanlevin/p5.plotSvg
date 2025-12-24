@@ -71,7 +71,7 @@ Using p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wik
 
 ### [plotSvg_post_grouping](plotSvg_post_grouping/README.md)
 
-Merge groups of paths computed at different times.<br />[here](plotSvg_post_grouping/README.md) • [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
+Merge groups of paths computed at different times. Demonstrates per-color "layers".<br />[here](plotSvg_post_grouping/README.md) • [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
 
 ![post_grouping.png](plotSvg_post_grouping/post_grouping_sm.png)
 

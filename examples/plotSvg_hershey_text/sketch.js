@@ -4,10 +4,12 @@
 // https://editor.p5js.org/allison.parrish/sketches/SJv2DCYpQ
 
 p5.disableFriendlyErrors = true; // hush, p5
-let bDoExportSvg = false; 
+let bDoExportSvg = false;
+let charCount = 0; 
 
 function setup() {
   createCanvas(640, 280);
+  setSvgMergeNamedGroups(false); // don't group paths from like letters
 
   let saveButton = createButton("Save SVG");
   saveButton.position(10, 10);
@@ -24,6 +26,7 @@ function draw(){
 
   if (bDoExportSvg){
     beginRecordSvg(this, "hershey_text.svg");
+    charCount = 0; 
   }
 
   drawString("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 50,70, 1.0); 
@@ -49,7 +52,7 @@ function keyPressed() {
 
 //===================================================================
 // convert a hersheytextjs SVG path to a list of opentype-esque commands
-// By Allison Parrish
+// Adapted from code by Allison Parrish
 
 function drawString(str, x, y, sca){
   drawPath(getPathCommandsForText(str), x,y, sca);
@@ -73,10 +76,11 @@ function getPathCommandsForText(s) {
   let commands = [];
   let offset = 0;
   for (let i = 0; i < s.length; i++) {
+    let ithChar = s[i];
   	let cidx = s.charCodeAt(i) - 33;
     if (cidx >= 0) {
       Array.prototype.push.apply(
-        commands, getPathCommandsForChar(font.chars[cidx].d, offset));
+        commands, getPathCommandsForChar(ithChar, font.chars[cidx].d, offset));
     	offset += int(font.chars[cidx].o) * 2;
     }
     else {
@@ -87,11 +91,11 @@ function getPathCommandsForText(s) {
 }
 
 //--------------------------------------------
-function getPathCommandsForChar(s, offset) {
+function getPathCommandsForChar(c, s, offset) {
   let instr = [];
   let mode = '';
 
-  instr.push({type: 'B', 'x': 0, 'y': 0}); // beginSvgGroup
+  instr.push({type: 'B', 'x': 0, 'y': 0, 'c':c}); // beginSvgGroup
   for (let t of s.split(' ')) {
     if (t.charAt(0) == 'M' || t.charAt(0) == 'L') {
       mode = t.charAt(0);
@@ -123,7 +127,7 @@ function drawPath(cmds, x,y, sca) {
   for (let cmd of cmds) {
     switch (cmd.type) {
       case 'B': 
-        beginSvgGroup();
+        beginSvgGroup(charToId(cmd.c));
         break;
       case 'E':
         endSvgGroup();
@@ -146,6 +150,13 @@ function drawPath(cmds, x,y, sca) {
 	}
   }
 }
+
+function charToId(c) {
+  // Wraps the character safely for the group-name
+  const code = c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0');
+  return `char_${charCount++}_U${code}`;
+}
+
 
 const hersheyFutural = {"futural":{
   "name":"Sans 1-stroke",

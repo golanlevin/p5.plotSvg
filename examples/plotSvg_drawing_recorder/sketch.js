@@ -90,16 +90,19 @@ function draw(){
     }
     endShape(); 
   }
-  // Draw the current (active) mark
-  beginShape();
-  for (let i=0; i<currentMark.length; i++){
-    vertex(currentMark[i].x, currentMark[i].y); 
-  }
-  endShape(); 
 
   if (bDoExportSvg){
     // End exporting, if doing so
     endRecordSvg();
     bDoExportSvg = false;
   }
+
+  // Draw the current (active) mark, 
+  // but draw it after the SVG has been exported
+  // so it doesn't get added to the file. 
+  beginShape();
+  for (let i=0; i<currentMark.length; i++){
+    vertex(currentMark[i].x, currentMark[i].y); 
+  }
+  endShape(); 
 }

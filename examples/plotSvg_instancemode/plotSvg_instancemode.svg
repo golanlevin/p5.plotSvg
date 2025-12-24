@@ -14,7 +14,6 @@
         vector-effect: non-scaling-stroke;
       }
     </style>
-<g vector-effect="non-scaling-stroke">
   <g>
     <g transform="translate(288, 288)">
       <g transform="rotate(0)">
@@ -276,5 +275,4 @@
       </g>
     </g>
   </g>
-</g>
 </svg>

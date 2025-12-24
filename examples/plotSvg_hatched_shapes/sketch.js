@@ -20,6 +20,7 @@ let shapes = [];
 let hatchBuffer;
 let hatchLines;
 let exportCount = 0;
+let myRandomSeed = 12345678; 
 
 p5.disableFriendlyErrors = true;
 //======================================
@@ -65,6 +66,7 @@ function makeFilledShape() {
 
 //======================================
 function makeThreeNewShapes(){
+  randomSeed(myRandomSeed);
   shapes = [];
   makeFilledShape();
   makeFilledShape();
@@ -77,9 +79,8 @@ function draw() {
   background(245);
 
   if (bDoExportSvg) {
-    let svgFilename = "plotSvg_hatched_shapes" + nf(exportCount,3) + ".svg";
+    let svgFilename = "plotSvg_hatched_shapes_" + nf(exportCount,3) + ".svg";
     beginRecordSvg(this, svgFilename);
-    exportCount++; 
   }
   
   stroke(0); 
@@ -88,7 +89,9 @@ function draw() {
 
   if (bDoExportSvg) {
     endRecordSvg();
+    save("plotSvg_hatched_shapes_" + nf(exportCount,3) + ".png");
     bDoExportSvg = false;
+    exportCount++; 
   } 
 }
 
@@ -117,6 +120,7 @@ function drawShapeHatchlines(){
   for (let s=0; s<shapes.length; s++){
     HATCH_ANGLE = mouseX/width + s*radians(60);
     computeHatchedShape(s); 
+    beginSvgGroup("hatchlines-for-shape-" + s);
     for (let i=0; i<hatchLines.length; i+=2) {   
       let x1 = hatchLines[i].x; 
       let y1 = hatchLines[i].y; 
@@ -124,6 +128,7 @@ function drawShapeHatchlines(){
       let y2 = hatchLines[i+1].y; 
       line(x1,y1, x2,y2);
     }
+    endSvgGroup(); 
     
     if (bShowDebug){
       // Display the hatching buffers
@@ -224,6 +229,7 @@ function computeHatchedShape(s) {
 
 //======================================
 function mousePressed(){
+  myRandomSeed = round(millis()); 
   makeThreeNewShapes(); 
 }
 function keyPressed() {
