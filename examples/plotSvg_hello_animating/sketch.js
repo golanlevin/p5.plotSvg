@@ -31,7 +31,6 @@ function draw(){
     // Begin exporting, if requested
     beginRecordSvg(this, "plotSvg_hello_animating.svg");
   }
-
   
   // Draw your artwork here.
   push(); 
@@ -45,7 +44,7 @@ function draw(){
   rectMode(CENTER); 
   rect(0,0, 400,300); 
   pop(); 
-  
+
 
   if (bDoExportSvg){
     // End exporting, if doing so
