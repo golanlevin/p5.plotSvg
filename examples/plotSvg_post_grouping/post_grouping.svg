@@ -1,9 +1,9 @@
 <!-- post_grouping.svg -->
-<!-- Generated using p5.plotSvg v.0.1.7: -->
+<!-- Generated using p5.plotSvg v.0.1.8: -->
 <!-- A Plotter-Oriented SVG Exporter for p5.js -->
-<!-- Wed Dec 24 2025 00:53:38 GMT-0500 (Eastern Standard Time) -->
+<!-- Fri Jan 23 2026 12:53:24 GMT-0500 (Eastern Standard Time) -->
 <!-- DPI: 96 -->
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="6in" height="4in" viewBox="0 0 576 384">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" inkscape:version="1.4" width="6in" height="4in" viewBox="0 0 576 384">
   <style>
       circle, ellipse, line, path, polygon, polyline, rect, quad, text {
         fill: none;
@@ -14,7 +14,7 @@
         vector-effect: non-scaling-stroke;
       }
     </style>
-<g id="horizontalLines">
+<g id="horizontalLines" inkscape:groupmode="layer" inkscape:label="1_horizontalLines">
   <line x1="288" y1="192" x2="249.6322" y2="192" style="stroke:red;"/>
   
   <line x1="249.6322" y1="162.9929" x2="253.0847" y2="162.9929" style="stroke:red;"/>
@@ -55,7 +55,7 @@
   <line x1="308.7605" y1="259.0385" x2="338.7244" y2="259.0385" style="stroke:red;"/>
   <line x1="338.7244" y1="272.4470" x2="341.5910" y2="272.4470" style="stroke:red;"/>
 </g>
-<g id="verticalLines">
+<g id="verticalLines" inkscape:groupmode="layer" inkscape:label="2_verticalLines">
   <line x1="249.6322" y1="192" x2="249.6322" y2="162.9929" style="stroke:blue;"/>
   
   <line x1="253.0847" y1="162.9929" x2="253.0847" y2="171.0871" style="stroke:blue;"/>

@@ -97,6 +97,18 @@ This value is used to determine the scaling of units (pixels to physical dimensi
 *   `dpcm` **[number][28]** The resolution in dots per centimeter. Must be a positive number.
 
 
+## setSvgInkscapeCompatibility
+
+Enables or disables Inkscape-compatible layer attributes for SVG groups.
+When enabled (default), Inkcape headers will be added to the SVG, and 
+SVG groups created with `beginSvgGroup()` will include
+`inkscape:groupmode="layer"` and auto-numbered `inkscape:label` attributes.
+
+#### Parameters
+
+*   `bEnabled` **[boolean][29]** Enable or disable Inkscape layer compatibility. The default is `true`: groups will include Inkscape layer attributes.
+
+
 ## setSvgDefaultStrokeWeight
 
 Sets the default stroke weight for SVG elements.
@@ -186,7 +198,7 @@ Sets whether or not to group SVG elements by stroke color. When true, elements w
 ## setSvgMergeNamedGroups
 
 Sets whether or not to merge user-defined SVG groups that have the same name. 
-Useful for grouping paths that might be computed at different times, but which are part of the same compositional design element, and should be plotted with the same drawing tool. The default is `true`, meaning that groups with the same name (which are at the same hierarchical level) will be merged.
+Useful for grouping paths that might be computed at different times, but which are part of the same compositional design element, and should be plotted with the same drawing tool. The default is `true`, meaning that groups with the same name (which are at the same hierarchical level) will be merged. *Note*: There may be unexpected groupings if `setSvgGroupByStrokeColor()` is also set to `true`. 
 
 #### Parameters
 *   `bEnabled` **[boolean][29]** Whether or not groups with the same name should be merged.

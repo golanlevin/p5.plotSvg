@@ -11,10 +11,9 @@ function preload() {
   mySvgFont = new SvgFont("HersheyScript1.svg");
   // mySvgFont = new SvgFont("HersheySans1.svg"); 
 
-  // Lots more SVG single-line fonts can be found at:
+  // Many more SVG single-line fonts can be found at:
   // https://github.com/golanlevin/p5-single-line-font-resources/tree/main/p5_single_line_svg_fonts
   // https://gitlab.com/oskay/svg-fonts
-  // https://github.com/isdat-type/Relief-SingleLine
 }
 
 

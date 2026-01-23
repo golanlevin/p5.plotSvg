@@ -20,7 +20,6 @@ function setup(){
   saveButton.mousePressed((event) => {
     event.stopPropagation();
     bDoExportSvg = true;
-    // save("post_grouping.png"); 
   });
 }
 
@@ -41,6 +40,8 @@ function draw(){
   // Horizonal lines are red, vertical lines are blue.
   // setSvgMergeNamedGroups(true) ensures that lines inside
   // the same group are (eventually) grouped together.
+  // FWIW, an *alternative* way to achieve this would be to use
+  // setSvgGroupByStrokeColor(true); 
   let px = width/2; 
   let py = height/2;
   for (let i=0; i<75; i++){
