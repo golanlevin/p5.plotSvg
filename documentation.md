@@ -91,7 +91,7 @@ This value is used to determine the scaling of units (pixels to physical dimensi
 ## setSvgResolutionDPCM
 
 Sets the resolution for the exported SVG file in dots per centimeter (DPCM).
-This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output. The default resolution is 243.84 dpcm (equivalent to 96 dpi). 
+This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output. The default resolution is approximately 37.79527559 dpcm (equivalent to 96 dpi). 
 
 #### Parameters
 *   `dpcm` **[number][28]** The resolution in dots per centimeter. Must be a positive number.

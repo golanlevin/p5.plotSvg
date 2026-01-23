@@ -1,6 +1,6 @@
-# LLM Context for p5.plotSvg
+# Context for p5.plotSvg Codebase
 
-This document provides context for LLMs working on the p5.plotSvg codebase.
+This document provides context for authors and LLMs working on the p5.plotSvg codebase.
 
 ## Overview
 
