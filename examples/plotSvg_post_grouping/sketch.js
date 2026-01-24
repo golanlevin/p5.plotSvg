@@ -13,7 +13,10 @@ let myRandomSeed = 12345;
 
 function setup(){
   createCanvas(6 * 96, 4 * 96); // 6x4 inches at 96dpi
-  setSvgMergeNamedGroups(true); // Groups the lines!
+  setSvgMergeNamedGroups(true); // Groups elements within a user-defined group
+
+  /* Groups elements with the same color. Uncomment this to see how: */
+  // setSvgGroupByStrokeColor(true); 
   
   let saveButton = createButton("Save SVG");
   saveButton.position(10, 10);
@@ -37,11 +40,9 @@ function draw(){
   }
 
   // Do a drunk walk, alternating horizonal and vertical moves. 
-  // Horizonal lines are red, vertical lines are blue.
+  // Horizonal lines are red or blue, while all vertical lines are black.
   // setSvgMergeNamedGroups(true) ensures that lines inside
-  // the same group are (eventually) grouped together.
-  // FWIW, an *alternative* way to achieve this would be to use
-  // setSvgGroupByStrokeColor(true); 
+  // the same named group are (eventually) grouped together.
   let px = width/2; 
   let py = height/2;
   for (let i=0; i<75; i++){
@@ -51,14 +52,20 @@ function draw(){
     if (i%2 == 0){
       qx += 40 * random(-1,1); 
       beginSvgGroup("horizontalLines");
-      stroke('red'); 
+      if (qx > px){
+        // lines moving to the right are red
+        stroke('red');
+      } else {
+        // lines moving to the left are blue
+        stroke('blue');
+      }
       line(px,py, qx,qy); 
       endSvgGroup(); 
       
     } else {
       qy += 30 * random(-1,1); 
       beginSvgGroup("verticalLines"); 
-      stroke('blue'); 
+      stroke('black'); 
       line(px,py, qx,qy); 
       endSvgGroup(); 
     } 

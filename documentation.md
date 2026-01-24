@@ -14,6 +14,7 @@
 *   [setSvgDocumentSize](#setsvgdocumentsize)
 *   [setSvgResolutionDPI](#setsvgresolutiondpi)
 *   [setSvgResolutionDPCM](#setsvgresolutiondpcm)
+*   [setSvgInkscapeCompatibility](#setsvginkscapecompatibility)
 *   [setSvgDefaultStrokeWeight](#setsvgdefaultstrokeweight)
 *   [setSvgDefaultStrokeColor](#setsvgdefaultstrokecolor)
 *   [setSvgBackgroundColor](#setsvgbackgroundcolor)
@@ -24,6 +25,7 @@
 *   [setSvgPointRadius](#setsvgpointradius)
 *   [setSvgGroupByStrokeColor](#setsvggroupbystrokecolor)
 *   [setSvgMergeNamedGroups](#setsvgmergenamedgroups)
+*   [setSvgExportPolylinesAsPaths](#setsvgexportpolylinesaspaths)
 *   [beginSvgGroup](#beginsvggroup)
 *   [endSvgGroup](#endsvggroup)
 *   [getDefaultStrokeColor](#getdefaultstrokecolor)
@@ -31,7 +33,6 @@
 
 
 <!-- WORK IN PROGRESS
-*   [setSvgExportPolylinesAsPaths](#setsvgexportpolylinesaspaths)
 *   [injectSvgHeaderAttribute](#injectsvgheaderattribute)
 *   [injectSvgDef](#injectsvgdef) 
 -->
@@ -91,7 +92,7 @@ This value is used to determine the scaling of units (pixels to physical dimensi
 ## setSvgResolutionDPCM
 
 Sets the resolution for the exported SVG file in dots per centimeter (DPCM).
-This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output. The default resolution is approximately 37.79527559 dpcm (equivalent to 96 dpi). 
+This value is used to determine the scaling of units (pixels to physical dimensions) in the SVG output. The default resolution is approximately `37.79527559` dpcm (equivalent to 96 dpi). 
 
 #### Parameters
 *   `dpcm` **[number][28]** The resolution in dots per centimeter. Must be a positive number.
@@ -100,13 +101,12 @@ This value is used to determine the scaling of units (pixels to physical dimensi
 ## setSvgInkscapeCompatibility
 
 Enables or disables Inkscape-compatible layer attributes for SVG groups.
-When enabled (default), Inkcape headers will be added to the SVG, and 
-SVG groups created with `beginSvgGroup()` will include
-`inkscape:groupmode="layer"` and auto-numbered `inkscape:label` attributes.
+When enabled (which is the default), Inkscape headers will be added to the SVG, and SVG groups created with `beginSvgGroup()` will include
+`inkscape:groupmode="layer"` and auto-numbered `inkscape:label` attributes. Disabling this mode produces 'vanilla' SVG files.
 
 #### Parameters
 
-*   `bEnabled` **[boolean][29]** Enable or disable Inkscape layer compatibility. The default is `true`: groups will include Inkscape layer attributes.
+*   `bEnabled` **[boolean][29]** Enable or disable Inkscape layer compatibility. The default is `true`: groups will include Inkscape layer attributes, and the SVG file will have Inkscape hints in its headers.
 
 
 ## setSvgDefaultStrokeWeight
@@ -204,15 +204,14 @@ Useful for grouping paths that might be computed at different times, but which a
 *   `bEnabled` **[boolean][29]** Whether or not groups with the same name should be merged.
 
 
-<!-- WORK IN PROGRESS
 ## setSvgExportPolylinesAsPaths
-Sets whether all polylines should be exported as `<path>` elements instead of `<polyline>` or `<polygon>`.  
-This option is required for compatibility with Inkscape’s PowerStroke live path effect (LPE), which only works with `<path>` elements.  
-By default, p5.plotSvg outputs simple poly-linear shapes as `<polyline>` or `<polygon>`.
+
+Sets whether all polylines should be exported as `<path>` elements instead of the default case (which is `<polyline>` or `<polygon>`). <!--  
+This option is required for compatibility with Inkscape’s PowerStroke live path effect (LPE), which only works with `<path>` elements. -->
 
 #### Parameters
-*   `b` **[boolean][29]** `true` to export polylines as `<path>` elements, `false` to keep the default behavior.
--->
+*   `b` **[boolean][29]** `true` to export polylines as `<path>` elements; `false` to keep the default behavior.
+
 
 
 <!-- WORK IN PROGRESS; revised documentation:
@@ -249,13 +248,13 @@ Ends the current user-defined group of SVG elements.
 ## getDefaultStrokeColor
 
 Retrieves the default stroke color used for SVG rendering.
-Returns **[string][27]** The default stroke color (in hex, RGB, or named CSS color format).
+Returns **[string][27]**, the default stroke color (in hex, RGB, or named CSS color format).
 
 
 ## isRecordingSVG
 
 Retrieves whether or not SVG recording is active.
-Returns **[boolean][29]** True if SVG recording is active, false otherwise.
+Returns **[boolean][29]** `true` if SVG recording is active, `false` otherwise.
 
 
 <!-- WORK IN PROGRESS

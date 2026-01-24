@@ -12,6 +12,7 @@ p5.disableFriendlyErrors = true;
 let bDoExportSvg = false; 
 function setup() {
   createCanvas(576, 384); // Postcard size: 6"x4" at 96 dpi
+  setSvgExportPolylinesAsPaths(true);
 }
 
 function keyPressed(){
