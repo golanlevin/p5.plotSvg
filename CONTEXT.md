@@ -160,10 +160,9 @@ Two modes controlled by `_bFlattenTransforms`:
 1. No fill support (by design—plotter-focused)
 2. No WEBGL mode support
 3. `textAlign()` vertical modes (except BASELINE) not fully supported
-4. Multi-contour shapes (`beginContour`/`endContour`) not supported
-5. `curveVertex()` has minor starting orientation error
-6. `colorMode()` not supported—only CSS colors, hex, and RGB 0-255
-7. Fonts referenced by name, not embedded
+4. `curveVertex()` has minor starting orientation error
+5. `colorMode()` not supported—only CSS colors, hex, and RGB 0-255
+6. Fonts referenced by name, not embedded
 
 ## File Structure
 

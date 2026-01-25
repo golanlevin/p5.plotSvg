@@ -1,6 +1,6 @@
 # plotSvg_post_grouping Example
 
-The `plotSvg_post_grouping` example demonstrates how to use the `setSvgMergeNamedGroups()` function to merge groups of SVG paths, even if the paths were computed at different times, *so long as the SVG groups have the same name*. The implementation of this functionality is thanks to the contribution of Lionel Ringenbach ([@Ucodia](https://github.com/ucodia)) and is supported in p5.plotSvg 0.1.5+.
+The `plotSvg_post_grouping` example demonstrates how to use the `setSvgMergeNamedGroups()` function to merge groups of SVG paths, even if the paths were computed at different times, *so long as the SVG groups have the same name*. The implementation of this functionality is thanks to the contributions of @Ucodia and @R4chel, and is supported in p5.plotSvg 0.1.5+. From v.0.1.8+, the emitted groups are now compatible with the "layers" functionality of Inkscape. 
 
 To create a group of paths that are specifically intended to plotted with the same color pen, the `setSvgGroupByStrokeColor()` is a complementary choice. By contrast, the `setSvgMergeNamedGroups()` function is more open-ended, conceptually.
 
@@ -12,9 +12,11 @@ Code:
 
 * At editor.p5js.org: [https://editor.p5js.org/golan/sketches/aWfRPvVfT](https://editor.p5js.org/golan/sketches/aWfRPvVfT)
 * At Github: [sketch.js](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/examples/plotSvg_post_grouping/sketch.js)
-* A related example by @Ucodia can be found [here](https://editor.p5js.org/golan/sketches/k3xWBNTND)
 
-In the example provided here, a `for` loop in the `draw()` function accumulates 75 steps of a "drunk walk", alternately pushing a tracer at `(px,py)` horizontally and vertically by random amounts. Horizontal movements are shown with a red or blue line, and vertical movements are shown with a black line. In the [resulting SVG](post_grouping.svg), the horizontal lines and vertical lines are each placed into separate SVG groups, e.g.:
+<!--
+* A related example by @Ucodia can be found [here](https://editor.p5js.org/golan/sketches/k3xWBNTND) -->
+
+In the example provided here, a `for` loop in the `draw()` function accumulates 75 steps of a "drunk walk", alternately pushing a tracer at `(px,py)` horizontally and vertically by random amounts. Horizontal movements are shown with a red or blue line, while vertical movements are shown with a black line. In the [resulting SVG](post_grouping.svg), the horizontal lines and vertical lines are each placed into separate SVG groups, e.g.:
 
 ```xml
   <g id="horizontalLines" inkscape:groupmode="layer" inkscape:label="1_horizontalLines">
