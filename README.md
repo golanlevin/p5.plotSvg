@@ -21,7 +21,7 @@ Version 0.1.8, January 22, 2026 • Initiated by Golan Levin ([@golanlevin](htt
 ### Contents:
 
 * [About p5.plotSvg](#about-p5plotsvg)
-* [Quickstart Installation](#quickstart-installation)
+* [Quickstart Installation Instructions](#quickstart-installation-instructions)
 * [What the p5.plotSvg library *IS*](#what-the-p5plotsvg-library-is)
 * [What the p5.plotSvg library *IS NOT*](#what-the-p5plotsvg-library-is-not)
 * [Example Programs](#example-programs)
@@ -46,10 +46,24 @@ p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin
 
 ---
 
-## Quickstart Installation
+## Quickstart Installation Instructions
 
 First, include `p5.plotSvg.js` in your project, alongside p5.js. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) or 
 [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your project's `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file:
+
+<details>
+<summary>**(Instructions en français • cliquez)**</summary>
+Tout d'abord, incluez `p5.plotSvg.js` dans votre projet, à côté de p5.js. Vous pouvez le faire en ajoutant un lien vers une version en ligne de p5.plotSvg sur [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) ou
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) dans le fichier `index.html` de votre projet. Vous pouvez également utiliser une copie locale de p5.plotSvg.js, que vous pouvez télécharger depuis ce dépôt GitHub, [ici](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). L'exemple suivant montre comment inclure `p5.plotSvg.js` dans le fichier `index.html` de votre projet :</details>
+<details>
+<summary>**(Instrucciones en español • haga clic)**</summary>
+Primero, incluya `p5.plotSvg.js` en su proyecto, junto con p5.js. Puede hacerlo enlazando a una copia en línea de p5.plotSvg en [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) o
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) en el archivo `index.html` de su proyecto. Alternativamente, puede enlazar a una copia local de p5.plotSvg.js, que puede descargar desde este repositorio de GitHub, [aquí](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). El siguiente ejemplo muestra una forma de incluir `p5.plotSvg.js` en el archivo `index.html` de su proyecto:
+</details>
+<details>
+<summary>**(日本語の説明 • クリック)**</summary>
+まず、p5.js と一緒に `p5.plotSvg.js` をプロジェクトに含めてください。これは、プロジェクトの `index.html` ファイルで [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) または [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) にある p5.plotSvg のオンラインコピーへのリンクを追加することで実現できます。あるいは、この GitHub リポジトリからダウンロードできる p5.plotSvg.js のローカルコピーへのリンクを追加することもできます（[こちら](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js)）。以下の例は、プロジェクトの `index.html` ファイルに `p5.plotSvg.js` を含める方法の一例です。
+</details>
 
 ```html
 <!-- This is the index.html file -->
@@ -71,7 +85,7 @@ Next, create a p5.js file like the one below, called `sketch.js`, in the same di
 // Press 's' to export the SVG.
 // Note that p5.js is used in 'global mode'. 
 
-p5.disableFriendlyErrors = true; // hush
+p5.disableFriendlyErrors = true; // keep warnings quiet
 let bDoExportSvg = false; 
 
 function setup(){
@@ -128,7 +142,7 @@ new p5(sketch, document.getElementById("container"));
 
 * The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. We anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter, AxiDraw, or [NextDraw](https://store.bantamtools.com/collections/bantam-tools-nextdraw) pen-plotter.
 * The p5.plotSvg library is intended for use with p5.js, and is modeled after the way in which [PDF exporting](https://processing.org/reference/libraries/pdf/index.html) and [SVG exporting](https://processing.org/reference/libraries/svg/index.html) are implemented in [Processing](https://processing.org/) (Java). To use p5.plotSvg, you are expected to manage the timing of a `beginRecordSvg()` and `endRecordSvg()` function in your code.
-* The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored.
+* The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are temporarily redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored.
 
 
 ---
@@ -169,11 +183,9 @@ new p5(sketch, document.getElementById("container"));
 ### Color
 
 * The p5.plotSvg library ignores p5.js `fill()` commands, and does not export SVG shapes with filled colors. To export filled shapes for a pen-plotter, consider implementing your own hatching method, as in [this example](examples/plotSvg_hatched_shapes/).
-* SVGs produced with p5.plotSvg have a default stroke color, `black`. This can be altered with `setSvgDefaultStrokeColor()`, which takes valid CSS color strings (e.g., `'red'`, `'#ff0000'`, `'rgb(255,0,0)'`).
-* To create SVG paths with non-default colors, simply use the `stroke()` command as usual. Note, however, that any such strokes will have additional style information added to their SVG representation (e.g. `style="stroke:#ff0000;"`); this could lead to potentially large file sizes, depending on your design. To restore the default stroke color, you can use `stroke(getDefaultStrokeColor());`.
+* SVGs produced with p5.plotSvg have a default stroke color, `black`, which can be altered with `setSvgDefaultStrokeColor()`. This library takes `stroke` commands with valid CSS [color strings](https://johndecember.com/html/spec/colorsvg.html) (e.g., `'red'`, `'#ff0000'`, `'rgb(255,0,0)'`). The p5 `colorMode()` command is not supported by p5.plotSvg, and calls to `colorMode()` may produce unpredictable results in your SVG.
 * If you use stroke colors, the working assumption of p5.plotSvg is that you are using so *to label different logical entities* — such as different color pens in a multi-pen plotter, different tools in a CNC machine, or different intensity settings in a laser cutter. For this reason, alpha (transparency) values are stripped out. I strongly recommend using just a small number of colors, and selecting easy-to-remember [CSS color keyword names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords) such as `'red'`, `'green'`, `'blue'`, etc. 
-* This library only accepts p5 `stroke()` commands with the following types of arguments: CSS named colors [in the set of 147 official SVG colors](https://johndecember.com/html/spec/colorsvg.html), hex formatted color strings, or as RGB/gray colors whose values range from 0-255. The p5 `colorMode()` command is not supported by p5.plotSvg, and calls to `colorMode()` may produce unpredictable results in your SVG.
-* When making multi-color plots, the `setSvgGroupByStrokeColor(true)` function may be helpful in grouping paths you want plotted with the same color pen; see [this example](examples/setSvgMergeNamedGroups/README.md).
+* When making complex and/or multi-color plots, the `setSvgMergeNamedGroups()` and `setSvgGroupByStrokeColor()` functions may be helpful in producing Inkscape-compatible "layers" and grouping paths you want plotted with the same pen. 
 
 ### Graphics Transforms
 
