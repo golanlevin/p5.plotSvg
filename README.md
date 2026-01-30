@@ -113,9 +113,11 @@ function draw(){
 }
 ```
 
+One recommended workflow is to generate an SVG file using p5.js with p5.plotSvg, as described above, and then (if desired) optimize your SVG file for plotting using the excellent [vpype](https://vpype.readthedocs.io/en/latest/) command-line utility.
+
 ### Instance mode
 
-Alternatively, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). Here's an alternative `sketch.js` file showing a minimal example of this: 
+As an alternative to using the p5.js global mode, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). Here's an alternative `sketch.js` file showing a minimal example of this: 
 
 
 ```js
@@ -247,6 +249,6 @@ Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://
 
 ## Acknowledgments
 
-This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), the students in my [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines/) course at CMU, @lewi0622, @mariuswatz, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, and pull requests.
+This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), the students in my [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines/) course at CMU, @lewi0622, @mariuswatz, @msurguy, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, pull requests, and other forms of support.
 
-<img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55">
+<img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55"><br/>![Processing logo](images/processing_logo.png) ![p5.js logo](images/p5_logo.png) ![SVG logo](images/svg_logo.png)
