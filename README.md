@@ -52,17 +52,17 @@ First, include `p5.plotSvg.js` in your project, alongside p5.js. You can do this
 [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your project's `index.html` file. Alternatively, you can link to a local copy of p5.plotSvg.js, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file:
 
 <details>
-<summary>**(Instructions en français • cliquez)**</summary>
-Tout d'abord, incluez `p5.plotSvg.js` dans votre projet, à côté de p5.js. Vous pouvez le faire en ajoutant un lien vers une version en ligne de p5.plotSvg sur [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) ou
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) dans le fichier `index.html` de votre projet. Vous pouvez également utiliser une copie locale de p5.plotSvg.js, que vous pouvez télécharger depuis ce dépôt GitHub, [ici](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). L'exemple suivant montre comment inclure `p5.plotSvg.js` dans le fichier `index.html` de votre projet :</details>
+<summary><strong>(Instructions en français • cliquez)</strong></summary>
+Tout d'abord, incluez `p5.plotSvg.js` dans votre projet, à côté de p5.js. Vous pouvez le faire en ajoutant un lien vers une version en ligne de p5.plotSvg sur <a href="https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js">unpkg.com</a> ou
+<a href="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js">cdn.jsdelivr.net</a> dans le fichier `index.html` de votre projet. Vous pouvez également utiliser une copie locale de p5.plotSvg.js, que vous pouvez télécharger depuis ce dépôt GitHub, <a href="https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js">ici</a>. L'exemple suivant montre comment inclure `p5.plotSvg.js` dans le fichier `index.html` de votre projet :</details>
 <details>
-<summary>**(Instrucciones en español • haga clic)**</summary>
-Primero, incluya `p5.plotSvg.js` en su proyecto, junto con p5.js. Puede hacerlo enlazando a una copia en línea de p5.plotSvg en [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) o
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) en el archivo `index.html` de su proyecto. Alternativamente, puede enlazar a una copia local de p5.plotSvg.js, que puede descargar desde este repositorio de GitHub, [aquí](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). El siguiente ejemplo muestra una forma de incluir `p5.plotSvg.js` en el archivo `index.html` de su proyecto:
+<summary><strong>(Instrucciones en español • haga clic)</strong></summary>
+Primero, incluya `p5.plotSvg.js` en su proyecto, junto con p5.js. Puede hacerlo enlazando a una copia en línea de p5.plotSvg en <a href="https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js">unpkg.com</a> o
+<a href="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js">cdn.jsdelivr.net</a> en el archivo `index.html` de su proyecto. Alternativamente, puede enlazar a una copia local de p5.plotSvg.js, que puede descargar desde este repositorio de GitHub, <a href="https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js">aquí</a>. El siguiente ejemplo muestra una forma de incluir `p5.plotSvg.js` en el archivo `index.html` de su proyecto:
 </details>
 <details>
-<summary>**(日本語の説明 • クリック)**</summary>
-まず、p5.js と一緒に `p5.plotSvg.js` をプロジェクトに含めてください。これは、プロジェクトの `index.html` ファイルで [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) または [cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) にある p5.plotSvg のオンラインコピーへのリンクを追加することで実現できます。あるいは、この GitHub リポジトリからダウンロードできる p5.plotSvg.js のローカルコピーへのリンクを追加することもできます（[こちら](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js)）。以下の例は、プロジェクトの `index.html` ファイルに `p5.plotSvg.js` を含める方法の一例です。
+<summary><strong>(日本語の説明 • クリック)</strong></summary>
+まず、p5.js と一緒に `p5.plotSvg.js` をプロジェクトに含めてください。これは、プロジェクトの `index.html` ファイルで <a href="https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js">unpkg.com</a> または <a href="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js">cdn.jsdelivr.net</a> にある p5.plotSvg のオンラインコピーへのリンクを追加することで実現できます。あるいは、この GitHub リポジトリからダウンロードできる p5.plotSvg.js のローカルコピーへのリンクを追加することもできます (<a href="https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js"> こちら </a> )。以下の例は、プロジェクトの `index.html` ファイルに `p5.plotSvg.js` を含める方法の一例です。
 </details>
 
 ```html
