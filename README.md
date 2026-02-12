@@ -243,7 +243,7 @@ The following projects may be of interest to creative coders working with SVG fi
 
 ## Keywords
 
-Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://www.instagram.com/explore/search/keyword/?q=%23plottertwitter), creative coding, generative art, drawing machines, JavaScript library, EMSL AxiDraw, NextDraw, open-source software tools for the arts, #OSSTA.
+Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://www.instagram.com/explore/search/keyword/?q=%23plottertwitter), [#penplotter](https://www.instagram.com/explore/search/keyword/?q=%23penplotter), creative coding, generative art, drawing machines, JavaScript library, EMSL AxiDraw, NextDraw, open-source software tools for the arts, #OSSTA.
 
 ---
 
