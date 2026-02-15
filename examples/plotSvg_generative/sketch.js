@@ -14,12 +14,12 @@ let exportSvgButton;
 function setup() {
   createCanvas(576, 384); // 6"x4" at 96 dpi
   
-  regenerateButton = createButton('Regenerate');
+  regenerateButton = createButton('Generate New Design');
   regenerateButton.position(0, height);
   regenerateButton.mousePressed(regenerate);
   
   exportSvgButton = createButton('Export SVG');
-  exportSvgButton.position(100, height);
+  exportSvgButton.position(160, height);
   exportSvgButton.mousePressed(initiateSvgExport);
 }
 
