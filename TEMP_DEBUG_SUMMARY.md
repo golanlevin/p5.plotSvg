@@ -102,3 +102,4 @@ The following refactors are intentionally out of scope:
 Completed organizational cleanup:
 
 - SVG string post-processing is now isolated behind `postProcessSvgString()`, which applies named-group merging and stroke-color grouping in one explicit final stage after base SVG serialization.
+- Persistent SVG export options are now grouped in a private internal `config` object. Live recording/session state remains in the existing module variables for now.
