@@ -5,7 +5,9 @@
     version: p5.VERSION,
     before: {
       lineOwn: Object.prototype.hasOwnProperty.call(window, "line"),
-      rectOwn: Object.prototype.hasOwnProperty.call(window, "rect")
+      rectOwn: Object.prototype.hasOwnProperty.call(window, "rect"),
+      lineType: typeof window.line,
+      rectType: typeof window.rect
     },
     after: null,
     error: "",

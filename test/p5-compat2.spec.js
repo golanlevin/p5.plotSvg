@@ -83,6 +83,10 @@ for (const runner of runners) {
     expect(f5.instanceProbe.svgLength).toBeGreaterThan(0);
     expect(f5.instanceProbe.before).toHaveProperty("lineOwn");
     expect(f5.instanceProbe.after).toHaveProperty("lineOwn");
+    expect(f5.instanceProbe.after.lineOwn).toBe(f5.instanceProbe.before.lineOwn);
+    expect(f5.instanceProbe.after.rectOwn).toBe(f5.instanceProbe.before.rectOwn);
+    expect(f5.instanceProbe.after.lineType).toBe(f5.instanceProbe.before.lineType);
+    expect(f5.instanceProbe.after.rectType).toBe(f5.instanceProbe.before.rectType);
 
     const f6 = finding(report, 6);
     expect(f6.apiBeforeRecord).toHaveProperty("beginClip");

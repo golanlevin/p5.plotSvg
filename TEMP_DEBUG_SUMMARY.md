@@ -42,11 +42,11 @@ The local p5 copies are ignored through `.gitignore` via `temp/`.
 
    Result: in v2, old sketches can produce an SVG that looks like the old v1 intent while the canvas does not. That is a screen/export mismatch.
 
-5. **Instance mode works, but pollutes globals.**
+5. **Completed: instance mode no longer pollutes globals.**
 
-   A browser probe with `new p5(sketch)` for v1 and v2 confirmed export works, but after `endRecordSvg()`, globals such as `window.line` and `window.rect` existed even though they did not exist before.
+   A browser probe with `new p5(sketch)` for v1 and v2 confirms export works and `window.line` / `window.rect` return to their pre-recording own-property state after `endRecordSvg()`.
 
-   The cause is that override/restore currently touches both the instance and global target. Fix by only overriding globals when actually in global mode, or by tracking original property descriptors per target.
+   The fix tracks original property descriptors per overridden target/name pair and restores those descriptors exactly. In instance mode, p5.plotSvg now skips unnecessary global overrides; in global mode, it still overrides globals as expected.
 
 6. **Intentionally unsupported: `clip()`, `beginClip()`, and `endClip()`.**
 
@@ -68,7 +68,7 @@ The local p5 copies are ignored through `.gitignore` via `temp/`.
 
 1. Completed: add v2 shims for `curve()`, `curveTightness()`, `curveVertex()`, and `quadraticVertex()`.
 2. Decide what to do with old six-argument `bezierVertex()` under v2: warn hard, shim it, or require v2 examples.
-3. Fix instance-mode global pollution.
+3. Completed: fix instance-mode global pollution.
 4. Add tests that compare actual path `d` data for v1/v2 curve equivalents.
 5. Document and preserve the intentional non-support stance for `clip()`, `beginClip()`, and `endClip()`.
 6. Revisit text after geometry compatibility is stable.
