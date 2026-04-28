@@ -1,0 +1,42 @@
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: system-ui, sans-serif;
+  background: #f5f5f5;
+}
+
+canvas {
+  display: block;
+}
+
+.test-header {
+  box-sizing: border-box;
+  width: 612px;
+  padding: 8px 10px;
+  background: #202020;
+  color: #fff;
+}
+
+.test-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.test-meta {
+  color: #cfcfcf;
+  font-size: 12px;
+}
+
+.split-root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+.pane {
+  width: 100%;
+  height: 100vh;
+  border: 0;
+  border-right: 1px solid #bbb;
+}
