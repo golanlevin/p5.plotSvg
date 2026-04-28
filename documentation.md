@@ -267,7 +267,9 @@ During an active recording session, `p5plotSvg._commands` refers to the live
 internal command array that will be converted into SVG by `endRecordSvg()`.
 External code may inspect this array or append compatible command objects before
 export. This interface only exists between `beginRecordSvg()` and
-`endRecordSvg()`, and it is cleared after export.
+`endRecordSvg()`, and it is cleared after export. The read-only
+`p5plotSvg.SVG_COMMAND` and `p5plotSvg.SVG_SEGMENT` constants document the
+command and nested segment `type` strings used by this interface.
 
 Related generic hooks include `injectSvgHeaderAttribute()`, `injectSvgDef()`,
 custom `attributes` arrays on injected command objects, and

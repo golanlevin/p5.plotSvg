@@ -71,6 +71,16 @@ for (const runner of runners) {
         registeredWithP5Addon: typeof p5.registerAddon === "function" &&
           p5._registeredAddons instanceof Set &&
           p5._registeredAddons.has(window.p5plotSvg.plotSvgAddon),
+        commandConstants: {
+          commandFrozen: Object.isFrozen(window.p5plotSvg.SVG_COMMAND),
+          segmentFrozen: Object.isFrozen(window.p5plotSvg.SVG_SEGMENT),
+          commandWritable: Object.getOwnPropertyDescriptor(window.p5plotSvg, "SVG_COMMAND")?.writable,
+          segmentWritable: Object.getOwnPropertyDescriptor(window.p5plotSvg, "SVG_SEGMENT")?.writable,
+          line: window.p5plotSvg.SVG_COMMAND?.LINE,
+          beginGroup: window.p5plotSvg.SVG_COMMAND?.BEGIN_GROUP,
+          vertex: window.p5plotSvg.SVG_SEGMENT?.VERTEX,
+          bezierPoint: window.p5plotSvg.SVG_SEGMENT?.BEZIER_POINT
+        },
         proto: Object.fromEntries(protoMethods.map(name => [
           name,
           typeof p5.prototype[name]
@@ -99,6 +109,14 @@ for (const runner of runners) {
     expect(report.globalsStillExist).toBe(true);
     expect(report.addonInstallerExists).toBe(true);
     expect(report.registeredWithP5Addon).toBe(runner.major >= 2);
+    expect(report.commandConstants.commandFrozen).toBe(true);
+    expect(report.commandConstants.segmentFrozen).toBe(true);
+    expect(report.commandConstants.commandWritable).toBe(false);
+    expect(report.commandConstants.segmentWritable).toBe(false);
+    expect(report.commandConstants.line).toBe("line");
+    expect(report.commandConstants.beginGroup).toBe("beginGroup");
+    expect(report.commandConstants.vertex).toBe("vertex");
+    expect(report.commandConstants.bezierPoint).toBe("bezierPoint");
     for (const type of Object.values(report.proto)) {
       expect(type).toBe("function");
     }

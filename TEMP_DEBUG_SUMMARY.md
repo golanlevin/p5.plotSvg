@@ -91,3 +91,14 @@ Needed changes:
 8. Prepare p5 libraries page submission materials: category likely `Export`, concise description, author info, license, docs link, examples, npm/CDN links, and a thumbnail/image.
 
 Important note: p5.plotSvg should not become a custom renderer unless the project intentionally changes direction. The current export-on-demand architecture is better served by a standard add-on wrapper around the existing implementation.
+
+## Refactor Decisions
+
+The following refactors are intentionally out of scope:
+
+- Do not extract shared `ellipseMode()` / `rectMode()` normalization helpers. The existing per-function handling should remain local and explicit.
+- Do not replace the main SVG export dispatcher with a renderer map. The current large `if` / `else if` chain is direct, legible, and appropriate for this library.
+
+Completed organizational cleanup:
+
+- SVG string post-processing is now isolated behind `postProcessSvgString()`, which applies named-group merging and stroke-color grouping in one explicit final stage after base SVG serialization.

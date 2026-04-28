@@ -194,7 +194,9 @@ internal command array. External code may:
 - Inject custom `<defs>` elements with `injectSvgDef()`
 
 `p5plotSvg._commands` is only valid between `beginRecordSvg()` and
-`endRecordSvg()`. It is cleared after export.
+`endRecordSvg()`. It is cleared after export. Use the read-only
+`p5plotSvg.SVG_COMMAND` and `p5plotSvg.SVG_SEGMENT` constants as the reference
+for supported command and nested segment `type` strings.
 
 ## Testing Considerations
 
