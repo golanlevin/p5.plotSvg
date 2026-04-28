@@ -179,10 +179,22 @@ p5.plotSvg/
 
 ## Extension Points
 
-The library exposes `p5plotSvg._commands` during recording, allowing addon libraries (like p5PowerStroke) to:
-- Read the commands array
-- Add custom commands with `attributes` arrays
-- Inject custom SVG elements
+The library intentionally exposes some low-level experimental extension hooks
+for advanced add-ons and research sketches. These hooks are not required for
+ordinary SVG export, and they are less stable than the public drawing/export
+API, but they are useful for experiments that need to participate directly in
+SVG generation.
+
+During an active recording session, `p5plotSvg._commands` points to the live
+internal command array. External code may:
+- Read the command array
+- Append compatible command objects before `endRecordSvg()`
+- Add custom command `attributes` arrays
+- Inject custom SVG header attributes with `injectSvgHeaderAttribute()`
+- Inject custom `<defs>` elements with `injectSvgDef()`
+
+`p5plotSvg._commands` is only valid between `beginRecordSvg()` and
+`endRecordSvg()`. It is cleared after export.
 
 ## Testing Considerations
 

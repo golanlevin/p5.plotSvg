@@ -30,6 +30,7 @@
 *   [endSvgGroup](#endsvggroup)
 *   [getDefaultStrokeColor](#getdefaultstrokecolor)
 *   [isRecordingSVG](#isRecordingSVG)
+*   [Experimental Extension Hooks](#experimental-extension-hooks)
 
 
 <!-- WORK IN PROGRESS
@@ -206,8 +207,7 @@ Useful for grouping paths that might be computed at different times, but which a
 
 ## setSvgExportPolylinesAsPaths
 
-Sets whether all polylines should be exported as `<path>` elements instead of the default case (which is `<polyline>` or `<polygon>`). <!--  
-This option is required for compatibility with Inkscape’s PowerStroke live path effect (LPE), which only works with `<path>` elements. -->
+Sets whether all polylines should be exported as `<path>` elements instead of the default case (which is `<polyline>` or `<polygon>`). This can be useful for extension code or downstream tools that require path elements.
 
 #### Parameters
 *   `b` **[boolean][29]** `true` to export polylines as `<path>` elements; `false` to keep the default behavior.
@@ -257,6 +257,26 @@ Retrieves whether or not SVG recording is active.
 Returns **[boolean][29]** `true` if SVG recording is active, `false` otherwise.
 
 
+## Experimental Extension Hooks
+
+p5.plotSvg intentionally exposes a few low-level hooks for advanced experiments
+and companion add-ons. These hooks are not needed for ordinary SVG export, and
+they may change more readily than the main public API.
+
+During an active recording session, `p5plotSvg._commands` refers to the live
+internal command array that will be converted into SVG by `endRecordSvg()`.
+External code may inspect this array or append compatible command objects before
+export. This interface only exists between `beginRecordSvg()` and
+`endRecordSvg()`, and it is cleared after export.
+
+Related generic hooks include `injectSvgHeaderAttribute()`, `injectSvgDef()`,
+custom `attributes` arrays on injected command objects, and
+`setSvgExportPolylinesAsPaths()`. These make it possible to add custom
+namespaces, `<defs>` entries, command-level SVG attributes, or
+downstream-tool-specific path output without adding those experiments directly
+to the core library.
+
+
 <!-- WORK IN PROGRESS
 ## injectSvgHeaderAttribute  
 Injects an attribute into the `<svg>` tag in the SVG header section.  
@@ -271,11 +291,11 @@ If an attribute with the same name already exists, its value will be updated rat
 <!-- WORK IN PROGRESS
 ## injectSvgDef  
 Injects a definition into the `<defs>` section of the SVG.  
-Each definition is an XML element (such as `inkscape:path-effect`) with an associated set of attributes.  
+Each definition is an XML element (such as `marker`) with an associated set of attributes.
 If a definition with the same `type` and `id` already exists, its attributes will be updated.
 
 #### Parameters  
-* `type` **[string][27]** The tag name of the element to define (e.g. `"inkscape:path-effect"`).  
+* `type` **[string][27]** The tag name of the element to define (e.g. `"marker"`).
 * `attributesObj` **[object][26]** An object containing name–value pairs for the attributes of the element.  
 -->
 

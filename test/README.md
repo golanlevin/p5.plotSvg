@@ -77,3 +77,15 @@ present. It verifies that p5 v2 registers the installer through
 uses separate global-mode fixtures to verify the flexible
 `beginRecordSvg("file.svg")` and legacy `beginRecordSvg(window, "file.svg")`
 argument forms in both p5 v1 and p5 v2.
+
+## SVG Escaping Baseline
+
+Run:
+
+```sh
+npx playwright test test/p5-svg-escaping.spec.js --browser=chromium
+```
+
+This test verifies that user-provided SVG text and attribute values are escaped
+before serialization. It covers text content, group IDs, injected SVG header
+attributes, and injected `<defs>` attributes in both p5 v1 and p5 v2.

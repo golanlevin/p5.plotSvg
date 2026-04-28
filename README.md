@@ -202,6 +202,14 @@ p5.plotSvg offers two convenience functions which control how many digits of dec
 * `setSvgCoordinatePrecision()` – The default is 4 digits of precision for path coordinates, e.g. `3.1416`
 * `setSvgTransformPrecision()` – The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
 
+### Experimental Extension Hooks
+
+p5.plotSvg intentionally exposes a few low-level hooks for advanced experiments and companion add-ons. These hooks are not needed for ordinary SVG export, and they may change more readily than the public drawing/export API, but they are available for people who want to extend the library's SVG output.
+
+During an active recording session, `p5plotSvg._commands` refers to the live internal command array that will be converted into SVG by `endRecordSvg()`. External code may inspect this array or append compatible command objects before export. This is an experimental interface: it only exists between `beginRecordSvg()` and `endRecordSvg()`, and it is cleared after export.
+
+Related generic hooks include `injectSvgHeaderAttribute()`, `injectSvgDef()`, custom `attributes` arrays on injected command objects, and `setSvgExportPolylinesAsPaths()`. These make it possible to add custom namespaces, `<defs>` entries, command-level SVG attributes, or downstream-tool-specific path output without adding those experiments directly to the core library.
+
 ---
 
 ## Known Issues and Bugs:
