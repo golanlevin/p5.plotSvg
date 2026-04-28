@@ -6,8 +6,8 @@ This document provides context for authors and LLMs working on the p5.plotSvg co
 
 **p5.plotSvg** is a JavaScript library that enables p5.js sketches to export SVG files optimized for pen plotters (like AxiDraw). It captures p5.js drawing commands and converts them to SVG paths focused on geometry only—no fills, transparency, or raster effects.
 
-- **Version**: 0.1.7 (November 2025)
-- **Compatibility**: p5.js 1.4.2 through 1.11.11
+- **Version**: 0.2.0 (April 2026)
+- **Compatibility**: p5.js 1.4.2 through 1.11.13
 - **Main file**: `lib/p5.plotSvg.js` (~3,300 lines)
 
 ## Architecture

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/p5@2.2.2/lib/p5.js"></script>
+  <script src="../../lib/p5.plotSvg.js" type="text/javascript"></script>
+
+  <style> 
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent scrolling */
+      touch-action: none; /* Prevent touch scrolling */
+      -webkit-user-select: none; /* Prevent selection on iOS */
+      -ms-user-select: none; /* Prevent selection on IE */
+      user-select: none; /* Prevent selection on other browsers */
+    }
+    canvas {
+      display: block;
+      touch-action: none; /* Prevent default gestures on canvas */
+    }
+  </style>
+</head>
+
+<body class="prevent-select">
+  <main></main>
+  <script src="sketch.js"></script>
+  <p>Draw some scribbles. Press 's' to save SVG.</p>
+</body>
+</html>

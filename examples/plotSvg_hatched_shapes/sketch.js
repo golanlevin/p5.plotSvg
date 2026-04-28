@@ -89,7 +89,7 @@ function draw() {
 
   if (bDoExportSvg) {
     endRecordSvg();
-    save("plotSvg_hatched_shapes_" + nf(exportCount,3) + ".png");
+    // save("plotSvg_hatched_shapes_" + nf(exportCount,3) + ".png");
     bDoExportSvg = false;
     exportCount++; 
   } 

@@ -6,7 +6,7 @@
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
-Version 0.1.8, January 22, 2026 • Initiated by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
+Version 0.2.0, April 28, 2026 • Initiated by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 
 ### Downloads, Mirrors, and Documentation:
@@ -39,7 +39,7 @@ Version 0.1.8, January 22, 2026 • Initiated by Golan Levin ([@golanlevin](htt
 
 The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Key advantages of p5.plotSvg are that it does not interfere with graphics performance during animation, and it is easy to add to projects. 
 
-Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.11. Compatibility with p5.js version 2.x is forthcoming in mid-2026. 
+Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.13. Compatibility with p5.js version 2.x is now "mostly" supported but still in-progress; YMMV. 
 
 p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 

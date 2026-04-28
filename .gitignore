@@ -1,2 +1,4 @@
 
 .DS_Store
+temp/
+test-results/
