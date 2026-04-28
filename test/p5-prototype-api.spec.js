@@ -67,6 +67,10 @@ for (const runner of runners) {
         version: p5.VERSION,
         globalsStillExist: typeof window.beginRecordSvg === "function" &&
           typeof window.p5plotSvg?.beginRecordSvg === "function",
+        addonInstallerExists: typeof window.p5plotSvg?.plotSvgAddon === "function",
+        registeredWithP5Addon: typeof p5.registerAddon === "function" &&
+          p5._registeredAddons instanceof Set &&
+          p5._registeredAddons.has(window.p5plotSvg.plotSvgAddon),
         proto: Object.fromEntries(protoMethods.map(name => [
           name,
           typeof p5.prototype[name]
@@ -93,6 +97,8 @@ for (const runner of runners) {
 
     expect(parseInt(report.version.split(".")[0], 10)).toBe(runner.major);
     expect(report.globalsStillExist).toBe(true);
+    expect(report.addonInstallerExists).toBe(true);
+    expect(report.registeredWithP5Addon).toBe(runner.major >= 2);
     for (const type of Object.values(report.proto)) {
       expect(type).toBe("function");
     }
