@@ -83,7 +83,7 @@ Needed changes:
 
 1. Add an official add-on installer function, e.g. `plotSvgAddon(p5, fn, lifecycles)`, which attaches methods such as `beginRecordSvg()`, `endRecordSvg()`, `setSvgDocumentSize()`, and related configuration functions to the p5 sketch API.
 2. Completed: add prototype methods without removing globals. p5 instances now expose wrappers such as `sketch.beginRecordSvg("file.svg")`, `sketch.endRecordSvg()`, and `sketch.setSvgDocumentSize(w, h)`, while existing `beginRecordSvg(this, "file.svg")` and `p5plotSvg.beginRecordSvg(this, "file.svg")` usage remains supported.
-3. Add add-on-native usage: in global mode, `beginRecordSvg("file.svg")`; in instance mode, `sketch.beginRecordSvg("file.svg")` and `sketch.endRecordSvg()`.
+3. Completed: add flexible argument handling for add-on-native usage. The old explicit form `beginRecordSvg(this, "file.svg")` still works, global-mode sketches can use `beginRecordSvg("file.svg")`, and instance-mode sketches can use `sketch.beginRecordSvg("file.svg")`. In p5 v2 global mode, p5 may expose `beginRecordSvg` through a prototype-generated global alias, so the wrapper detects `this === p5.instance` and records against `window` to ensure global drawing functions are captured.
 4. Stop relying on broad unconditional global exports. Let p5 expose prototype methods globally in global mode, while keeping the existing globals as compatibility aliases if needed.
 5. Add a Rollup-based build pipeline like the template, producing an IIFE build for script tags and an ESM build for imports/npm. Update `package.json` with an `exports` map.
 6. Support both p5 v1 and p5 v2: p5 v2 can use `p5.registerAddon()`, while p5 v1 needs a fallback that mutates `p5.prototype` directly.

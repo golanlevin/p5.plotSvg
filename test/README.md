@@ -72,4 +72,6 @@ npx playwright test test/p5-prototype-api.spec.js --browser=chromium
 This test verifies the add-on-style prototype methods, such as
 `sketch.beginRecordSvg(null)` and `sketch.endRecordSvg()`, while also checking
 that the existing global and `p5plotSvg` namespace entry points are still
-present.
+present. It also uses separate global-mode fixtures to verify the flexible
+`beginRecordSvg("file.svg")` and legacy `beginRecordSvg(window, "file.svg")`
+argument forms in both p5 v1 and p5 v2.
