@@ -1,21 +1,43 @@
 const { test, expect } = require("@playwright/test");
+const fs = require("fs");
 const path = require("path");
 
 const runners = [
   {
     name: "p5 v1.11.13",
     file: "smorgasbord/runner-v1.html",
-    major: 1
+    major: 1,
+    fixture: "smorgasbord/fixtures/p5v1.svg"
   },
   {
     name: "p5 v2.2.2",
     file: "smorgasbord/runner-v2.html",
-    major: 2
+    major: 2,
+    fixture: "smorgasbord/fixtures/p5v2.svg"
   }
 ];
 
 function testUrl(file) {
   return `file://${path.resolve(__dirname, file)}`;
+}
+
+function readFixture(file) {
+  return fs.readFileSync(path.resolve(__dirname, file), "utf8");
+}
+
+function normalizeSvgForFixtureComparison(svg) {
+  return svg
+    .replace(/\r\n/g, "\n")
+    .replace(/^<!-- plotSvg_smorgasbord\.svg -->\n/m, "")
+    .replace(
+      /^<!-- Generated using p5\.js v\..* and p5\.plotSvg v\..*: -->$/m,
+      "<!-- Generated using p5.js and p5.plotSvg -->"
+    )
+    .replace(
+      /^<!-- [A-Z][a-z]{2} [A-Z][a-z]{2} .* GMT.* -->$/m,
+      "<!-- SVG export timestamp -->"
+    )
+    .trim();
 }
 
 for (const runner of runners) {
@@ -42,6 +64,7 @@ for (const runner of runners) {
       const count = selector => doc.querySelectorAll(selector).length;
       return {
         version: p5.VERSION,
+        svg,
         svgLength: svg.length,
         parseError: parseError ? parseError.textContent : "",
         hasUndefinedOrNaN: /undefined|NaN/.test(svg),
@@ -74,5 +97,9 @@ for (const runner of runners) {
     expect(report.counts.group).toBeGreaterThanOrEqual(8);
     expect(consoleErrors).toEqual([]);
     expect(pageErrors).toEqual([]);
+
+    const actualSvg = normalizeSvgForFixtureComparison(report.svg);
+    const expectedSvg = normalizeSvgForFixtureComparison(readFixture(runner.fixture));
+    expect(actualSvg).toBe(expectedSvg);
   });
 }
