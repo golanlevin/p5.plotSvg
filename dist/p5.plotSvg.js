@@ -192,6 +192,12 @@
       nonFiniteNumberShown: false
     };
 
+    /**
+     * @private
+     * Resets per-recording Inkscape layer bookkeeping.
+     * Layer labels and numeric prefixes are session state; they must not leak
+     * between independent SVG exports.
+     */
     function resetSessionLayers() {
       session.layers.inkscapeLayerMap = new Map();
       session.layers.inkscapeUsedLabels = new Map();
@@ -597,17 +603,31 @@
       return svgStr;
     };
 
-    // Old names: wrappers for backward compatibility
+    /**
+     * @public
+     * @deprecated Use p5plotSvg.beginRecordSvg() instead.
+     * Backward-compatible wrapper for the original capitalized API name.
+     */
     p5plotSvg.beginRecordSVG = function() {
       console.warn("beginRecordSVG() is deprecated. The new name is beginRecordSvg().");
       return p5plotSvg.beginRecordSvg.apply(p5plotSvg, arguments);
     };
 
+    /**
+     * @public
+     * @deprecated Use p5plotSvg.pauseRecordSvg() instead.
+     * Backward-compatible wrapper for the original capitalized API name.
+     */
     p5plotSvg.pauseRecordSVG = function() {
       console.warn("pauseRecordSVG() is deprecated. The new name is pauseRecordSvg().");
       return p5plotSvg.pauseRecordSvg.apply(p5plotSvg, arguments);
     };
 
+    /**
+     * @public
+     * @deprecated Use p5plotSvg.endRecordSvg() instead.
+     * Backward-compatible wrapper for the original capitalized API name.
+     */
     p5plotSvg.endRecordSVG = function() {
       console.warn("endRecordSVG() is deprecated. The new name is endRecordSvg().");
       return p5plotSvg.endRecordSvg.apply(p5plotSvg, arguments);
@@ -2195,6 +2215,14 @@
       return new XMLSerializer().serializeToString(doc);
     }
 
+    /**
+     * @private
+     * Extracts the effective stroke color from an SVG element for post-processing.
+     * Checks the direct stroke attribute first, then falls back to an inline style
+     * declaration. Returns null for missing strokes and explicit "none" strokes.
+     * @param {Element} element - SVG DOM element to inspect.
+     * @returns {?string} The stroke color string, or null if no usable stroke is present.
+     */
     function getStrokeColor(element) {
       if (element.hasAttribute('stroke')) {
         const stroke = element.getAttribute('stroke');
@@ -2810,6 +2838,11 @@
       }
     };
 
+    /**
+     * @public
+     * @deprecated Use p5plotSvg.setSvgDocumentSize() instead.
+     * Backward-compatible wrapper for the original capitalized API name.
+     */
     p5plotSvg.setSVGDocumentSize = function() {
       console.warn("setSVGDocumentSize() is deprecated. The new name is setSvgDocumentSize().");
       return p5plotSvg.setSvgDocumentSize.apply(p5plotSvg, arguments);
@@ -3228,8 +3261,18 @@
     }
 
 
-    // https://github.com/processing/p5.js/blob/e32b45367baad694b1f4eeec0586b910bfcf0724/src/typography/p5.Font.js#L1099
-    // Modified to support curveTightness parameter
+    /**
+     * @private
+     * Converts a flat Catmull-Rom point list into SVG cubic Bezier segments.
+     * Based on p5.Font's curve conversion and modified to honor p5's
+     * curveTightness() value.
+     * Source reference:
+     * https://github.com/processing/p5.js/blob/e32b45367baad694b1f4eeec0586b910bfcf0724/src/typography/p5.Font.js#L1099
+     * @param {number[]} crp - Flat point list in [x0, y0, x1, y1, ...] order.
+     * @param {boolean} z - Whether the Catmull-Rom path is closed.
+     * @param {number} [tightness=0] - p5 curve tightness value.
+     * @returns {number[][]} Cubic Bezier segments as [x1, y1, x2, y2, x, y].
+     */
     function catmullRom2bezier(crp, z, tightness = 0) {
       const s = 1 - tightness; // Scale factor for control point influence
       const d = [];
@@ -3312,16 +3355,41 @@
     }
 
 
+    /**
+     * @private
+     * Appends an SVG path move command to a path fragment array.
+     * @param {string[]} parts - Mutable array of serialized path fragments.
+     * @param {number} x - Destination x coordinate.
+     * @param {number} y - Destination y coordinate.
+     */
     function appendPathMoveTo(parts, x, y) {
       parts.push(`M ${formatNumber(x)},${formatNumber(y)}`);
     }
 
 
+    /**
+     * @private
+     * Appends an SVG path line command to a path fragment array.
+     * @param {string[]} parts - Mutable array of serialized path fragments.
+     * @param {number} x - Destination x coordinate.
+     * @param {number} y - Destination y coordinate.
+     */
     function appendPathLineTo(parts, x, y) {
       parts.push(` L ${formatNumber(x)},${formatNumber(y)}`);
     }
 
 
+    /**
+     * @private
+     * Appends an SVG cubic Bezier path command to a path fragment array.
+     * @param {string[]} parts - Mutable array of serialized path fragments.
+     * @param {number} x1 - First control point x coordinate.
+     * @param {number} y1 - First control point y coordinate.
+     * @param {number} x2 - Second control point x coordinate.
+     * @param {number} y2 - Second control point y coordinate.
+     * @param {number} x - Destination x coordinate.
+     * @param {number} y - Destination y coordinate.
+     */
     function appendPathCubicTo(parts, x1, y1, x2, y2, x, y) {
       parts.push(` C ${formatNumber(x1)},${formatNumber(y1)}`);
       parts.push(` ${formatNumber(x2)},${formatNumber(y2)}`);
@@ -3329,22 +3397,51 @@
     }
 
 
+    /**
+     * @private
+     * Appends an SVG quadratic Bezier path command to a path fragment array.
+     * @param {string[]} parts - Mutable array of serialized path fragments.
+     * @param {number} cx - Control point x coordinate.
+     * @param {number} cy - Control point y coordinate.
+     * @param {number} x - Destination x coordinate.
+     * @param {number} y - Destination y coordinate.
+     */
     function appendPathQuadraticTo(parts, cx, cy, x, y) {
       parts.push(` Q ${formatNumber(cx)},${formatNumber(cy)}`);
       parts.push(` ${formatNumber(x)},${formatNumber(y)}`);
     }
 
 
+    /**
+     * @private
+     * Appends an SVG closepath command to a path fragment array.
+     * @param {string[]} parts - Mutable array of serialized path fragments.
+     */
     function appendPathClose(parts) {
       parts.push(' Z');
     }
 
 
+    /**
+     * @private
+     * Joins serialized SVG path fragments into one path data string.
+     * @param {string[]} parts - Serialized path fragments.
+     * @returns {string} SVG path data.
+     */
     function joinPathData(parts) {
       return parts.join('');
     }
 
 
+    /**
+     * @private
+     * Generates SVG path data for a simple vertex-only contour.
+     * This handles recorded vertex() commands that do not include curve or
+     * Bezier segment metadata.
+     * @param {Object[]} vertices - Vertex records with x and y properties.
+     * @param {boolean} closed - Whether to close the path with Z.
+     * @returns {string} SVG path data.
+     */
     function generateVertexPathData(vertices, closed) {
       if (!Array.isArray(vertices) || vertices.length === 0) return '';
 
@@ -3362,6 +3459,13 @@
     }
 
 
+    /**
+     * @private
+     * Emits a warning for an unsupported path segment, optionally using a
+     * warn-once flag from the module-level warnings object.
+     * @param {string} message - Warning text to send to console.warn().
+     * @param {string} [flagName] - Optional warnings object key used to suppress repeats.
+     */
     function warnUnsupportedPathSegment(message, flagName) {
       if (flagName && warnings[flagName]) return;
       console.warn(message);
@@ -3369,6 +3473,16 @@
     }
 
 
+    /**
+     * @private
+     * Appends path data for one recorded segment in a complex beginShape() path.
+     * Some recorded p5 commands consume more than one segment record; in those
+     * cases the returned index advances past the consumed records.
+     * @param {string[]} parts - Mutable array of serialized path fragments.
+     * @param {Object[]} segments - Recorded segment stream.
+     * @param {number} index - Index of the segment to process.
+     * @returns {number} Index of the last consumed segment.
+     */
     function appendSegmentPathData(parts, segments, index) {
       let seg = segments[index];
       if (!seg || !seg.type) {
@@ -3444,6 +3558,16 @@
     }
 
 
+    /**
+     * @private
+     * Generates SVG path data for a recorded complex beginShape() path.
+     * Supports vertex, bezierVertex, quadraticVertex, v1 curveVertex-derived
+     * Catmull-Rom segments, and pure v2 spline paths. Mixed or unsupported v2
+     * segment forms are skipped with warnings until explicitly implemented.
+     * @param {Object[]} segments - Recorded path segment stream.
+     * @param {boolean} closed - Whether to close the path with Z.
+     * @returns {string} SVG path data.
+     */
     function generateSegmentPathData(segments, closed) {
       if (!Array.isArray(segments) || segments.length === 0) return '';
 
@@ -4568,6 +4692,11 @@
      * Official p5.js add-on installer.
      * p5.js v2 invokes this through p5.registerAddon(); p5.js v1 uses the same
      * function as a direct fallback because registerAddon() does not exist there.
+     * The installer attaches p5.plotSvg's public API to p5 instances without
+     * removing the existing global and p5plotSvg namespace APIs.
+     * @param {Function} p5Ctor - The p5 constructor supplied by p5.js.
+     * @param {Object} fn - Prototype/method target supplied by p5.js v2, or p5.prototype in v1.
+     * @param {Object} lifecycles - p5.js lifecycle registry; currently unused.
      */
     function plotSvgAddon(p5Ctor, fn, lifecycles) {
       installPrototypeMethods(p5Ctor, fn);
