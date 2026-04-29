@@ -104,6 +104,21 @@ uses separate global-mode fixtures to verify the flexible
 `beginRecordSvg("file.svg")` and legacy `beginRecordSvg(window, "file.svg")`
 argument forms in both p5 v1 and p5 v2.
 
+## Add-on Build Baseline
+
+Run:
+
+```sh
+npm run build
+npx playwright test test/p5-addon-build.spec.js --browser=chromium
+```
+
+This test verifies the generated files in `dist/`. It loads
+`dist/p5.plotSvg.js` as a classic script in p5 v1 and p5 v2, and imports
+`dist/p5.plotSvg.esm.js` as an ES module in p5 v2. The ESM fixture uses a local
+HTTP server inside the Playwright test because browser modules cannot be loaded
+from `file://` URLs.
+
 ## SVG Escaping Baseline
 
 Run:

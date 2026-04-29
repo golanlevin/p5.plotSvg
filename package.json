@@ -3,12 +3,31 @@
   "version": "0.2.0",
   "description": "A Plotter-Oriented SVG Exporter for p5.js",
   "main": "lib/p5.plotSvg.js",
+  "module": "dist/p5.plotSvg.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/p5.plotSvg.esm.js",
+      "require": "./lib/p5.plotSvg.js",
+      "default": "./dist/p5.plotSvg.js"
+    },
+    "./lib/p5.plotSvg.js": "./lib/p5.plotSvg.js",
+    "./dist/p5.plotSvg.js": "./dist/p5.plotSvg.js",
+    "./dist/p5.plotSvg.esm.js": "./dist/p5.plotSvg.esm.js"
+  },
+  "files": [
+    "dist",
+    "lib",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "directories": {
     "example": "examples",
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c rollup.config.mjs",
+    "test": "npx playwright test --browser=chromium"
   },
   "repository": {
     "type": "git",
@@ -24,6 +43,9 @@
   ],
   "author": "Golan Levin",
   "license": "MIT",
+  "devDependencies": {
+    "rollup": "^4.41.1"
+  },
   "bugs": {
     "url": "https://github.com/golanlevin/p5.plotSvg/issues"
   },

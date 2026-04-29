@@ -2,3 +2,4 @@
 .DS_Store
 temp/
 test-results/
+node_modules/

@@ -556,7 +556,7 @@
     session.quadStripSetCount = 0;
     resetSessionLayers();
     overrideP5Functions();
-  }
+  };
 
 
   /**
@@ -574,7 +574,7 @@
         session.recording = true;
       }
     }
-  }
+  };
 
 
   /**
@@ -592,7 +592,7 @@
     session.recordingSessionId++;
     p5plotSvg._recordingSessionId = session.recordingSessionId;
     return svgStr;
-  }
+  };
 
   // Old names: wrappers for backward compatibility
   p5plotSvg.beginRecordSVG = function() {
@@ -692,9 +692,7 @@
                            'center';
 
         // Adjust x, y, w, h based on ellipseMode (arc follows ellipse mode)
-        if (ellipseMode === 'center') {
-          // No adjustment needed for 'center'
-        } else if (ellipseMode === 'corner') {
+        if (ellipseMode === 'center') ; else if (ellipseMode === 'corner') {
           x += w / 2;
           y += h / 2;
         } else if (ellipseMode === 'radius') {
@@ -891,9 +889,7 @@
                             session.p5Instance._renderer?._ellipseMode ||
                             'center';
 
-        if (ellipseMode === 'center'){
-          ;
-        } else if (ellipseMode === 'corner'){
+        if (ellipseMode === 'center'); else if (ellipseMode === 'corner'){
           x += w/2;
           y += h/2;
         } else if (ellipseMode === 'radius'){
@@ -1006,9 +1002,7 @@
                          'corner';
 
         // Handle different rect modes
-        if (rectMode === 'corner') {
-          // No adjustment needed for 'corner'
-        } else if (rectMode === 'center') {
+        if (rectMode === 'corner') ; else if (rectMode === 'center') {
           x = x - w / 2;
           y = y - h / 2;
         } else if (rectMode === 'radius') {
@@ -1067,9 +1061,7 @@
                          session.p5Instance._renderer?._rectMode ||
                          'corner';
 
-        if (rectMode === 'corner'){
-          ;
-        } else if (rectMode === 'center'){
+        if (rectMode === 'corner'); else if (rectMode === 'center'){
           x = x - w/2;
           y = y - h/2;
         } else if (rectMode === 'radius'){
@@ -1369,9 +1361,7 @@
       if (session.recording) {
         session.shapeMode = 'complex'; // Switch to complex mode
         let tightness = session.curveTightness; // Capture current tightness
-
-        let bDoKludge = true; // TODO: Revisit
-        if (bDoKludge){
+        {
           if (session.vertexStack.length === 1){
             if(session.vertexStack[0].type === SVG_SEGMENT.CURVE){
               let x0 = session.vertexStack[0].x;
@@ -2040,9 +2030,6 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-    } else {
-      // config.filename is explicitly null; do not save any file.
-      // Probably you're using the returned SVG string in some other way.
     }
 
     session.vertexStack = [];
@@ -2728,7 +2715,7 @@
     } else {
       config.mergeNamedGroups = false;
     }
-  }
+  };
 
 
   /**
@@ -2745,7 +2732,7 @@
     } else {
       config.inkscapeCompatibility = false;
     }
-  }
+  };
 
 
   /**
@@ -2759,7 +2746,7 @@
     } else {
       config.groupByStrokeColor = false;
     }
-  }
+  };
 
 
   /**
@@ -2772,7 +2759,7 @@
     } else {
       console.warn("Invalid stroke weight. Please provide a positive number.");
     }
-  }
+  };
 
 
   /**
@@ -2785,7 +2772,7 @@
     } else {
       console.warn("Invalid stroke color. Provide a valid CSS color string (e.g., 'red', '#ff0000', 'rgb(255,0,0)').");
     }
-  }
+  };
 
 
   /**
@@ -2802,7 +2789,7 @@
     } else {
       console.warn("Invalid background color. Provide a valid CSS color string (e.g., 'ivory', '#FFFFF0', 'rgb(255,255,240)').");
     }
-  }
+  };
 
   /**
    * @public
@@ -2818,7 +2805,7 @@
       config.width = w;
       config.height = h;
     }
-  }
+  };
 
   p5plotSvg.setSVGDocumentSize = function() {
     console.warn("setSVGDocumentSize() is deprecated. The new name is setSvgDocumentSize().");
@@ -2839,7 +2826,7 @@
     } else {
       console.warn("Invalid DPI value. Please provide a positive number.");
     }
-  }
+  };
 
 
   /**
@@ -2856,7 +2843,7 @@
     } else {
       console.warn("Invalid DPCM value. Please provide a positive number.");
     }
-  }
+  };
 
 
   /**
@@ -2894,7 +2881,7 @@
         config.indentAmount = 0;
       }
     }
-  }
+  };
 
 
   /**
@@ -2938,7 +2925,7 @@
     } else {
       config.flattenTransforms = false;
     }
-  }
+  };
 
 
   /**
@@ -2954,7 +2941,7 @@
     } else {
       console.warn('Invalid precision value.');
     }
-  }
+  };
 
 
   /**
@@ -2970,7 +2957,7 @@
     } else {
       console.warn('Invalid precision value.');
     }
-  }
+  };
 
 
   /**
@@ -2984,7 +2971,7 @@
     } else {
       console.warn("Invalid radius. Please provide a positive number.");
     }
-  }
+  };
 
 
   /**
@@ -2998,7 +2985,7 @@
     } else {
       config.exportPolylinesAsPaths = false;
     }
-  }
+  };
 
 
   /**
@@ -3168,7 +3155,7 @@
         session.groupStack.pop();
       }
     }
-  }
+  };
 
 
   /**
@@ -3243,23 +3230,14 @@
   function catmullRom2bezier(crp, z, tightness = 0) {
     const s = 1 - tightness; // Scale factor for control point influence
     const d = [];
-    for (let i = 0, iLen = crp.length; iLen - 2 * !z > i; i += 2) {
+    for (let i = 0, iLen = crp.length; iLen - 2 * true > i; i += 2) {
       const p = [
         { x: crp[i - 2], y: crp[i - 1] },
         { x: crp[i + 0], y: crp[i + 1] },
         { x: crp[i + 2], y: crp[i + 3] },
         { x: crp[i + 4], y: crp[i + 5] },
         ];
-      if (z) {
-        if (!i) {
-          p[0] = { x: crp[iLen - 2], y: crp[iLen - 1] };
-        } else if (iLen - 4 === i) {
-          p[3] = { x: crp[0], y: crp[1] };
-        } else if (iLen - 2 === i) {
-          p[2] = { x: crp[0], y: crp[1] };
-          p[3] = { x: crp[2], y: crp[3] };
-        }
-      } else {
+      {
         if (iLen - 4 === i) {
           p[3] = p[2];
         } else if (!i) {
@@ -3941,7 +3919,7 @@
    */
   function getSvgStrText(cmd, renderContext) {
     let xStr = formatNumber(cmd.x);
-    let yStr = formatNumber(cmd.y);
+    formatNumber(cmd.y);
     let fontSizeStr = formatNumber(cmd.fontSize);
 
     // Adjust y-coordinate for vertical alignment : NOT FINISHED
@@ -3956,9 +3934,6 @@
         break;
       case 'bottom':
         adjustedY = adjustedY + cmd.fontSize - cmd.leading; // is this correct??
-        break;
-      case 'alphabetic': // baseline
-        // no solution needed
         break;
     }
     let adjustedYStr = formatNumber(adjustedY);
@@ -4426,7 +4401,7 @@
    */
   p5plotSvg.getDefaultStrokeColor = function() {
     return config.defaultStrokeColor;
-  }
+  };
 
   /**
    * Retrieves whether or not SVG recording is active.
@@ -4452,7 +4427,7 @@
     } else {
       session.injectedHeaderAttributes.push({ name: attrName, value: attrValue });
     }
-  }
+  };
 
   /**
    * Injects a <defs> element into the SVG output.
@@ -4483,7 +4458,7 @@
     } else {
       session.injectedDefs.push({ type: type, attributes: attrArray });
     }
-  }
+  };
 
   /**
    * @private
@@ -4601,7 +4576,7 @@
     if (typeof p5.registerAddon === 'function') {
       p5.registerAddon(plotSvgAddon);
     } else {
-      plotSvgAddon(p5, p5.prototype, {});
+      plotSvgAddon(p5, p5.prototype);
     }
   }
 
@@ -4674,3 +4649,9 @@
 
 
 })(typeof globalThis !== 'undefined' ? globalThis : undefined);
+
+const root = typeof globalThis !== 'undefined' ? globalThis : undefined;
+const p5plotSvg = root ? root.p5plotSvg : undefined;
+const plotSvgAddon = p5plotSvg ? p5plotSvg.plotSvgAddon : undefined;
+
+export { p5plotSvg as default, p5plotSvg, plotSvgAddon };
