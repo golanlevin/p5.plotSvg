@@ -61,6 +61,32 @@ npx playwright test test/p5-smorgasbord.spec.js --browser=chromium
 The test exports SVG from both versions and checks that the output is valid,
 nonempty, and covers the expected broad set of SVG element types.
 
+## Focused Shape Baseline
+
+Run:
+
+```sh
+npx playwright test test/p5-shapes.spec.js --browser=chromium
+```
+
+This test exports `test/shapes/shapes_v1/sketch.js` in p5 v1 and compares the
+normalized SVG against `test/shapes/fixtures/shapes_v1.svg`. It is intentionally
+more curve-focused than Smorgasbord, while Smorgasbord remains the broader
+shape, transform, grouping, and element-type regression test.
+
+## Path Data Regression Baseline
+
+Run:
+
+```sh
+npx playwright test test/p5-path-regression.spec.js --browser=chromium
+```
+
+This compact p5 v1 fixture checks exact exported `points` and `d` strings for
+plain `vertex()` shapes, closed shapes, `bezierVertex()`, `quadraticVertex()`,
+`curveVertex()`, and multi-contour paths. It is the first guardrail for the
+path/segment generation refactor.
+
 ## Prototype API Baseline
 
 Run:
