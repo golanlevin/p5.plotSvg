@@ -17,7 +17,7 @@ effects, and WEBGL are intentionally out of scope.
 - **Generated browser build**: `dist/p5.plotSvg.js`
 - **Generated ESM build**: `dist/p5.plotSvg.esm.js`
 - **Build entries**: `src/browser.js` and `src/main.js`
-- **Current compatibility target**: p5.js v1.11.13 and p5.js v2.2.2 test fixtures
+- **Current compatibility target**: p5.js v1.11.13 and p5.js v2.3.0 test fixtures
 
 The project is in the middle of becoming a more official p5.js add-on. Existing
 global and `p5plotSvg` namespace APIs are still preserved for backward
@@ -291,7 +291,7 @@ p5.plotSvg/
 Local p5 test fixtures live under:
 
 - `test/p5.js-v.1.11.13/p5.js`
-- `test/p5.js-v2.2.2/p5.js`
+- `test/p5.js-v2.3.0/p5.js`
 
 The top-level `temp/` directory is ignored and should remain scratch space.
 

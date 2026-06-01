@@ -8,7 +8,7 @@ const runners = [
     major: 1
   },
   {
-    name: "p5 v2.2.2",
+    name: "p5 v2.3.0",
     file: "test_program_01/index_p5v2.html",
     major: 2
   }

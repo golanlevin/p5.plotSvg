@@ -10,7 +10,7 @@ const scriptRunners = [
     major: 1
   },
   {
-    name: "p5 v2.2.2 script build",
+    name: "p5 v2.3.0 script build",
     file: "addon-build/script-v2.html",
     major: 2
   }

@@ -6,7 +6,7 @@ Open `test/compat/split.html` in a browser to see the same compatibility sketch
 running in two isolated iframes:
 
 - left: `test/p5.js-v.1.11.13/p5.js`
-- right: `test/p5.js-v2.2.2/p5.js`
+- right: `test/p5.js-v2.3.0/p5.js`
 
 Each side has an Export button that runs `beginRecordSvg(window, null)` and logs
 the returned SVG string length.

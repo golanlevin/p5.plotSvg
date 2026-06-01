@@ -26,7 +26,7 @@ npx playwright test test/p5-addon-build.spec.js test/p5-prototype-api.spec.js te
 
 The generated `dist/` files are now part of the test surface.
 
-The local p5 copies used by tests now live under `test/p5.js-v.1.11.13/` and `test/p5.js-v2.2.2/`. The top-level `temp/` directory remains ignored through `.gitignore`.
+The local p5 copies used by tests now live under `test/p5.js-v.1.11.13/` and `test/p5.js-v2.3.0/`. The top-level `temp/` directory remains ignored through `.gitignore`.
 
 ## v2 Compatibility Findings
 

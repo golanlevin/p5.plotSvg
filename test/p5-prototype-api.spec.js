@@ -9,7 +9,7 @@ const runners = [
     major: 1
   },
   {
-    name: "p5 v2.2.2",
+    name: "p5 v2.3.0",
     file: "prototype/runner-v2.html",
     globalFile: "prototype/global-runner-v2.html",
     major: 2
