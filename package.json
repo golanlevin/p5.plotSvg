@@ -44,6 +44,7 @@
   "author": "Golan Levin",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "rollup": "^4.41.1"
   },
   "bugs": {

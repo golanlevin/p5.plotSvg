@@ -26,6 +26,9 @@
 *   [setSvgGroupByStrokeColor](#setsvggroupbystrokecolor)
 *   [setSvgMergeNamedGroups](#setsvgmergenamedgroups)
 *   [setSvgExportPolylinesAsPaths](#setsvgexportpolylinesaspaths)
+*   [setSvgExportMalformedNumbersWithSanitizations](#setsvgexportmalformednumberswithsanitizations)
+*   [setSvgClampLargeCoordinates](#setsvgclamplargecoordinates)
+*   [setSvgCoordinateClampMagnitude](#setsvgcoordinateclampmagnitude)
 *   [beginSvgGroup](#beginsvggroup)
 *   [endSvgGroup](#endsvggroup)
 *   [getDefaultStrokeColor](#getdefaultstrokecolor)
@@ -211,6 +214,42 @@ Sets whether all polylines should be exported as `<path>` elements instead of th
 
 #### Parameters
 *   `b` **[boolean][29]** `true` to export polylines as `<path>` elements; `false` to keep the default behavior.
+
+
+## setSvgExportMalformedNumbersWithSanitizations
+
+Sets whether malformed numeric values are sanitized or omitted from SVG output.
+The default is `true`, meaning that non-finite values such as `NaN`, `Infinity`,
+and `-Infinity` are clobbered to `0` during SVG serialization. When set to
+`false`, any drawing command containing a non-finite numeric value is omitted
+entirely from the exported SVG.
+
+#### Parameters
+*   `bEnabled` **[boolean][29]** `true` to export malformed commands with numeric sanitization; `false` to omit malformed commands.
+
+
+## setSvgClampLargeCoordinates
+
+Sets whether very large finite SVG numeric values are clamped before export. The
+default is `true`. This is a safety rail against accidentally exporting huge
+coordinates or dimensions that can make SVG files unwieldy or cause problems in
+downstream plotting software.
+
+By default, values are clamped to the range `[-1000000, 1000000]`. Use
+`setSvgCoordinateClampMagnitude()` to change that magnitude.
+
+#### Parameters
+*   `bEnabled` **[boolean][29]** `true` to clamp very large finite values; `false` to export them unchanged.
+
+
+## setSvgCoordinateClampMagnitude
+
+Sets the absolute magnitude used by large-coordinate clamping. The default is
+`1000000`, meaning serialized numeric geometry values are clamped to the range
+`[-1000000, 1000000]` when `setSvgClampLargeCoordinates(true)` is active.
+
+#### Parameters
+*   `magnitude` **[number][28]** Positive finite maximum absolute value for clamped SVG numeric geometry.
 
 
 

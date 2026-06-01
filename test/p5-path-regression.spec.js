@@ -56,3 +56,104 @@ test("p5 v1 exports stable beginShape path data", async ({ page }) => {
   expect(consoleErrors).toEqual([]);
   expect(pageErrors).toEqual([]);
 });
+
+test("p5 v1 handles malformed numeric coordinates by policy", async ({ page }) => {
+  const pageErrors = [];
+
+  page.on("pageerror", err => {
+    pageErrors.push(err.message);
+  });
+
+  await page.goto(testUrl("path-regression/index.html"));
+  await page.waitForFunction(() => typeof window.runMalformedNumberExport === "function");
+
+  const report = await page.evaluate(() => {
+    const parseSvg = svg => {
+      const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+      const attr = (selector, name) =>
+        Array.from(doc.querySelectorAll(selector), el => el.getAttribute(name));
+      return {
+        hasMalformedText: /NaN|Infinity/.test(svg),
+        lines: attr("line", "x1").map((x1, index) => ({
+          x1,
+          y1: attr("line", "y1")[index],
+          x2: attr("line", "x2")[index],
+          y2: attr("line", "y2")[index]
+        })),
+        rects: attr("rect", "y"),
+        polylines: attr("polyline", "points")
+      };
+    };
+
+    return {
+      sanitized: parseSvg(window.runMalformedNumberExport(true)),
+      skipped: parseSvg(window.runMalformedNumberExport(false))
+    };
+  });
+
+  expect(report.sanitized.hasMalformedText).toBe(false);
+  expect(report.sanitized.lines).toEqual([
+    { x1: "0", y1: "10", x2: "50", y2: "10" },
+    { x1: "10", y1: "80", x2: "50", y2: "80" }
+  ]);
+  expect(report.sanitized.rects).toEqual(["0"]);
+  expect(report.sanitized.polylines).toEqual(["0,40 50,40"]);
+
+  expect(report.skipped.hasMalformedText).toBe(false);
+  expect(report.skipped.lines).toEqual([
+    { x1: "10", y1: "80", x2: "50", y2: "80" }
+  ]);
+  expect(report.skipped.rects).toEqual([]);
+  expect(report.skipped.polylines).toEqual([]);
+  expect(pageErrors).toEqual([]);
+});
+
+test("p5 v1 clamps very large coordinate values by policy", async ({ page }) => {
+  const pageErrors = [];
+
+  page.on("pageerror", err => {
+    pageErrors.push(err.message);
+  });
+
+  await page.goto(testUrl("path-regression/index.html"));
+  await page.waitForFunction(() => typeof window.runLargeCoordinateExport === "function");
+
+  const report = await page.evaluate(() => {
+    const parseSvg = svg => {
+      const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+      const attr = (selector, name) =>
+        Array.from(doc.querySelectorAll(selector), el => el.getAttribute(name));
+      return {
+        lines: attr("line", "x1").map((x1, index) => ({
+          x1,
+          y1: attr("line", "y1")[index],
+          x2: attr("line", "x2")[index],
+          y2: attr("line", "y2")[index]
+        })),
+        rects: attr("rect", "y"),
+        widths: attr("rect", "width"),
+        polylines: attr("polyline", "points")
+      };
+    };
+
+    return {
+      clamped: parseSvg(window.runLargeCoordinateExport(true)),
+      unclamped: parseSvg(window.runLargeCoordinateExport(false))
+    };
+  });
+
+  expect(report.clamped.lines).toEqual([
+    { x1: "-100", y1: "10", x2: "100", y2: "20" }
+  ]);
+  expect(report.clamped.rects).toEqual(["-100"]);
+  expect(report.clamped.widths).toEqual(["100"]);
+  expect(report.clamped.polylines).toEqual(["-100,40 100,40"]);
+
+  expect(report.unclamped.lines).toEqual([
+    { x1: "-200", y1: "10", x2: "200", y2: "20" }
+  ]);
+  expect(report.unclamped.rects).toEqual(["-250"]);
+  expect(report.unclamped.widths).toEqual(["200"]);
+  expect(report.unclamped.polylines).toEqual(["-300,40 300,40"]);
+  expect(pageErrors).toEqual([]);
+});

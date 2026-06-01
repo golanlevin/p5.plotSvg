@@ -9,6 +9,26 @@ function setup() {
     drawPathRegressionScene();
     return endRecordSvg();
   };
+
+  window.runMalformedNumberExport = function(bSanitize) {
+    setSvgExportMalformedNumbersWithSanitizations(bSanitize);
+    beginRecordSvg(window, null);
+    drawMalformedNumberScene();
+    const svg = endRecordSvg();
+    setSvgExportMalformedNumbersWithSanitizations(true);
+    return svg;
+  };
+
+  window.runLargeCoordinateExport = function(bClamp) {
+    setSvgClampLargeCoordinates(bClamp);
+    setSvgCoordinateClampMagnitude(100);
+    beginRecordSvg(window, null);
+    drawLargeCoordinateScene();
+    const svg = endRecordSvg();
+    setSvgClampLargeCoordinates(true);
+    setSvgCoordinateClampMagnitude(1000000);
+    return svg;
+  };
 }
 
 function draw() {
@@ -20,6 +40,22 @@ function drawPathRegressionScene() {
   noFill();
   stroke(0);
   strokeWeight(1);
+
+  // Degenerate beginShape() cases should not emit SVG geometry.
+  beginShape();
+  endShape();
+
+  beginShape();
+  vertex(200, 10);
+  endShape();
+
+  beginShape();
+  vertex(200, 20);
+  endShape(CLOSE);
+
+  beginShape();
+  curveVertex(200, 30);
+  endShape();
 
   beginShape();
   vertex(10, 10);
@@ -63,4 +99,33 @@ function drawPathRegressionScene() {
   vertex(170, 130);
   endContour(CLOSE);
   endShape(CLOSE);
+}
+
+function drawMalformedNumberScene() {
+  noFill();
+  stroke(0);
+  strokeWeight(1);
+
+  line(NaN, 10, 50, 10);
+  rect(10, Infinity, 20, 20);
+
+  beginShape();
+  vertex(NaN, 40);
+  vertex(50, 40);
+  endShape();
+
+  line(10, 80, 50, 80);
+}
+
+function drawLargeCoordinateScene() {
+  noFill();
+  stroke(0);
+  strokeWeight(1);
+
+  line(-200, 10, 200, 20);
+  rect(0, -250, 200, 20);
+  beginShape();
+  vertex(-300, 40);
+  vertex(300, 40);
+  endShape();
 }
