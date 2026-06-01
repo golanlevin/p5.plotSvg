@@ -225,12 +225,16 @@
     );
     if (!restoreInfo) {
       const hadOwnProperty = Object.prototype.hasOwnProperty.call(target, funcName);
-      session.overrides.restoreStack.push({
+      restoreInfo = {
         target,
         funcName,
         hadOwnProperty,
-        descriptor: hadOwnProperty ? Object.getOwnPropertyDescriptor(target, funcName) : undefined
-      });
+        descriptor: hadOwnProperty ? Object.getOwnPropertyDescriptor(target, funcName) : undefined,
+        replacementFunc: newFunc
+      };
+      session.overrides.restoreStack.push(restoreInfo);
+    } else {
+      restoreInfo.replacementFunc = newFunc;
     }
 
     const currentDescriptor = Object.getOwnPropertyDescriptor(target, funcName);
@@ -253,6 +257,10 @@
     for (let i = session.overrides.restoreStack.length - 1; i >= 0; i--) {
       const item = session.overrides.restoreStack[i];
       if (!item.target) continue;
+      // Warn if another library/user replaced our temporary override while recording.
+      if (item.replacementFunc && item.target[item.funcName] !== item.replacementFunc) {
+        console.warn(`p5.plotSvg: ${item.funcName} changed during SVG recording; another library may have overwritten the temporary override.`);
+      }
       if (item.hadOwnProperty) {
         Object.defineProperty(item.target, item.funcName, item.descriptor);
       } else {
