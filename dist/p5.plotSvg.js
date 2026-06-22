@@ -4,7 +4,7 @@
   // p5.plotSvg: a Plotter-Oriented SVG Exporter for p5.js
   // https://github.com/golanlevin/p5.plotSvg
   // Initiated by Golan Levin (@golanlevin)
-  // v.0.2.0, April 28, 2026
+  // v.0.3.0, June 22, 2026
   // Known to work with p5.js versions 1.4.2–1.11.13
   // Basic 2D geometry export is tested with p5.js version 2.3.0 as well.
 
@@ -13,7 +13,7 @@
     const p5plotSvg = {};
 
     // Attach constants to the p5plotSvg namespace
-    p5plotSvg.VERSION = "0.2.0";
+    p5plotSvg.VERSION = "0.3.0";
     p5plotSvg.SVG_INDENT_NONE = 0;
     p5plotSvg.SVG_INDENT_SPACES = 1;
     p5plotSvg.SVG_INDENT_TABS = 2;
@@ -1386,7 +1386,7 @@
     /**
      * @private
      * Overrides the p5.js curveVertex function to capture Catmull-Rom curve control points for SVG export.
-     * Marks the current shape as complex and handles specific kludge logic for initial vertices.
+     * Marks the current shape as complex and preserves the legacy v1-style endpoint behavior.
      * @see {@link https://p5js.org/reference/p5/curveVertex/}
      */
     function overrideCurveVertexFunction() {
@@ -1397,16 +1397,17 @@
         if (session.recording) {
           session.shapeMode = 'complex'; // Switch to complex mode
           let tightness = session.curveTightness; // Capture current tightness
-          {
-            if (session.vertexStack.length === 1){
-              if(session.vertexStack[0].type === SVG_SEGMENT.CURVE){
-                let x0 = session.vertexStack[0].x;
-                let y0 = session.vertexStack[0].y;
-                let dist01 = Math.hypot(x-x0, y-y0);
-                if (dist01 > 0){
-                  session.vertexStack.shift();
-                  session.vertexStack.push({ type: SVG_SEGMENT.CURVE, x, y, tightness });
-                }
+
+          // For open Catmull-Rom paths, duplicate the first distinct curve point
+          // so the SVG conversion receives the endpoint context expected by p5 v1.
+          if (session.vertexStack.length === 1){
+            if(session.vertexStack[0].type === SVG_SEGMENT.CURVE){
+              let x0 = session.vertexStack[0].x;
+              let y0 = session.vertexStack[0].y;
+              let dist01 = Math.hypot(x-x0, y-y0);
+              if (dist01 > 0){
+                session.vertexStack.shift();
+                session.vertexStack.push({ type: SVG_SEGMENT.CURVE, x, y, tightness });
               }
             }
           }

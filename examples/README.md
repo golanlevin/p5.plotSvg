@@ -11,6 +11,7 @@ These examples show how to generate plotter-friendly SVGs from p5.js using p5.pl
 
 [![plotSvg_smorgasbord](plotSvg_smorgasbord/plotSvg_smorgasbord_sm.png)](plotSvg_smorgasbord/README.md)
 
+
 ---
 
 ### [plotSvg_hello_static](plotSvg_hello_static/README.md)
@@ -19,6 +20,7 @@ Simplest possible demo, in "static" mode; all art is in `setup()` only.<br />[he
 
 [![plotSvg_hello_static](plotSvg_hello_static/plotSvg_hello_static_sm.png)](plotSvg_hello_static/README.md)
 
+
 ---
 
 ### [plotSvg_hello_animating](plotSvg_hello_animating/README.md)
@@ -26,6 +28,20 @@ Simplest possible demo, in "static" mode; all art is in `setup()` only.<br />[he
 Simple demo; uses `setup()`, `draw()` and a keypress to capture an SVG during animation.<br />[here](plotSvg_hello_animating/README.md) • [@editor](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing](https://openprocessing.org/sketch/2455390)
 
 [![plotSvg_hello_animating](plotSvg_hello_animating/plotSvg_hello_animating_sm.png)](plotSvg_hello_animating/README.md)
+
+
+---
+
+### [plotSvg_addon_example](plotSvg_addon_example/README.md)
+
+Demonstrates the use of the plotSvg add-on-style API — in both v1 and v2 versions of p5.js, and in both global and instance modes. 
+
+- p5.js v1, global mode: [plotSvg_addon_example_v1_global](plotSvg_addon_example/plotSvg_addon_example_v1_global/index.html)
+- p5.js v1, instance mode: [plotSvg_addon_example_v1_instance](plotSvg_addon_example/plotSvg_addon_example_v1_instance/index.html)
+- p5.js v2, global mode: [plotSvg_addon_example_v2_global](plotSvg_addon_example/plotSvg_addon_example_v2_global/index.html)
+- p5.js v2, instance mode: [plotSvg_addon_example_v2_instance](plotSvg_addon_example/plotSvg_addon_example_v2_instance/index.html)
+
+[![plotSvg_addon_example_sm.png](plotSvg_addon_example/plotSvg_addon_example_sm.png)](plotSvg_addon_example/README.md)
 
 ---
 

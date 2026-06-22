@@ -6,17 +6,18 @@
 ![Plotter](images/bantam_artframe_plotter.jpg)
 
 [**p5.plotSvg**](https://github.com/golanlevin/p5.plotSvg) is a p5.js library for exporting SVG files tailored for pen plotting.<br /> 
-Version 0.2.0, April 28, 2026 • Initiated by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
+Version 0.3.0, June 22, 2026 • Initiated by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 
 ### Downloads, Mirrors, and Documentation:
 
 * [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from this GitHub repo ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
 * p5.plotSvg.js at **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
-* p5.plotSvg.js at **unpkg.com**: [https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js)
-* p5.plotSvg.js at **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
-* Generated builds: [`dist/p5.plotSvg.js`](dist/p5.plotSvg.js) for script tags, and [`dist/p5.plotSvg.esm.js`](dist/p5.plotSvg.esm.js) for ESM imports
+* Legacy script build at **unpkg.com**: [https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js)
+* Legacy script build at **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
+* Generated add-on builds: [`dist/p5.plotSvg.js`](dist/p5.plotSvg.js) for script tags, and [`dist/p5.plotSvg.esm.js`](dist/p5.plotSvg.esm.js) for ESM imports
 * [**DOCUMENTATION**](documentation.md)
+* [**ROADMAP**](ROADMAP.md)
 
 
 ### Contents:
@@ -83,13 +84,13 @@ For p5.js v1 projects, the traditional script-tag form remains fully supported:
 </html>
 ```
 
-For p5.js v2 projects, use p5.js v2 and the generated script build:
+For p5.js v2 projects, use p5.js v2 and the generated plotSvg script build:
 
 ```html
 <!-- This is the index.html file -->
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@2/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@2.3.0/lib/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/dist/p5.plotSvg.js"></script>
   </head>
   <body>
@@ -218,15 +219,16 @@ The named `plotSvgAddon` export is the p5.js v2 add-on installer. The default ex
 1. [**plotSvg_smorgasbord**](examples/plotSvg_smorgasbord/README.md): ⭐ Full demo of all p5.js drawing primitives exported to SVG. [@editor](https://editor.p5js.org/golan/sketches/QReF_9ss2) • [@openProcessing](https://openprocessing.org/sketch/2455426)
 2. [**plotSvg_hello_static**](examples/plotSvg_hello_static/README.md): Simplest possible demo; all art in `setup()` only. [@editor](https://editor.p5js.org/golan/sketches/AW8GI36fA) • [@openProcessing](https://openprocessing.org/sketch/2455362)
 3. [**plotSvg_hello_animating**](examples/plotSvg_hello_animating/README.md): Simple demo; uses `setup()` & `draw()` and a keypress. [@editor](https://editor.p5js.org/golan/sketches/JA-ty5j83) • [@openProcessing](https://openprocessing.org/sketch/2455390)
-4. [**plotSvg_generative**](examples/plotSvg_generative/README.md): Simple "generative artwork"; press button to export. [@editor](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing](https://openprocessing.org/sketch/2455399)
-5. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/README.md): Records a series of marks drawn by the user. [@editor](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing](https://openprocessing.org/sketch/2478914)
-6. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/README.md): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
-7. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/README.md): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
-8. [**plotSvg_instancemode**](examples/plotSvg_instancemode/README.md): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
-9. [**plotSvg_addon_example**](examples/plotSvg_addon_example/README.md): Demonstrates the add-on-style API in p5.js v1/v2 and global/instance mode.
-10. [**plotSvg_post_grouping**](examples/plotSvg_post_grouping/README.md): Merge groups of paths ("layers") computed at different times. [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
-11. [**plotSvg_svg_font_text**](examples/plotSvg_svg_font_text/README.md): Use monoline SVG fonts in your exported designs. [@editor](https://editor.p5js.org/golan/sketches/rIsRh01Vj) • [@openProcessing](https://openprocessing.org/sketch/2684135)
-12. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
+4. [**plotSvg_addon_example**](examples/plotSvg_addon_example/README.md): Demonstrates using the p5.plotSvg addon. 
+5. [**plotSvg_generative**](examples/plotSvg_generative/README.md): Simple "generative artwork"; press button to export. [@editor](https://editor.p5js.org/golan/sketches/LRTXmDg2q) • [@openProcessing](https://openprocessing.org/sketch/2455399)
+6. [**plotSvg_drawing_recorder**](examples/plotSvg_drawing_recorder/README.md): Records a series of marks drawn by the user. [@editor](https://editor.p5js.org/golan/sketches/bQDM5IQdv) • [@openProcessing](https://openprocessing.org/sketch/2478914)
+7. [**plotSvg_particle_paths**](examples/plotSvg_particle_paths/README.md): Accumulates the traces of some particles over time. [@editor](https://editor.p5js.org/golan/sketches/1Toe-pMZH) • [@openProcessing](https://openprocessing.org/sketch/2478945)
+8. [**plotSvg_hatched_shapes**](examples/plotSvg_hatched_shapes/README.md): A trick for exporting hatched ("filled") SVG shapes. [@editor](https://editor.p5js.org/golan/sketches/b75oVci5f) • [@openProcessing](https://openprocessing.org/sketch/2479519)
+9. [**plotSvg_instancemode**](examples/plotSvg_instancemode/README.md): Example of SVG export in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). [@editor](https://editor.p5js.org/Ucodia/sketches/xO8vTRzP7)
+10. [**plotSvg_addon_example**](examples/plotSvg_addon_example/README.md): Demonstrates the add-on-style API in p5.js v1/v2 and global/instance mode.
+11. [**plotSvg_post_grouping**](examples/plotSvg_post_grouping/README.md): Merge groups of paths ("layers") computed at different times. [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
+12. [**plotSvg_svg_font_text**](examples/plotSvg_svg_font_text/README.md): Use monoline SVG fonts in your exported designs. [@editor](https://editor.p5js.org/golan/sketches/rIsRh01Vj) • [@openProcessing](https://openprocessing.org/sketch/2684135)
+13. [**plotSvg_face_flipbook**](https://openprocessing.org/sketch/2488219): Exports a tiny flipbook recording from a face-tracker. [@openProcessing](https://openprocessing.org/sketch/2488219)
 
 
 ---
@@ -315,5 +317,3 @@ This project was initiated by Golan Levin and made possible by support from the 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55"><br/>![Processing logo](images/processing_logo.png) ![p5.js logo](images/p5_logo.png) ![SVG logo](images/svg_logo.png)
 
 ---
-
-<!-- codex resume 019dd25a-8fba-7291-bf17-3d0f9d6d680d -->
