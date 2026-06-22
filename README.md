@@ -260,3 +260,7 @@ Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://
 This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), the students in my [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines/) course at CMU, @lewi0622, @mariuswatz, @msurguy, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, pull requests, and other forms of support.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55"><br/>![Processing logo](images/processing_logo.png) ![p5.js logo](images/p5_logo.png) ![SVG logo](images/svg_logo.png)
+
+---
+
+<!-- codex resume 019dd25a-8fba-7291-bf17-3d0f9d6d680d -->
