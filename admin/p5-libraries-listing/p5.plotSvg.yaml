@@ -1,6 +1,6 @@
 name: p5.plotSvg
 category: export
-description: Exports SVG files tailored for pen plotters and other path-based vector output devices.
+description: Export plotter-friendly SVG files from p5.js sketches.
 author:
   name: Golan Levin
   url: https://flong.com/
@@ -9,5 +9,5 @@ websiteUrl: https://github.com/golanlevin/p5.plotSvg
 npm: p5.plotsvg
 npmFilePath: dist/p5.plotSvg.js
 featuredImage: ../images/p5.plotSvg.png
-featuredImageAlt: A pen-plotter draws blobs with a white pen on black paper
+featuredImageAlt: A pen plotter drawing white paths on black paper.
 license: MIT
