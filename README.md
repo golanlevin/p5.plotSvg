@@ -67,6 +67,7 @@ First, include `p5.plotSvg.js` in your project, alongside p5.js. You can do this
 
 p5.plotSvg works with both p5.js v1 and p5.js v2. It can be used as a classic script-tag library, through the `p5plotSvg` namespace, or through newer p5 add-on-style methods attached to p5 instances. The older global functions remain supported for backward compatibility.
 
+
 ### Script tag usage
 
 For p5.js v1 projects, the traditional script-tag form remains fully supported:
