@@ -3,7 +3,11 @@
   "version": "0.2.0",
   "description": "A Plotter-Oriented SVG Exporter for p5.js",
   "main": "lib/p5.plotSvg.js",
+  "browser": "dist/p5.plotSvg.js",
   "module": "dist/p5.plotSvg.esm.js",
+  "unpkg": "dist/p5.plotSvg.js",
+  "jsdelivr": "dist/p5.plotSvg.js",
+  "sideEffects": true,
   "exports": {
     ".": {
       "import": "./dist/p5.plotSvg.esm.js",
@@ -19,6 +23,7 @@
     "lib",
     "src",
     "README.md",
+    "documentation.md",
     "LICENSE"
   ],
   "directories": {
@@ -35,8 +40,13 @@
   },
   "keywords": [
     "plotters",
+    "pen-plotter",
+    "cnc",
     "p5.js",
+    "p5js",
+    "p5-addon",
     "SVG",
+    "svg-export",
     "#plotterTwitter",
     "creativecoding",
     "generativeart"
@@ -46,6 +56,14 @@
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "rollup": "^4.41.1"
+  },
+  "peerDependencies": {
+    "p5": ">=1.4.2"
+  },
+  "peerDependenciesMeta": {
+    "p5": {
+      "optional": true
+    }
   },
   "bugs": {
     "url": "https://github.com/golanlevin/p5.plotSvg/issues"

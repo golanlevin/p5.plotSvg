@@ -15,6 +15,7 @@ Version 0.2.0, April 28, 2026 • Initiated by Golan Levin ([@golanlevin](https
 * p5.plotSvg.js at **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
 * p5.plotSvg.js at **unpkg.com**: [https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * p5.plotSvg.js at **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
+* Generated builds: [`dist/p5.plotSvg.js`](dist/p5.plotSvg.js) for script tags, and [`dist/p5.plotSvg.esm.js`](dist/p5.plotSvg.esm.js) for ESM imports
 * [**DOCUMENTATION**](documentation.md)
 
 
@@ -39,7 +40,7 @@ Version 0.2.0, April 28, 2026 • Initiated by Golan Levin ([@golanlevin](https
 
 The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Key advantages of p5.plotSvg are that it does not interfere with graphics performance during animation, and it is easy to add to projects. 
 
-Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.13. Compatibility with p5.js version 2.x is now "mostly" supported but still in-progress; YMMV. 
+Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.13. Compatibility with p5.js version 2.x is now supported for basic 2D geometry export and remains under active development for newer p5.js v2 curve and spline features.
 
 p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
 
@@ -60,14 +61,20 @@ Primero, incluya <code>p5.plotSvg.js</code> en su proyecto, junto con p5.js. Pue
 首先，将 <code>p5.plotSvg.js</code> 文件添加到您的项目中。您可以通过在项目的 <code>index.html</code> 文件中链接到 <a href="https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js">unpkg.com</a> 或 <a href="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js">cdn.jsdelivr.net</a> 上的 p5.plotSvg 在线版本来实现。或者，您也可以链接到本地​​的 <code>p5.plotSvg.js</code> 文件，您可以从这个 GitHub 仓库下载该文件 （<a href="https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js">点击此处</a>）。以下示例展示了如何在项目的 <code>index.html</code> 文件中引入 <code>p5.plotSvg.js</code>。之后，在与 <code>index.html</code> 文件相同的目录下创建一个名为 <code>sketch.js</code> 的 p5.js 文件，内容如下所示。在 Web 浏览器中运行此示例文件后，您可以按 <code>s</code> 键导出 SVG 文件。
 </details>
 
-First, include `p5.plotSvg.js` in your project, alongside p5.js. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) or 
-[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your project's `index.html` file. Alternatively, you can link to a local copy of `p5.plotSvg.js`, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js). The following example shows one way to include `p5.plotSvg.js` in your project's `index.html` file:
+First, include `p5.plotSvg.js` in your project, alongside p5.js. You can do this by linking to an online copy of p5.plotSvg at [unpkg.com](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js) or
+[cdn.jsdelivr.net](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js) in your project's `index.html` file. Alternatively, you can link to a local copy of `p5.plotSvg.js`, which you can download from this GitHub repo, [here](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js).
+
+p5.plotSvg works with both p5.js v1 and p5.js v2. It can be used as a classic script-tag library, through the `p5plotSvg` namespace, or through newer p5 add-on-style methods attached to p5 instances. The older global functions remain supported for backward compatibility.
+
+### Script tag usage
+
+For p5.js v1 projects, the traditional script-tag form remains fully supported:
 
 ```html
 <!-- This is the index.html file -->
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js"></script>
   </head>
   <body>
@@ -76,7 +83,22 @@ First, include `p5.plotSvg.js` in your project, alongside p5.js. You can do this
 </html>
 ```
 
-Next, create a p5.js file like the one below, called `sketch.js`, in the same directory as your `index.html`. When you run this example file in a web browser, you can press the `s` key to export an SVG file:
+For p5.js v2 projects, use p5.js v2 and the generated script build:
+
+```html
+<!-- This is the index.html file -->
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@2/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/dist/p5.plotSvg.js"></script>
+  </head>
+  <body>
+    <script src="sketch.js"></script>
+  </body>
+</html>
+```
+
+Next, create a p5.js file like the one below, called `sketch.js`, in the same directory as your `index.html`. When you run this example file in a web browser, you can press the `s` key to export an SVG file. In global mode, the newer add-on-style form is:
 
 ```js
 // This is the sketch.js file.
@@ -100,7 +122,7 @@ function keyPressed(){
 function draw(){
   background(255); 
   if (bDoExportSvg){
-    beginRecordSvg(this, "myOutput.svg");
+    beginRecordSvg("myOutput.svg");
   }
 
   // Draw stuff here, such as:
@@ -113,28 +135,58 @@ function draw(){
 }
 ```
 
+Older sketches that call `beginRecordSvg(this, "myOutput.svg")` are still supported.
+
 One recommended workflow is to generate an SVG file using p5.js with p5.plotSvg, as described above, and then (if desired) optimize your SVG file for plotting using the excellent [vpype](https://vpype.readthedocs.io/en/latest/) command-line utility.
 
 ### Instance mode
 
-As an alternative to using the p5.js global mode, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). Here's an alternative `sketch.js` file showing a minimal example of this: 
-
+As an alternative to using p5.js global mode, the p5.plotSvg library can also be used in p5's [instance mode](https://github.com/processing/p5.js/wiki/Global-and-instance-mode). The add-on-style instance API is recommended for new instance-mode sketches:
 
 ```js
 // This is a minimal sketch.js file for instance mode. 
-import p5plot from 'p5.plotsvg';
 
 function sketch(context) {
   context.setup = function() {
     context.createCanvas(400, 400);    
-    p5plot.beginRecordSvg(context, "output.svg");
+    context.beginRecordSvg("output.svg");
     context.circle(200, 200, 200);
-    p5plot.endRecordSvg();
+    context.endRecordSvg();
   };
 };
 
 new p5(sketch, document.getElementById("container"));
 ```
+
+The namespace form also remains available:
+
+```js
+p5plotSvg.beginRecordSvg(context, "output.svg");
+// draw with context.line(), context.circle(), etc.
+p5plotSvg.endRecordSvg();
+```
+
+### ESM usage
+
+Projects that use JavaScript modules can import p5.plotSvg from npm/CDN package entry points. With p5.js v2, register the exported add-on before creating a sketch:
+
+```js
+import p5 from 'p5';
+import { plotSvgAddon } from 'p5.plotsvg';
+
+p5.registerAddon(plotSvgAddon);
+
+new p5((sketch) => {
+  sketch.setup = function() {
+    sketch.createCanvas(400, 400);
+    sketch.beginRecordSvg("output.svg");
+    sketch.line(20, 20, 380, 380);
+    sketch.endRecordSvg();
+  };
+});
+```
+
+The named `plotSvgAddon` export is the p5.js v2 add-on installer. The default export is the `p5plotSvg` namespace, which remains available for namespace-style calls.
 
 ---
 
@@ -142,7 +194,7 @@ new p5(sketch, document.getElementById("container"));
 
 * The p5.plotSvg library allows you to export a p5.js drawing as an SVG file that consists exclusively of scalable 2D vector paths, such as lines, arcs, shapes, polylines, and curves. We anticipate that you'll use the SVG files generated with this library to execute your drawings on a vector output device, such as a laser cutter, AxiDraw, or [NextDraw](https://store.bantamtools.com/collections/bantam-tools-nextdraw) pen-plotter.
 * The p5.plotSvg library is intended for use with p5.js, and is modeled after the way in which [PDF exporting](https://processing.org/reference/libraries/pdf/index.html) and [SVG exporting](https://processing.org/reference/libraries/svg/index.html) are implemented in [Processing](https://processing.org/) (Java). To use p5.plotSvg, you are expected to manage the timing of a `beginRecordSvg()` and `endRecordSvg()` function in your code.
-* The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are temporarily redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored.
+* The p5.plotSvg library works by temporarily overriding the functionality of the p5.js drawing commands. At the precise moment when you export the SVG, p5 drawing commands like `line()` and `ellipse()` are temporarily redefined so that they not only draw onscreen, but *also* add their data to the SVG file. When the SVG is finished saving, the regular definitions of these functions are restored. This temporary override model is central to p5.plotSvg's export-on-demand workflow; the library restores original property descriptors after recording so p5.js and other libraries can continue normally.
 
 
 ---
@@ -215,10 +267,10 @@ Related generic hooks include `injectSvgHeaderAttribute()`, `injectSvgDef()`, cu
 ## Known Issues and Bugs:
 
 * p5.plotSvg does not yet convert TTF/OTF text to outlines (though, this is planned). Additionally, p5.plotSvg does not embed TTF/OTF font data into SVGs; it refers to fonts by name and assumes they are installed on your host computer. You may need to perform additional operations on your SVGs (e.g. in Inkscape) to achieve desired typography. As an alternative, for quick typography with plotters, consider using [single stroke fonts](https://github.com/golanlevin/p5-single-line-font-resources).
-* As of p5.plotSvg v.0.1.x, non-default vertical `textAlign()` settings are not yet supported; only `BASELINE` currently works correctly.
-* As of p5.plotSvg v.0.1.x, there is a small discrepancy in the SVG output of polylines rendered with `curveVertex()`. Specifically, there is an error with the starting orientation of the first point of the polyline. 
-* As of p5.plotSvg v.0.1.x, this library is not intended to be used in `WEBGL` mode. There is currently no support for converting 3D graphics to 2D, though this may be added later. 
-* p5.plotSvg v.0.1.x works with versions of p5.js as old as v.1.4.2. The [forthcoming p5.js vertex API](https://github.com/processing/p5.js/issues/6766), which is due to come out with p5.js v.2.0, will likely cause breaking changes to portions of p5.plotSvg v.0.1.x.
+* Non-default vertical `textAlign()` settings are not yet fully supported; only `BASELINE` currently works correctly.
+* p5.js v2 curve and spline compatibility is still in progress. Basic v1-style curve export is supported, but newer p5.js v2 curve/spline APIs may not yet export with complete fidelity.
+* `clip()`, `beginClip()`, and `endClip()` are intentionally unsupported for SVG export. Correct plotter-safe clipping would require computational geometry and path splitting, which are outside the scope of this library.
+* This library is not intended to be used in `WEBGL` mode. There is currently no support for converting 3D graphics to 2D, though this may be added later.
 * Other bugs and issues as listed [here](https://github.com/golanlevin/p5.plotSvg/issues).
 
 ---

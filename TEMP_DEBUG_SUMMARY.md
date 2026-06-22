@@ -21,7 +21,7 @@ Recent broad verification has included:
 
 ```sh
 npm run build
-npx playwright test test/p5-addon-build.spec.js test/p5-prototype-api.spec.js test/p5-smorgasbord.spec.js --browser=chromium
+npm test
 ```
 
 The generated `dist/` files are now part of the test surface.
@@ -83,7 +83,7 @@ The local p5 copies used by tests now live under `test/p5.js-v.1.11.13/` and `te
 
 ## Official p5.js Add-on Assessment
 
-p5.plotSvg is now partly structured like a p5.js add-on. It has a p5 v2 `registerAddon()` path, a p5 v1 prototype fallback, prototype methods, flexible begin-record argument handling, and a first Rollup build scaffold. The remaining work is mostly packaging/docs policy: deciding the long-term source/distribution layout, hardening generated builds, reducing reliance on broad globals where practical, and preparing official library submission materials.
+p5.plotSvg is now partly structured like a p5.js add-on. It has a p5 v2 `registerAddon()` path, a p5 v1 prototype fallback, prototype methods, flexible begin-record argument handling, and a first Rollup build scaffold. The current add-on branch uses a conservative packaging policy: keep `lib/p5.plotSvg.js` as source of truth, keep `src/` as thin build entry wrappers, generate `dist/` with Rollup, and preserve global aliases for backward compatibility.
 
 The practical conversion path is to use the local `temp/p5.js-addon-template-main/templates/basic` pattern rather than the custom renderer template. A custom renderer would be a much larger redesign and would conflict with p5.plotSvg's current model: keep drawing to the normal p5 canvas, then temporarily capture drawing commands only during explicit SVG export.
 
@@ -92,10 +92,10 @@ Needed changes:
 1. Completed: add an official add-on installer function, `plotSvgAddon(p5, fn, lifecycles)`, which attaches methods such as `beginRecordSvg()`, `endRecordSvg()`, `setSvgDocumentSize()`, and related configuration functions to the p5 sketch API. p5 v2 now uses `p5.registerAddon(plotSvgAddon)` when available; p5 v1 falls back to invoking the same installer directly against `p5.prototype`.
 2. Completed: add prototype methods without removing globals. p5 instances now expose wrappers such as `sketch.beginRecordSvg("file.svg")`, `sketch.endRecordSvg()`, and `sketch.setSvgDocumentSize(w, h)`, while existing `beginRecordSvg(this, "file.svg")` and `p5plotSvg.beginRecordSvg(this, "file.svg")` usage remains supported.
 3. Completed: add flexible argument handling for add-on-native usage. The old explicit form `beginRecordSvg(this, "file.svg")` still works, global-mode sketches can use `beginRecordSvg("file.svg")`, and instance-mode sketches can use `sketch.beginRecordSvg("file.svg")`. In p5 v2 global mode, p5 may expose `beginRecordSvg` through a prototype-generated global alias, so the wrapper detects `this === p5.instance` and records against `window` to ensure global drawing functions are captured.
-4. Remaining: stop relying on broad unconditional global exports where practical. Let p5 expose prototype methods globally in global mode, while keeping existing globals as compatibility aliases if needed.
+4. Decided for this release: keep broad unconditional global exports for backward compatibility. p5 add-on/prototype methods are supported and preferred in new docs, but existing global functions remain available.
 5. Completed first scaffold / still hardening: add a Rollup-based build pipeline like the template, producing an IIFE build for script tags and an ESM build for imports/npm. The scaffold now exists with `src/browser.js`, `src/main.js`, `rollup.config.mjs`, generated `dist/p5.plotSvg.js`, generated `dist/p5.plotSvg.esm.js`, and a package `exports` map. The scaffold intentionally keeps `lib/p5.plotSvg.js` as the source-of-truth for now.
 6. Completed: support both p5 v1 and p5 v2 through the same installer path. p5 v2 can use `p5.registerAddon()`, while p5 v1 falls back to direct prototype attachment.
-7. In progress: document the temporary p5 function override model honestly. It technically conflicts with the p5 recommendation not to overwrite p5 functions, but p5.plotSvg does so only during recording and restores exact property descriptors afterward. Internal JSDoc now documents the add-on installer and related helper contracts; README/user docs still need updating.
+7. In progress: document the temporary p5 function override model honestly. It technically conflicts with the p5 recommendation not to overwrite p5 functions, but p5.plotSvg does so only during recording and restores exact property descriptors afterward. Internal JSDoc and README/user docs now describe this model; more polish can happen during final release documentation.
 8. Prepare p5 libraries page submission materials: category likely `Export`, concise description, author info, license, docs link, examples, npm/CDN links, and a thumbnail/image.
 
 Important note: p5.plotSvg should not become a custom renderer unless the project intentionally changes direction. The current export-on-demand architecture is better served by a standard add-on wrapper around the existing implementation.
@@ -110,7 +110,7 @@ The add-on conversion should continue incrementally. The current priority is to 
 
 2. **Clarify source vs. distribution policy.**
 
-   Decide whether `lib/p5.plotSvg.js` remains the long-term editable source, or whether the project eventually moves to `src/main.js` as the source and treats both `lib/` and `dist/` as generated outputs. For now, the safest policy is:
+   Decided for the current add-on branch: `lib/p5.plotSvg.js` remains the editable source, `src/` contains thin build entry wrappers, and `dist/` is generated output. The working policy is:
 
    - edit `lib/p5.plotSvg.js`;
    - run `npm run build`;
@@ -133,13 +133,13 @@ The add-on conversion should continue incrementally. The current priority is to 
 
 5. **Document installation paths.**
 
-   The README should explain three supported usage modes:
+   The README now explains three supported usage modes:
 
    - traditional browser script loading from CDN or local file;
    - p5 v1 global/prototype fallback behavior;
    - p5 v2 add-on registration and ESM import behavior.
 
-   The documentation should explicitly say that older sketches are intended to keep working.
+   The documentation explicitly says that older sketches are intended to keep working.
 
 6. **Prepare package metadata for publishing.**
 
@@ -186,7 +186,68 @@ Current refactor boundaries:
 
 Remaining refactor follow-ups:
 
-- Decide whether to further reduce direct global exports after README/examples are updated for add-on-style usage.
+- Keep direct global exports for this add-on release; revisit only in a future major-version compatibility discussion.
 - Expand curve-specific path tests before deeper p5 v2 spline/bezier work.
 - Revisit text/font extraction after geometry compatibility stabilizes.
-- Eventually decide whether `lib/p5.plotSvg.js` remains source-of-truth or whether implementation moves into `src/` with generated `lib/`/`dist/` outputs.
+- Eventually revisit whether implementation should move into `src/` with generated `lib/`/`dist/` outputs. For the current add-on branch, `lib/p5.plotSvg.js` remains the source of truth.
+
+---
+
+## Add-on Branch Packaging Policy
+
+The project is now on the `p5-addon` branch for official add-on packaging work.
+The selected conservative policy is:
+
+- `lib/p5.plotSvg.js` remains the editable source of truth for now.
+- `src/` contains thin Rollup entry wrappers.
+- `dist/` is generated by `npm run build` and should be committed for releases.
+- Current unconditional global exports remain in place for this release because backward compatibility is a priority, especially for p5.js v1 and existing p5 Web Editor sketches.
+- New docs should prefer add-on/prototype-style usage, but old `beginRecordSvg(this, ...)`, global function, and `p5plotSvg.*` namespace forms remain supported.
+
+The main downside of this conservative path is architectural polish: `src/` is
+not yet the real source directory, and the ESM build still imports the IIFE and
+reads `globalThis.p5plotSvg`. This is acceptable for the add-on release because
+it avoids risky 5,000-line source movement while packaging and docs stabilize.
+
+## Add-on Roadmap
+
+1. **Package/docs cleanup.**
+
+   Status: completed for the current pass on the `p5-addon` branch. README and documentation now describe p5 v1/v2 script-tag usage, add-on-style instance/global usage, ESM usage, and the conservative source/dist policy.
+
+2. **Keep package entry points conservative.**
+
+   `main` should continue to point at `lib/p5.plotSvg.js` for CommonJS/legacy compatibility. `module`, `browser`, `unpkg`, and `jsdelivr` should point at generated `dist/` builds.
+
+3. **Generated builds.**
+
+   Run `npm run build` after source or build-entry changes and commit generated `dist/` files for releases.
+
+4. **Tests.**
+
+   Continue using the full Playwright matrix before merging: p5 v1.11.13, p5 v2.3.0, script builds, ESM build, global/instance mode, Smorgasbord, path regression, escaping, and prototype API tests.
+
+5. **Examples.**
+
+   Keep existing examples working. Gradually add p5 v1/v2 entry points and add-on-style examples where useful.
+
+6. **p5 libraries submission.**
+
+   Category should likely be `Export`. Submission materials need a concise description, docs link, examples link, repo URL, license, author info, npm/CDN links, and a thumbnail or preview image.
+
+## Later Source-Layout Cleanup
+
+After the add-on release is stable, a separate branch can repair the temporary
+source layout:
+
+1. Move the real implementation from `lib/p5.plotSvg.js` to `src/p5.plotSvg.js` or `src/main.js`.
+2. Change the IIFE wrapper so the core object is exported cleanly instead of only attaching itself to `globalThis`.
+3. Make Rollup generate `dist/p5.plotSvg.js`, `dist/p5.plotSvg.esm.js`, and optionally `lib/p5.plotSvg.js` as a backward-compatible generated copy.
+4. Update `package.json` so `main`, `module`, and `exports` point to generated files in a clear way.
+5. Keep `lib/p5.plotSvg.js` available for old CDN links, at least for a transition period.
+6. Update docs to say that new projects should use package entry points or `dist/`, while `lib/` remains for legacy compatibility.
+7. Run the full browser test matrix and compare generated SVG fixtures.
+
+The main risk of that later migration is churn: a 5,000-line source move makes
+Git diffs noisy and can hide accidental behavior changes. Deferring it keeps the
+current add-on work focused on packaging, documentation, and compatibility.

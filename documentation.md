@@ -6,6 +6,11 @@
 
 # p5.plotSvg Documentation
 
+p5.plotSvg can be used through global functions, through the `p5plotSvg`
+namespace, or through p5 add-on-style methods attached to p5 sketch instances.
+Existing global usage remains supported for backward compatibility with older
+sketches and p5.js v1 projects.
+
 ### Table of Contents
 
 *   [beginRecordSvg](#beginrecordsvg)
@@ -51,12 +56,18 @@ Begins recording SVG output for a p5.js sketch.
 Initializes recording state, validates and sets the output filename,
 and overrides p5.js drawing functions to capture drawing commands for SVG export.
 
+Supported forms:
+
+```js
+beginRecordSvg(this, "file.svg");        // legacy explicit p5 instance form
+beginRecordSvg("file.svg");              // global-mode add-on style
+sketch.beginRecordSvg("file.svg");       // instance-mode add-on style
+p5plotSvg.beginRecordSvg(this, null);    // namespace form, no file download
+```
+
 #### Parameters
-*   `p5Instance` **[object][26]** A reference to the current p5.js sketch (e.g. `this`).
-*   `fn` **[string][27]?** Optional filename for the output SVG file. The *explicit* use of `null` will prevent a file from being saved. Behavior: 
-	* `beginRecordSvg(this, "file.svg"); // saves to "file.svg"`
-	* `beginRecordSvg(this); // saves to "output.svg" (default)`
-	* `beginRecordSvg(this, null); // DOES NOT save any file!`
+*   `p5Instance` **[object][26] | [string][27] | null** A reference to the current p5.js sketch (e.g. `this`) when using the legacy explicit form, or a filename/null when using add-on-style global or instance methods.
+*   `fn` **[string][27]? | null** Optional filename for the output SVG file when using the explicit p5 instance form. The explicit use of `null` will prevent a file from being saved.
 
 
 ## pauseRecordSvg
@@ -71,6 +82,10 @@ depending on whether the boolean `bPause` argument is `true` or `false`.
 ## endRecordSvg
 
 Ends recording of SVG output for a p5.js sketch. Calls the export function to generate the SVG output and restores the original p5.js functions. Returns the complete text of the SVG file as a string.
+
+When used as an add-on-style instance method, call it as `sketch.endRecordSvg()`.
+The global form `endRecordSvg()` and namespace form `p5plotSvg.endRecordSvg()`
+remain supported.
 
 
 ## setSvgDocumentSize
