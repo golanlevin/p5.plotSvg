@@ -85,12 +85,6 @@ Using p5.plotSvg in p5's [instance mode](https://github.com/processing/p5.js/wik
 
 ---
 
-### [plotSvg_addon_example](plotSvg_addon_example/README.md)
-
-Demonstrates the p5.plotSvg add-on-style API in p5.js v1/v2 and global/instance mode.<br />[here](plotSvg_addon_example/README.md)
-
----
-
 ### [plotSvg_post_grouping](plotSvg_post_grouping/README.md)
 
 Merge groups of paths computed at different times. Demonstrates per-color "layers".<br />[here](plotSvg_post_grouping/README.md) • [@editor](https://editor.p5js.org/golan/sketches/aWfRPvVfT) • [@openProcessing](https://openprocessing.org/sketch/2684018)
