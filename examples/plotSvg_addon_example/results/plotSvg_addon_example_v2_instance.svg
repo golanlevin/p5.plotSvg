@@ -1,0 +1,59 @@
+<!-- plotSvg_addon_example_v2_instance.svg -->
+<!-- Generated using p5.js v.2.3.0 and p5.plotSvg v.0.2.0: -->
+<!-- A Plotter-Oriented SVG Exporter for p5.js -->
+<!-- Mon Jun 22 2026 03:00:55 GMT-0400 (Eastern Daylight Time) -->
+<!-- DPI: 96 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" version="1.1" inkscape:version="1.4" width="6.25in" height="6.25in" viewBox="0 0 600 600">
+  <style>
+      circle, ellipse, line, path, polygon, polyline, rect, quad, text {
+        fill: none;
+        stroke: black;
+        stroke-width: 1;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+      }
+    </style>
+<g id="grid" inkscape:groupmode="layer" inkscape:label="1_grid">
+  <line x1="36" y1="36" x2="564" y2="36"/>
+  <line x1="36" y1="84" x2="564" y2="84"/>
+  <line x1="36" y1="132" x2="564" y2="132"/>
+  <line x1="36" y1="180" x2="564" y2="180"/>
+  <line x1="36" y1="228" x2="564" y2="228"/>
+  <line x1="36" y1="276" x2="564" y2="276"/>
+  <line x1="36" y1="324" x2="564" y2="324"/>
+  <line x1="36" y1="372" x2="564" y2="372"/>
+  <line x1="36" y1="420" x2="564" y2="420"/>
+  <line x1="36" y1="468" x2="564" y2="468"/>
+  <line x1="36" y1="516" x2="564" y2="516"/>
+  <line x1="36" y1="564" x2="564" y2="564"/>
+  <line x1="36" y1="36" x2="36" y2="564"/>
+  <line x1="84" y1="36" x2="84" y2="564"/>
+  <line x1="132" y1="36" x2="132" y2="564"/>
+  <line x1="180" y1="36" x2="180" y2="564"/>
+  <line x1="228" y1="36" x2="228" y2="564"/>
+  <line x1="276" y1="36" x2="276" y2="564"/>
+  <line x1="324" y1="36" x2="324" y2="564"/>
+  <line x1="372" y1="36" x2="372" y2="564"/>
+  <line x1="420" y1="36" x2="420" y2="564"/>
+  <line x1="468" y1="36" x2="468" y2="564"/>
+  <line x1="516" y1="36" x2="516" y2="564"/>
+  <line x1="564" y1="36" x2="564" y2="564"/>
+  </g>
+<g id="circles" inkscape:groupmode="layer" inkscape:label="2_circles">
+  <circle cx="95" cy="170" r="18" style="stroke:red;"/>
+  <circle cx="146.2500" cy="183.5230" r="20.5000" style="stroke:red;"/>
+  <circle cx="197.5000" cy="187.8500" r="23" style="stroke:red;"/>
+  <circle cx="248.7500" cy="180.0383" r="25.5000" style="stroke:red;"/>
+  <circle cx="300" cy="165.4003" r="28" style="stroke:red;"/>
+  <circle cx="351.2500" cy="153.8902" r="30.5000" style="stroke:red;"/>
+  <circle cx="402.5000" cy="153.3353" r="33" style="stroke:red;"/>
+  <circle cx="453.7500" cy="164.1130" r="35.5000" style="stroke:red;"/>
+  <circle cx="505" cy="178.8940" r="38" style="stroke:red;"/>
+  </g>
+<g id="curves" inkscape:groupmode="layer" inkscape:label="3_curves">
+  <polyline points="80,330 120,375.4330 160,386.4832 200,354.7880 240,304.3338 280,273.3033 320,285.1797 360,330.9752 400,376.0327 440,386.2536 480,353.9029 520,303.4629" style="stroke:blue;"/>
+  <path d="M 90,470 C 210,380 370,560 510,470" style="stroke:green;"/>
+  <path d="M 208.5498 427.3561 A 130 60 0 0 1 391.4502 427.3561" style="stroke:green;"/>
+  </g>
+</svg>
