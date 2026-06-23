@@ -9,20 +9,21 @@
 Version 0.3.0, June 22, 2026 • Initiated by Golan Levin ([@golanlevin](https://github.com/golanlevin))<br />
 
 
-### Downloads, Mirrors, and Documentation:
+### Documentation, Downloads, and Mirrors:
 
+* [**DOCUMENTATION**](documentation.md)
 * [**Download p5.plotSvg.js**](lib/p5.plotSvg.js) from this GitHub repo ([raw](https://raw.githubusercontent.com/golanlevin/p5.plotSvg/refs/heads/main/lib/p5.plotSvg.js))
 * p5.plotSvg.js at **npmjs.com**: [https://www.npmjs.com/package/p5.plotsvg](https://www.npmjs.com/package/p5.plotsvg)
 * Legacy script build at **unpkg.com**: [https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js](https://unpkg.com/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * Legacy script build at **cdn.jsdelivr.net**: [https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js](https://cdn.jsdelivr.net/npm/p5.plotsvg@latest/lib/p5.plotSvg.js)
 * Generated add-on builds: [`dist/p5.plotSvg.js`](dist/p5.plotSvg.js) for script tags, and [`dist/p5.plotSvg.esm.js`](dist/p5.plotSvg.esm.js) for ESM imports
-* [**DOCUMENTATION**](documentation.md)
-* [**ROADMAP**](ROADMAP.md)
+
 
 
 ### Contents:
 
 * [About p5.plotSvg](#about-p5plotsvg)
+* [Why Should I Use p5.plotSvg for Plotting?](#why-should-i-use-p5plotsvg-for-plotting)
 * [Quickstart Installation Instructions](#quickstart-installation-instructions)
 * [What the p5.plotSvg library *IS*](#what-the-p5plotsvg-library-is)
 * [What the p5.plotSvg library *IS NOT*](#what-the-p5plotsvg-library-is-not)
@@ -41,9 +42,21 @@ Version 0.3.0, June 22, 2026 • Initiated by Golan Levin ([@golanlevin](https:
 
 The [p5.plotSvg](https://github.com/golanlevin/p5.plotSvg) library allows the [p5.js](https://p5js.org/) creative coding toolkit to generate SVG files specifically tailored for path-based vector output devices like the [AxiDraw pen-plotter](https://www.axidraw.com/). Key advantages of p5.plotSvg are that it does not interfere with graphics performance during animation, and it is easy to add to projects. 
 
-Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.13. Compatibility with p5.js version 2.x is now supported for basic 2D geometry export and remains under active development for newer p5.js v2 curve and spline features.
+Note that p5.plotSvg is *not* a general-purpose library for importing, exporting, optimizing, or rendering SVG files in p5.js: the p5.plotSvg library only considers the *geometry* of paths, and not how they are *visually styled*, with the expectation that the way a path eventually appears is a function of the type of physical tool you happen to have in your drawing machine. The p5.plotSvg library is known to be compatible with p5.js versions 1.4.2 through 1.11.13; dompatibility with p5.js version 2.3.0 is now supported for most 2D geometry export and remains under active development for newer p5.js v2 curve and spline features.
 
 p5.plotSvg was initiated by [Golan Levin](https://art.cmu.edu/people/golan-levin/) in November 2024 as a resource for the [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines) course at [CMU School of Art](https://art.cmu.edu/). It was created with encouragement and generous support from [Bantam Tools](https://www.bantamtools.com/), makers of the world's finest pen-plotting instruments.
+
+
+---
+
+## Why Should I Use p5.plotSvg for Plotting?
+
+There are several ways to generate SVGs from p5.js sketches, and many of them aim to reproduce the visual appearance of the p5 canvas as faithfully as possible. p5.plotSvg has a narrower goal: it exports clean, path-based SVG geometry for pen plotters, laser cutters, CNC machines, and other vector output devices. It intentionally avoids many screen-graphics features that do not translate well to physical tools, and instead provides safeguards and workflow features that are useful when an SVG is going to drive a physical machine. Advantages for plotting include:
+
+* **Machine-friendly cleanup:** p5.plotSvg filters degenerate no-op paths, sanitizes or skips malformed numeric values, clamps extremely large coordinates, and offers controls for decimal precision, document resolution, and SVG formatting.
+* **Layer and pen workflows:** p5.plotSvg offers Inkscape-compatible layer metadata, SVG group naming and merging, and grouping by stroke-color — supporting multi-pen and downstream CAM workflows.
+* **Export-on-demand workflow:** SVG capture happens only between `beginRecordSvg()` and `endRecordSvg()`, so animated sketches can run normally and export a chosen frame or event.
+* **Broad compatibility:** p5.plotSvg supports p5.js v1 and v2, global and instance mode, legacy script-tag usage, and newer add-on-style APIs.
 
 
 ---
@@ -240,22 +253,22 @@ The named `plotSvgAddon` export is the p5.js v2 add-on installer. The default ex
 * The p5.plotSvg library ignores p5.js `fill()` commands, and does not export SVG shapes with filled colors. To export filled shapes for a pen-plotter, consider implementing your own hatching method, as in [this example](examples/plotSvg_hatched_shapes/).
 * SVGs produced with p5.plotSvg have a default stroke color, `black`, which can be altered with `setSvgDefaultStrokeColor()`. This library takes `stroke` commands with valid CSS [color strings](https://johndecember.com/html/spec/colorsvg.html) (e.g., `'red'`, `'#ff0000'`, `'rgb(255,0,0)'`). The p5 `colorMode()` command is not supported by p5.plotSvg, and calls to `colorMode()` may produce unpredictable results in your SVG.
 * If you use stroke colors, the working assumption of p5.plotSvg is that you are using so *to label different logical entities* — such as different color pens in a multi-pen plotter, different tools in a CNC machine, or different intensity settings in a laser cutter. For this reason, alpha (transparency) values are stripped out. I strongly recommend using just a small number of colors, and selecting easy-to-remember [CSS color keyword names](https://www.w3.org/TR/SVG11/types.html#ColorKeywords) such as `'red'`, `'green'`, `'blue'`, etc. 
-* When making complex and/or multi-color plots, the `setSvgMergeNamedGroups()` and `setSvgGroupByStrokeColor()` functions may be helpful in producing Inkscape-compatible "layers" and grouping paths you want plotted with the same pen. 
+* When making complex and/or multi-color plots, the [`setSvgMergeNamedGroups()`](documentation.md#setsvgmergenamedgroups) and [`setSvgGroupByStrokeColor()`](documentation.md#setsvggroupbystrokecolor) functions may be helpful in producing Inkscape-compatible "layers" and grouping paths you want plotted with the same pen. 
 
 ### Graphics Transforms
 
 The p5.plotSvg library offers two different ways of encoding graphics transformation operations (such as `rotate()`, `translate()`, `scale()`, `shearX()` and `shearY()`) into your SVG file. You can select the option you prefer using one the following functions during `setup()`: 
 
-* `setSvgFlattenTransforms (true)`: The current transformation matrix is encoded into each SVG element. This leads to potentially larger SVG files, but graphical elements will appear with *exactly* the same transformations as they do in the corresponding p5 sketch. You might want to use this mode if your design concatenates *many* transforms.
-* `setSvgFlattenTransforms (false)` (*default option*): Graphics transforms are encoded into a hierarchy of SVG groups, each containing an atomic transform operation. This may produce smaller SVG files, depending on your design, but there is a possibility that different SVG rendering engines may accumulate the transforms with slightly different results.
+* [`setSvgFlattenTransforms (true)`](documentation.md#setsvgflattentransforms): The current transformation matrix is encoded into each SVG element. This leads to potentially larger SVG files, but graphical elements will appear with *exactly* the same transformations as they do in the corresponding p5 sketch. You might want to use this mode if your design concatenates *many* transforms.
+* [`setSvgFlattenTransforms (false)`](documentation.md#setsvgflattentransforms) (*default option*): Graphics transforms are encoded into a hierarchy of SVG groups, each containing an atomic transform operation. This may produce smaller SVG files, depending on your design, but there is a possibility that different SVG rendering engines may accumulate the transforms with slightly different results.
 * If no graphics transforms are used in a p5 sketch, none are encoded into the SVG file.
 
 ### Numeric Precision
 
 p5.plotSvg offers two convenience functions which control how many digits of decimal precision are exported to SVG files. These can have a significant impact on SVG file size: 
 
-* `setSvgCoordinatePrecision()` – The default is 4 digits of precision for path coordinates, e.g. `3.1416`
-* `setSvgTransformPrecision()` – The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
+* [`setSvgCoordinatePrecision()`](documentation.md#setsvgcoordinateprecision) – The default is 4 digits of precision for path coordinates, e.g. `3.1416`
+* [`setSvgTransformPrecision()`](documentation.md#setsvgtransformprecision) – The default is 6 digits of precision for  matrix transform data, e.g. `3.141593`
 
 ### Experimental Extension Hooks
 
@@ -263,7 +276,7 @@ p5.plotSvg intentionally exposes a few low-level hooks for advanced experiments 
 
 During an active recording session, `p5plotSvg._commands` refers to the live internal command array that will be converted into SVG by `endRecordSvg()`. External code may inspect this array or append compatible command objects before export. This is an experimental interface: it only exists between `beginRecordSvg()` and `endRecordSvg()`, and it is cleared after export. The read-only `p5plotSvg.SVG_COMMAND` and `p5plotSvg.SVG_SEGMENT` constants document the command and segment `type` strings used by this interface.
 
-Related generic hooks include `injectSvgHeaderAttribute()`, `injectSvgDef()`, custom `attributes` arrays on injected command objects, and `setSvgExportPolylinesAsPaths()`. These make it possible to add custom namespaces, `<defs>` entries, command-level SVG attributes, or downstream-tool-specific path output without adding those experiments directly to the core library.
+Related generic hooks include `injectSvgHeaderAttribute()`, `injectSvgDef()`, custom `attributes` arrays on injected command objects, and [`setSvgExportPolylinesAsPaths()`](documentation.md#setsvgexportpolylinesaspaths). These make it possible to add custom namespaces, `<defs>` entries, command-level SVG attributes, or downstream-tool-specific path output without adding those experiments directly to the core library.
 
 ---
 
@@ -285,13 +298,15 @@ The following projects may be of interest to creative coders working with SVG fi
 * [p5.js-svg](https://github.com/zenozeng/p5.js-svg) by Zenozeng allows for direct SVG rendering in p5.js sketches, offering an alternative SVG-based renderer for the web browser. Replacing the HTML canvas entirely, it supports a wide range of SVG elements but also aims for full compatibility with p5.js drawing functions.
 * [Paper.js](http://paperjs.org/features/#svg-import-and-export) by Jürg Lehni & Jonathan Puckey is a powerful open-source vector graphics scripting framework that runs on top of the HTML5 Canvas. It supports SVG import and export and offers a wide range of vector graphics manipulation features, such as [path simplification](http://paperjs.org/examples/path-simplification/) and [shape-shape intersection](http://paperjs.org/examples/path-intersections/).
 * [vpype](https://vpype.readthedocs.io/en/latest/) by Antoine Beyeler is a powerful command-line tool and Python library for preprocessing and optimizing SVG vector graphics for plotting. It provides utilities for sorting paths, simplifying curves, and optimizing plotting jobs for pen plotters.
-* [Rune.js](https://runemadsen.github.io/rune.js/) by Rune Madsen is a JavaScript library for creative coding, similar to p5.js. While it is not strictly a p5.js SVG exporter, it includes capabilities for working with vector graphics, including SVG import/export.
-* [p5-svg-test](https://github.com/runemadsen/p5-svg-test) by Rune Madsen is a simple test for SVG generation using p5.js. This repository provides a proof of concept for exporting p5.js graphics to SVG format but is not a fully-featured library.
 * [PEmbroider](https://github.com/CreativeInquiry/PEmbroider) by the Frank-Ratchye STUDIO for Creative Inquiry at Carnegie Mellon University is a library for computational embroidery using Processing (Java). It allows users to generate embroidery stitch paths from their Processing sketches, with support for various embroidery machine formats. It also supports SVG export.
-* [canvas2svg](https://github.com/gliffy/canvas2svg) by Gliffy provides a way to export HTML5 Canvas content to SVG using JavaScript. It works by implementing a virtual canvas that mimics the CanvasRenderingContext2D interface, capturing drawing commands as SVG elements.
-* Bob Cook's [SVG Example](https://jsfiddle.net/bobcook/2p9tqzze/) provides an example demonstrating how to convert canvas-based drawings to SVG using a custom library in a jsFiddle example.
 
 <!--
+* [p5.SVG.js](https://github.com/VANSH3104/p5.SVG.js/tree/flat) by Vansh Kabra is an experimental p5.js v2 SVG import/export add-on developed as part of GSoC 2026. It uses p5’s newer Shape / PrimitiveVisitor architecture and is promising for general SVG fidelity, but is still in active development and not specifically plotter-oriented.
+* [p5.js-svg-export](https://github.com/NalinDalal/p5.js-svg-export) by Nalin Dalal is an experimental p5.js add-on workspace exploring SVG import/export, with recent work focused on `loadSVG()`, `parseSVG()`, and `drawSVG()`-style import workflows. As of June 2026, it appears to be in the template/research-stage.
+* [Rune.js](https://runemadsen.github.io/rune.js/) by Rune Madsen is a JavaScript library for creative coding, similar to p5.js. While it is not strictly a p5.js SVG exporter, it includes capabilities for working with vector graphics, including SVG import/export.
+* [canvas2svg](https://github.com/gliffy/canvas2svg) by Gliffy provides a way to export HTML5 Canvas content to SVG using JavaScript. It works by implementing a virtual canvas that mimics the CanvasRenderingContext2D interface, capturing drawing commands as SVG elements.
+* [p5-svg-test](https://github.com/runemadsen/p5-svg-test) by Rune Madsen is a simple test for SVG generation using p5.js. This repository provides a proof of concept for exporting p5.js graphics to SVG format but is not a fully-featured library.
+* Bob Cook's [SVG Example](https://jsfiddle.net/bobcook/2p9tqzze/) provides an example demonstrating how to convert canvas-based drawings to SVG using a custom library in a jsFiddle example.
 * [stitch.js](https://github.com/stitchables/stitch.js) by Stitchables is a JavaScript library for rendering SVG-based embroidery patterns. It allows users to convert drawings made with HTML5 Canvas or SVG paths into embroidery stitch paths.
 * [ln](https://github.com/fogleman/ln) by Michael Fogleman is a vector-based 3D renderer written in Go. It is used to produce 2D vector graphics depicting 3D scenes.
 -->
@@ -312,7 +327,7 @@ Pen plotters, vector output, plotter art, p5.js, SVG, [#plotterTwitter](https://
 
 ## Acknowledgments
 
-This project was initiated by Golan Levin and made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), the students in my [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines/) course at CMU, @lewi0622, @mariuswatz, @msurguy, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, pull requests, and other forms of support.
+This project was made possible by support from the [CMU School of Art](https://art.cmu.edu/), the [Frank-Ratchye STUDIO for Creative Inquiry](https://studioforcreativeinquiry.org) at Carnegie Mellon University, and [Bantam Tools](https://www.bantamtools.com/). Special thanks to the Processing Foundation's [p5.js project](https://github.com/processing/p5.js), the students in my [*Drawing with Machines*](https://github.com/golanlevin/DrawingWithMachines/) course at CMU, @lewi0622, @mariuswatz, @msurguy, @R4chel, @thrly, @Ucodia, @v3ga, @webholics, and everyone else in the community who has generously contributed by filing issues, thoughtful comments, pull requests, and other forms of support.
 
 <img src="images/cmu_school_of_art_logo.png" height="55"> <img src="images/studio_logo.png" height="55"> <img src="images/bantam_tools_logo.png" height="55"><br/>![Processing logo](images/processing_logo.png) ![p5.js logo](images/p5_logo.png) ![SVG logo](images/svg_logo.png)
 
