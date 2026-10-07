@@ -6,7 +6,7 @@
   // Initiated by Golan Levin (@golanlevin)
   // v.0.3.0, June 22, 2026
   // Known to work with p5.js versions 1.4.2–1.11.13
-  // Basic 2D geometry export is tested with p5.js version 2.3.0 as well.
+  // Basic 2D geometry export is tested with p5.js version 2.3.4 as well.
 
   (function(global) {
     // Create a namespace for the library

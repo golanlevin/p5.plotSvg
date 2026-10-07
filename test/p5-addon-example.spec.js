@@ -23,20 +23,20 @@ const examples = [
     localP5: "test/p5.js-v.1.11.13/p5.js"
   },
   {
-    name: "p5 v2.3.0 global add-on example",
+    name: "p5 v2.3.4 global add-on example",
     page: "examples/plotSvg_addon_example/plotSvg_addon_example_v2_global/index.html",
     fixture: "examples/plotSvg_addon_example/results/plotSvg_addon_example_v2_global.svg",
     major: 2,
-    cdnPattern: "**/npm/p5@2.3.0/lib/p5.js",
-    localP5: "test/p5.js-v2.3.0/p5.js"
+    cdnPattern: "**/npm/p5@2.3.4/lib/p5.js",
+    localP5: "test/p5.js-v2.3.4/p5.js"
   },
   {
-    name: "p5 v2.3.0 instance add-on example",
+    name: "p5 v2.3.4 instance add-on example",
     page: "examples/plotSvg_addon_example/plotSvg_addon_example_v2_instance/index.html",
     fixture: "examples/plotSvg_addon_example/results/plotSvg_addon_example_v2_instance.svg",
     major: 2,
-    cdnPattern: "**/npm/p5@2.3.0/lib/p5.js",
-    localP5: "test/p5.js-v2.3.0/p5.js"
+    cdnPattern: "**/npm/p5@2.3.4/lib/p5.js",
+    localP5: "test/p5.js-v2.3.4/p5.js"
   }
 ];
 

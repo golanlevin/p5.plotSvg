@@ -1,4 +1,4 @@
-/*! p5.js v2.3.0 May 28, 2026 */
+/*! p5.js v2.3.4 September 25, 2026 */
 var p5 = (function () {
   'use strict';
 
@@ -15,7 +15,7 @@ var p5 = (function () {
    * @property {String} VERSION
    * @final
    */
-  const VERSION = '2.3.0';
+  const VERSION = '2.3.4';
 
   // GRAPHICS RENDERER
   /**
@@ -31,18 +31,18 @@ var p5 = (function () {
   const P2D = 'p2d';
 
   /**
-   * A high-dynamic-range (HDR) variant of the default, two-dimensional renderer.
+   * An expanded color space (P3) variant of the default, two-dimensional renderer.
    *
    * When available, this mode can allow for extended color ranges and more
    * dynamic color representation. Use it similarly to `P2D`:
-   * `createCanvas(400, 400, P2DHDR)`.
+   * `createCanvas(400, 400, P2DP3)`.
    *
-   * @typedef {'p2d-hdr'} P2DHDR
-   * @property {P2DHDR} P2DHDR
+   * @typedef {'p2d-p3'} P2DP3
+   * @property {P2DP3} P2DP3
    * @final
    */
 
-  const P2DHDR = 'p2d-hdr';
+  const P2DP3 = 'p2d-p3';
 
   /**
    * One of the two render modes in p5.js, used for computationally intensive tasks like 3D rendering and shaders.
@@ -1343,7 +1343,7 @@ var p5 = (function () {
     OPTION: OPTION,
     OVERLAY: OVERLAY,
     P2D: P2D,
-    P2DHDR: P2DHDR,
+    P2DP3: P2DP3,
     PATH: PATH,
     PI: PI,
     PIE: PIE,
@@ -3981,7 +3981,7 @@ var p5 = (function () {
      * cursor, `x` and `y` set the location pointed to within the image. They are
      * both 0 by default, so the cursor points to the image's top-left corner. `x`
      * and `y` must be less than the image's width and height, respectively.
-     * 
+     *
      * Calling `cursor()` without an argument returns the current cursor type as a string.
      *
      * @method cursor
@@ -4259,7 +4259,7 @@ var p5 = (function () {
      * - `WEBGL2` whose value is `'webgl2'`,
      * - `WEBGL` whose value is `'webgl'`, or
      * - `P2D` whose value is `'p2d'`. This is the default for 2D sketches.
-     * - `P2DHDR` whose value is `'p2d-hdr'` (used for HDR 2D sketches, if available).
+     * - `P2DP3` whose value is `'p2d-p3'` (used for P3 2D sketches, if available).
      *
      * See <a href="#/p5/setAttributes">setAttributes()</a> for ways to set the
      * WebGL version.
@@ -10670,7 +10670,7 @@ var p5 = (function () {
       const colorjsMax = Color.#colorjsMaxes[RGB][0];
       const newval = map(new_red, max[0], max[1], colorjsMax[0], colorjsMax[1]);
 
-      if(this.mode === RGB || this.mode === RGBHDR){
+      if(this.mode === RGB || this.mode === RGBP3){
         this._color.coords[0] = newval;
       }else {
         // Will do an imprecise conversion to 'srgb', not recommended
@@ -10722,7 +10722,7 @@ var p5 = (function () {
       const colorjsMax = Color.#colorjsMaxes[RGB][1];
       const newval = map(new_green, max[0], max[1], colorjsMax[0], colorjsMax[1]);
 
-      if(this.mode === RGB || this.mode === RGBHDR){
+      if(this.mode === RGB || this.mode === RGBP3){
         this._color.coords[1] = newval;
       }else {
         // Will do an imprecise conversion to 'srgb', not recommended
@@ -10774,7 +10774,7 @@ var p5 = (function () {
       const colorjsMax = Color.#colorjsMaxes[RGB][2];
       const newval = map(new_blue, max[0], max[1], colorjsMax[0], colorjsMax[1]);
 
-      if(this.mode === RGB || this.mode === RGBHDR){
+      if(this.mode === RGB || this.mode === RGBP3){
         this._color.coords[2] = newval;
       }else {
         // Will do an imprecise conversion to 'srgb', not recommended
@@ -10866,7 +10866,7 @@ var p5 = (function () {
         max = [0, max];
       }
 
-      if(this.mode === RGB || this.mode === RGBHDR){
+      if(this.mode === RGB || this.mode === RGBP3){
         const colorjsMax = Color.#colorjsMaxes[this.mode][0];
         return map(
           this._color.coords[0],
@@ -10890,7 +10890,7 @@ var p5 = (function () {
         max = [0, max];
       }
 
-      if(this.mode === RGB || this.mode === RGBHDR){
+      if(this.mode === RGB || this.mode === RGBP3){
         const colorjsMax = Color.#colorjsMaxes[this.mode][1];
         return map(
           this._color.coords[1],
@@ -10909,7 +10909,7 @@ var p5 = (function () {
         max = [0, max];
       }
 
-      if(this.mode === RGB || this.mode === RGBHDR){
+      if(this.mode === RGB || this.mode === RGBP3){
         const colorjsMax = Color.#colorjsMaxes[this.mode][2];
         return map(
           this._color.coords[2],
@@ -11135,7 +11135,7 @@ var p5 = (function () {
 
     // Register color modes and initialize Color maxes to what p5 has set for itself
     p5.Color.addColorMode(RGB, sRGB);
-    p5.Color.addColorMode(RGBHDR, P3);
+    p5.Color.addColorMode(RGBP3, P3);
     p5.Color.addColorMode(HSB, HSBSpace);
     p5.Color.addColorMode(HSL, HSLSpace);
     p5.Color.addColorMode(HWB, HWBSpace);
@@ -11181,19 +11181,19 @@ var p5 = (function () {
 
       decorateGet('Red', {
         [RGB]: 0,
-        [RGBHDR]: 0
+        [RGBP3]: 0
       });
       decorateGet('Green', {
         [RGB]: 1,
-        [RGBHDR]: 1
+        [RGBP3]: 1
       });
       decorateGet('Blue', {
         [RGB]: 2,
-        [RGBHDR]: 2
+        [RGBP3]: 2
       });
       decorateGet('Alpha', {
         [RGB]: 3,
-        [RGBHDR]: 3,
+        [RGBP3]: 3,
         [HSB]: 3,
         [HSL]: 3,
         [HWB]: 3,
@@ -11241,11 +11241,11 @@ var p5 = (function () {
    */
   const RGB = 'rgb';
   /**
-   * @typedef {'rgbhdr'} RGBHDR
-   * @property {RGBHDR} RGBHDR
+   * @typedef {'rgbp3'} RGBP3
+   * @property {RGBP3} RGBP3
    * @final
    */
-  const RGBHDR = 'rgbhdr';
+  const RGBP3 = 'rgbp3';
   /**
    * HSB (hue, saturation, brightness) is a type of color model.
    * You can learn more about it at
@@ -11301,7 +11301,7 @@ var p5 = (function () {
 
   function creatingReading(p5, fn){
     fn.RGB = RGB;
-    fn.RGBHDR = RGBHDR;
+    fn.RGBP3 = RGBP3;
     fn.HSB = HSB;
     fn.HSL = HSL;
     fn.HWB = HWB;
@@ -11318,7 +11318,7 @@ var p5 = (function () {
     p5.Renderer.states.colorMode = RGB;
     p5.Renderer.states.colorMaxes = {
       [RGB]: [255, 255, 255, 255],
-      [RGBHDR]: [255, 255, 255, 255],
+      [RGBP3]: [255, 255, 255, 255],
       [HSB]: [360, 100, 100, 1],
       [HSL]: [360, 100, 100, 1],
       [HWB]: [360, 100, 100, 1],
@@ -11361,13 +11361,7 @@ var p5 = (function () {
      * or HSLA colors, depending on the current `colorMode()`. The last parameter
      * sets the alpha (transparency) value.
      *
-     * @method color
-     * @param  {Number} gray number specifying value between white and black.
-     * @param  {Number} [alpha] alpha value relative to current color range
-     *                                 (default is 0-255).
-     * @return {p5.Color} resulting color.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11383,8 +11377,9 @@ var p5 = (function () {
      *
      *   describe('A yellow square on a gray canvas.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11409,8 +11404,9 @@ var p5 = (function () {
      *     'Two circles on a gray canvas. The circle in the top-left corner is yellow and the one at the bottom-right is gray.'
      *   );
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11426,8 +11422,9 @@ var p5 = (function () {
      *
      *   describe('A magenta square on a gray canvas.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11450,8 +11447,9 @@ var p5 = (function () {
      *
      *   describe('Two bright green rectangles on a gray canvas.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11487,8 +11485,9 @@ var p5 = (function () {
      *
      *   describe('Four blue squares in the corners of a gray canvas.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11511,8 +11510,9 @@ var p5 = (function () {
      *
      *   describe('Two sea green rectangles. A darker rectangle on the left and a brighter one on the right.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11535,8 +11535,9 @@ var p5 = (function () {
      *
      *   describe('Two green rectangles. A darker rectangle on the left and a brighter one on the right.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11561,6 +11562,47 @@ var p5 = (function () {
      *
      *   describe('Two blue rectangles. A darker rectangle on the left and a brighter one on the right.');
      * }
+     * ```
+     *
+     * p5.strands is an experimental mode for writing shader code with p5.js-like
+     * syntax instead of GLSL. In p5.strands shader callbacks, `color()` accepts
+     * the same input formats but returns a `vec4` instead of a `p5.Color`
+     * object, with RGBA components normalized to the 0–1 range. All colors in
+     * strands are RGB-based; `colorMode()` has no effect inside shader
+     * callbacks. Color utility functions such as `red()`, `green()`, `blue()`,
+     * `alpha()`, `hue()`, `saturation()`, `brightness()`, and `lightness()`
+     * also return values in the 0–1 range when used in strands.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   // Same syntax as regular sketch code...
+     *   let c = color(255, 0, 0);
+     *   // ...but c is a vec4 with normalized RGBA (0-1), not a p5.Color.
+     *   finalColor.set(c);
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A red sphere on a gray background.');
+     * }
+     * ```
+     *
+     * @method color
+     * @param  {Number} gray number specifying value between white and black.
+     * @param  {Number} [alpha] alpha value relative to current color range
+     *                                 (default is 0-255).
+     * @return {p5.Color} resulting color.
      */
     /**
      * @method color
@@ -11616,12 +11658,7 @@ var p5 = (function () {
      * to 255. If the <a href="/reference/p5/colorMode/">colorMode()</a> is set to RGB, it
      * returns the red value in the given range.
      *
-     * @method red
-     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the red value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11644,8 +11681,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is red.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11668,8 +11706,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is red.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11692,8 +11731,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is red.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11719,6 +11759,40 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is red.');
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `red()` operates on `vec4` values and
+     * returns the red channel as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(200, 100, 50);
+     *   let r = red(c);
+     *   finalColor.set(vec4(r, 0, 0, 1.0));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A sphere colored using only its red channel.');
+     * }
+     * ```
+     *
+     * @method red
+     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the red value.
      */
     fn.red = function(c) {
       // p5._validateParameters('red', arguments);
@@ -11737,12 +11811,7 @@ var p5 = (function () {
      * to 255. If the <a href="/reference/p5/colorMode/">colorMode()</a> is set to RGB, it
      * returns the green value in the given range.
      *
-     * @method green
-     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the green value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11765,8 +11834,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is dark green.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11789,8 +11859,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is dark green.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11813,8 +11884,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is dark green.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11840,6 +11912,40 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is dark green.');
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `green()` operates on `vec4` values and
+     * returns the green channel as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(50, 200, 100);
+     *   let g = green(c);
+     *   finalColor.set(vec4(0, g, 0, 1.0));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A sphere colored using only its green channel.');
+     * }
+     * ```
+     *
+     * @method green
+     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the green value.
      */
     fn.green = function(c) {
       // p5._validateParameters('green', arguments);
@@ -11858,12 +11964,7 @@ var p5 = (function () {
      * to 255. If the <a href="/reference/p5/colorMode/">colorMode()</a> is set to RGB, it
      * returns the blue value in the given range.
      *
-     * @method blue
-     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the blue value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11886,8 +11987,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is royal blue.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11910,8 +12012,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is royal blue.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11934,8 +12037,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is royal blue.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -11961,6 +12065,40 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light purple and the right one is royal blue.');
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `blue()` operates on `vec4` values and
+     * returns the blue channel as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(50, 100, 200);
+     *   let b = blue(c);
+     *   finalColor.set(vec4(0, 0, b, 1.0));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A sphere colored using only its blue channel.');
+     * }
+     * ```
+     *
+     * @method blue
+     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the blue value.
      */
     fn.blue = function(c) {
       // p5._validateParameters('blue', arguments);
@@ -11975,12 +12113,7 @@ var p5 = (function () {
      * <a href="#/p5.Color">p5.Color</a> object, an array of color components, or
      * a CSS color string.
      *
-     * @method alpha
-     * @param {p5.Color|Number[]|String} color <a href="#/p5.Color">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the alpha value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12003,8 +12136,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light blue and the right one is charcoal gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12027,8 +12161,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light blue and the right one is charcoal gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12051,6 +12186,40 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is light blue and the right one is charcoal gray.');
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `alpha()` operates on `vec4` values and
+     * returns the alpha channel as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(255, 0, 0, 128);
+     *   let a = alpha(c);
+     *   finalColor.set(vec4(1.0, 0, 0, a * 0.5));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A semi-transparent sphere.');
+     * }
+     * ```
+     *
+     * @method alpha
+     * @param {p5.Color|Number[]|String} color <a href="#/p5.Color">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the alpha value.
      */
     fn.alpha = function(c) {
       // p5._validateParameters('alpha', arguments);
@@ -12070,12 +12239,7 @@ var p5 = (function () {
      * <a href="/reference/p5/colorMode/">colorMode()</a> is set to HSB or HSL, it returns the hue
      * value in the given mode.
      *
-     * @method hue
-     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the hue value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12103,8 +12267,9 @@ var p5 = (function () {
      *     'Two rectangles. The rectangle on the left is salmon pink and the one on the right is black.'
      *   );
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12132,8 +12297,9 @@ var p5 = (function () {
      *     'Two rectangles. The rectangle on the left is salmon pink and the one on the right is black.'
      *   );
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12161,6 +12327,40 @@ var p5 = (function () {
      *     'Two rectangles. The rectangle on the left is salmon pink and the one on the right is black.'
      *   );
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `hue()` operates on `vec4` values and
+     * returns the hue as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(0, 255, 128);
+     *   let h = hue(c);
+     *   finalColor.set(vec4(h, h, h, 1.0));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A sphere shaded in grayscale based on hue.');
+     * }
+     * ```
+     *
+     * @method hue
+     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the hue value.
      */
     fn.hue = function(c) {
       let colorMode = HSL;
@@ -12196,12 +12396,7 @@ var p5 = (function () {
      * <a href="/reference/p5/colorMode/">colorMode()</a> is set to HSB or HSL, it returns the
      * saturation value in the given mode.
      *
-     * @method saturation
-     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the saturation value
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12227,8 +12422,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is dark gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12254,8 +12450,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12281,8 +12478,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12308,8 +12506,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is white.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12335,6 +12534,40 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is white.');
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `saturation()` operates on `vec4` values
+     * and returns the saturation as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(255, 128, 128);
+     *   let s = saturation(c);
+     *   finalColor.set(vec4(s, s, s, 1.0));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A sphere shaded in grayscale based on saturation.');
+     * }
+     * ```
+     *
+     * @method saturation
+     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the saturation value
      */
     fn.saturation = function(c) {
       const colorMode = (this._renderer.states.colorMode === HSB) ? HSB : HSL;
@@ -12354,12 +12587,7 @@ var p5 = (function () {
      * to 100. If the <a href="/reference/p5/colorMode/">colorMode()</a> is set to HSB, it
      * returns the brightness value in the given range.
      *
-     * @method brightness
-     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the brightness value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12385,8 +12613,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is white.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12412,8 +12641,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is white.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12439,8 +12669,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is white.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12466,6 +12697,40 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is white.');
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `brightness()` operates on `vec4` values
+     * and returns the brightness as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(0, 50, 100);
+     *   let b = brightness(c);
+     *   finalColor.set(vec4(b, b, b, 1.0));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A sphere shaded in grayscale based on brightness.');
+     * }
+     * ```
+     *
+     * @method brightness
+     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the brightness value.
      */
     fn.brightness = function(c) {
       return this.color(c)._getBrightness(
@@ -12484,12 +12749,7 @@ var p5 = (function () {
      * to 100. If the <a href="/reference/p5/colorMode/">colorMode()</a> is set to HSL, it
      * returns the lightness value in the given range.
      *
-     * @method lightness
-     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
-     *                                         color components, or CSS color string.
-     * @return {Number} the lightness value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12515,8 +12775,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12542,8 +12803,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12569,8 +12831,9 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12596,6 +12859,40 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The left one is salmon pink and the right one is gray.');
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `lightness()` operates on `vec4` values
+     * and returns the lightness as a normalized value in the 0–1 range.
+     * `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c = color(0, 100, 75);
+     *   let l = lightness(c);
+     *   finalColor.set(vec4(l, l, l, 1.0));
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A sphere shaded in grayscale based on lightness.');
+     * }
+     * ```
+     *
+     * @method lightness
+     * @param {p5.Color|Number[]|String} color <a href="/reference/p5/p5.Color/">p5.Color</a> object, array of
+     *                                         color components, or CSS color string.
+     * @return {Number} the lightness value.
      */
     fn.lightness = function(c) {
       return this.color(c)._getLightness(
@@ -12616,13 +12913,7 @@ var p5 = (function () {
      * The way that colors are interpolated depends on the current
      * <a href="#/p5/colorMode">colorMode()</a>.
      *
-     * @method lerpColor
-     * @param  {p5.Color} c1  interpolate from this color.
-     * @param  {p5.Color} c2  interpolate to this color.
-     * @param  {Number}   amt number between 0 and 1.
-     * @return {p5.Color}     interpolated color.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -12657,6 +12948,42 @@ var p5 = (function () {
      *     'Four rectangles. From left to right, the rectangles are tan, brown, brownish purple, and purple.'
      *   );
      * }
+     * ```
+     *
+     * In p5.strands shader callbacks, `lerpColor()` interpolates between
+     * `vec4` colors and returns a normalized `vec4` with RGBA components in
+     * the 0–1 range. `colorMode()` has no effect inside shader callbacks.
+     *
+     * ```js example
+     * let myShader;
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildMaterialShader(myShaderBuilder);
+     * }
+     *
+     * function myShaderBuilder() {
+     *   finalColor.begin();
+     *   let c1 = color('red');
+     *   let c2 = color('blue');
+     *   let mixed = lerpColor(c1, c2, 0.5);
+     *   finalColor.set(mixed);
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(40);
+     *
+     *   describe('A purple sphere, a blend of red and blue.');
+     * }
+     * ```
+     *
+     * @method lerpColor
+     * @param  {p5.Color} c1  interpolate from this color.
+     * @param  {p5.Color} c2  interpolate to this color.
+     * @param  {Number}   amt number between 0 and 1.
+     * @return {p5.Color}     interpolated color.
      */
     fn.lerpColor = function(c1, c2, amt) {
       // p5._validateParameters('lerpColor', arguments);
@@ -17533,7 +17860,7 @@ var p5 = (function () {
    */
 
 
-  class Image {
+  let Image$1 = class Image {
     constructor(width, height) {
       this.width = width;
       this.height = height;
@@ -19316,7 +19643,7 @@ var p5 = (function () {
         }
       }
     }
-  }
+  };
   function encodeAndDownloadGif(pImg, filename) {
     const props = pImg.gifProperties;
 
@@ -19618,9 +19945,9 @@ var p5 = (function () {
      * @param {Number} width
      * @param {Number} height
      */
-    p5.Image = Image;
+    p5.Image = Image$1;
 
-    Image.prototype._friendlyError = p5._friendlyError;
+    Image$1.prototype._friendlyError = p5._friendlyError;
 
     /**
      * The image's width in pixels.
@@ -23468,6 +23795,14 @@ var p5 = (function () {
      * @property z
      * @name z
      */
+
+    /**
+     * The dimensions of the vector
+     * @type {Number}
+     * @for p5.Vector
+     * @property dimensions
+     * @name dimensions
+     */
   }
 
   if (typeof p5 !== 'undefined') {
@@ -23494,9 +23829,7 @@ var p5 = (function () {
 
   class Vertex {
     constructor(properties) {
-      for (const [key, value] of Object.entries(properties)) {
-        this[key] = value;
-      }
+      Object.assign(this, properties);
     }
     /*
     get array() {
@@ -23520,7 +23853,7 @@ var p5 = (function () {
     isClosing = false;
 
     constructor(...vertices) {
-      if (this.constructor === ShapePrimitive) {
+      if (new.target === ShapePrimitive) {
         throw new Error('ShapePrimitive is an abstract class: it cannot be instantiated.');
       }
       if (vertices.length > 0) {
@@ -23646,10 +23979,8 @@ var p5 = (function () {
   // ---- PATH PRIMITIVES ----
 
   class Anchor extends ShapePrimitive {
-    #vertexCapacity = 1;
-
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return 1;
     }
 
     accept(visitor) {
@@ -23665,7 +23996,7 @@ var p5 = (function () {
   class Segment extends ShapePrimitive {
     constructor(...vertices) {
       super(...vertices);
-      if (this.constructor === Segment) {
+      if (new.target === Segment) {
         throw new Error('Segment is an abstract class: it cannot be instantiated.');
       }
     }
@@ -23683,15 +24014,18 @@ var p5 = (function () {
     }
 
     getEndVertex() {
-      return this.vertices.at(-1);
+      return this.vertices[this.vertices.length - 1];
     }
   }
 
   class LineSegment extends Segment {
-    #vertexCapacity = 1;
-
+    // Consecutive line vertices on a path batch into a single LineSegment
+    // (see Shape.vertex()), so vertexCount may exceed this capacity. The
+    // capacity only governs addToShape() merging, which batching bypasses;
+    // it stays at 1 so the generic path never merges into a LineSegment
+    // (a closing vertex must remain its own segment).
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return 1;
     }
 
     accept(visitor) {
@@ -23889,10 +24223,8 @@ var p5 = (function () {
   // ---- ISOLATED PRIMITIVES ----
 
   class Point extends ShapePrimitive {
-    #vertexCapacity = 1;
-
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return 1;
     }
 
     accept(visitor) {
@@ -23901,10 +24233,8 @@ var p5 = (function () {
   }
 
   class Line extends ShapePrimitive {
-    #vertexCapacity = 2;
-
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return 2;
     }
 
     accept(visitor) {
@@ -23913,10 +24243,8 @@ var p5 = (function () {
   }
 
   class Triangle extends ShapePrimitive {
-    #vertexCapacity = 3;
-
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return 3;
     }
 
     accept(visitor) {
@@ -23925,10 +24253,8 @@ var p5 = (function () {
   }
 
   class Quad extends ShapePrimitive {
-    #vertexCapacity = 4;
-
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return 4;
     }
 
     accept(visitor) {
@@ -24015,13 +24341,52 @@ var p5 = (function () {
     }
   }
 
-  // ---- TESSELLATION PRIMITIVES ----
+  class RectPrimitive extends ShapePrimitive {
+    #x;
+    #y;
+    #w;
+    #h;
+    #tl;
+    #tr;
+    #br;
+    #bl;
+    #vertexCapacity = 1;
 
-  class TriangleFan extends ShapePrimitive {
-    #vertexCapacity = Infinity;
+    constructor(startVertex, x, y, w, h, tl, tr, br, bl) {
+      super(startVertex);
+      this.#x = x;
+      this.#y = y;
+      this.#w = w;
+      this.#h = h;
+      this.#tl = tl;
+      this.#tr = tr;
+      this.#br = br;
+      this.#bl = bl;
+    }
+
+    get x() { return this.#x; }
+    get y() { return this.#y; }
+    get w() { return this.#w; }
+    get h() { return this.#h; }
+    get tl() { return this.#tl; }
+    get tr() { return this.#tr; }
+    get br() { return this.#br; }
+    get bl() { return this.#bl; }
 
     get vertexCapacity() {
       return this.#vertexCapacity;
+    }
+
+    accept(visitor) {
+      visitor.visitRectPrimitive(this);
+    }
+  }
+
+  // ---- TESSELLATION PRIMITIVES ----
+
+  class TriangleFan extends ShapePrimitive {
+    get vertexCapacity() {
+      return Infinity;
     }
 
     accept(visitor) {
@@ -24030,10 +24395,8 @@ var p5 = (function () {
   }
 
   class TriangleStrip extends ShapePrimitive {
-    #vertexCapacity = Infinity;
-
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return Infinity;
     }
 
     accept(visitor) {
@@ -24042,10 +24405,8 @@ var p5 = (function () {
   }
 
   class QuadStrip extends ShapePrimitive {
-    #vertexCapacity = Infinity;
-
     get vertexCapacity() {
-      return this.#vertexCapacity;
+      return Infinity;
     }
 
     accept(visitor) {
@@ -24055,70 +24416,35 @@ var p5 = (function () {
 
   // ---- PRIMITIVE SHAPE CREATORS ----
 
-  class PrimitiveShapeCreators {
-    // TODO: make creators private?
-    // That'd probably be better, but for now, it may be convenient to use
-    // native Map properties like size, e.g. for testing, and it's simpler to
-    // not have to wrap all the properties that might be useful
-    creators;
-
-    constructor() {
-      let creators = new Map();
-
-      /* TODO: REFACTOR BASED ON THE CODE BELOW,
-         ONCE CONSTANTS ARE IMPLEMENTED AS SYMBOLS
-
-      // Store Symbols as strings for use in Map keys
-      const EMPTY_PATH = constants.EMPTY_PATH.description;
-      const PATH = constants.PATH.description;
-      //etc.
-
-      creators.set(`vertex-${EMPTY_PATH}`, (...vertices) => new Anchor(...vertices));
-      // etc.
-
-      get(vertexKind, shapeKind) {
-        const key = `${vertexKind}-${shapeKind.description}`;
-        return this.creators.get(key);
-      }
-      // etc.
-      */
-
-      // vertex
-      creators.set(`vertex-${EMPTY_PATH}`, (...vertices) => new Anchor(...vertices));
-      creators.set(`vertex-${PATH}`, (...vertices) => new LineSegment(...vertices));
-      creators.set(`vertex-${POINTS}`, (...vertices) => new Point(...vertices));
-      creators.set(`vertex-${LINES}`, (...vertices) => new Line(...vertices));
-      creators.set(`vertex-${TRIANGLES}`, (...vertices) => new Triangle(...vertices));
-      creators.set(`vertex-${QUADS}`, (...vertices) => new Quad(...vertices));
-      creators.set(`vertex-${TRIANGLE_FAN}`, (...vertices) => new TriangleFan(...vertices));
-      creators.set(`vertex-${TRIANGLE_STRIP}`, (...vertices) => new TriangleStrip(...vertices));
-      creators.set(`vertex-${QUAD_STRIP}`, (...vertices) => new QuadStrip(...vertices));
-
-      // bezierVertex (constructors all take order and vertices so they can be called in a uniform way)
-      creators.set(`bezierVertex-${EMPTY_PATH}`, (order, ...vertices) => new Anchor(...vertices));
-      creators.set(`bezierVertex-${PATH}`, (order, ...vertices) => new BezierSegment$1(order, ...vertices));
-
-      // splineVertex
-      creators.set(`splineVertex-${EMPTY_PATH}`, (...vertices) => new Anchor(...vertices));
-      creators.set(`splineVertex-${PATH}`, (...vertices) => new SplineSegment(...vertices));
-
-      this.creators = creators;
+  // Creators are stored in a static nested object keyed by vertex kind and
+  // then by shape kind, so a lookup is two property accesses with no key
+  // string to build, and nothing is constructed per Shape. Shape kinds are
+  // primitive constants (numbers/strings), which work as computed keys;
+  // Symbols would too, if constants become Symbols later.
+  const defaultPrimitiveShapeCreators = {
+    vertex: {
+      [EMPTY_PATH]: (...vertices) => new Anchor(...vertices),
+      [PATH]: (...vertices) => new LineSegment(...vertices),
+      [POINTS]: (...vertices) => new Point(...vertices),
+      [LINES]: (...vertices) => new Line(...vertices),
+      [TRIANGLES]: (...vertices) => new Triangle(...vertices),
+      [QUADS]: (...vertices) => new Quad(...vertices),
+      [TRIANGLE_FAN]: (...vertices) => new TriangleFan(...vertices),
+      [TRIANGLE_STRIP]: (...vertices) => new TriangleStrip(...vertices),
+      [QUAD_STRIP]: (...vertices) => new QuadStrip(...vertices)
+    },
+    // bezierVertex creators all take order and vertices so they can be
+    // called in a uniform way
+    bezierVertex: {
+      [EMPTY_PATH]: (order, ...vertices) => new Anchor(...vertices),
+      [PATH]: (order, ...vertices) =>
+        new BezierSegment$1(order, ...vertices)
+    },
+    splineVertex: {
+      [EMPTY_PATH]: (...vertices) => new Anchor(...vertices),
+      [PATH]: (...vertices) => new SplineSegment(...vertices)
     }
-
-    get(vertexKind, shapeKind) {
-      const key = `${vertexKind}-${shapeKind}`;
-      return this.creators.get(key);
-    }
-
-    set(vertexKind, shapeKind, creator) {
-      const key = `${vertexKind}-${shapeKind}`;
-      this.creators.set(key, creator);
-    }
-
-    clear() {
-      this.creators.clear();
-    }
-  }
+  };
 
   // ---- SHAPE ----
 
@@ -24142,7 +24468,7 @@ var p5 = (function () {
 
     constructor(
       vertexProperties,
-      primitiveShapeCreators = new PrimitiveShapeCreators()
+      primitiveShapeCreators = defaultPrimitiveShapeCreators
     ) {
       this.#initialVertexProperties = vertexProperties;
       this.#vertexProperties = vertexProperties;
@@ -24344,7 +24670,6 @@ var p5 = (function () {
       }
     }
 
-    // maybe call this clear() for consistency with PrimitiveShapeCreators.clear()?
     // note: p5.Geometry has a reset() method, but also clearColors()
     // looks like reset() isn't in the public reference, so maybe we can switch
     // everything to clear()? Not sure if reset/clear is used in other classes,
@@ -24407,9 +24732,8 @@ var p5 = (function () {
     }
 
     #createPrimitiveShape(vertexKind, shapeKind, ...vertices) {
-      let primitiveShapeCreator = this.#primitiveShapeCreators.get(
-        vertexKind, shapeKind
-      );
+      let primitiveShapeCreator =
+        this.#primitiveShapeCreators[vertexKind][shapeKind];
 
       return  vertexKind === 'bezierVertex' ?
         primitiveShapeCreator(this.#bezierOrder, ...vertices) :
@@ -24438,6 +24762,38 @@ var p5 = (function () {
     }
 
     vertex(position, textureCoordinates, { isClosing = false } = {}) {
+      // Fast path for the most common case: appending a line segment to a
+      // path that has already started. Equivalent to the general path below
+      // (a LineSegment's vertex capacity is 1, so addToShape() never merges
+      // it into the previous primitive), without the creator-map lookup and
+      // the generic merging logic.
+      const contours = this.contours;
+      const lastContour = contours[contours.length - 1];
+      if (
+        lastContour !== undefined &&
+        lastContour.primitives.length > 0 &&
+        lastContour.kind === PATH
+      ) {
+        const vertex = this.#createVertex(position, textureCoordinates);
+        const primitives = lastContour.primitives;
+        const lastPrimitive = primitives[primitives.length - 1];
+        if (
+          !isClosing &&
+          lastPrimitive instanceof LineSegment &&
+          !lastPrimitive.isClosing
+        ) {
+          // Consecutive line vertices accumulate into one polyline segment
+          lastPrimitive.vertices.push(vertex);
+          return;
+        }
+        const segment = new LineSegment(vertex);
+        segment.isClosing = isClosing;
+        segment._primitivesIndex = primitives.length;
+        segment._contoursIndex = contours.length - 1;
+        segment._shape = this;
+        primitives.push(segment);
+        return;
+      }
       const added = this.#generalVertex('vertex', position, textureCoordinates);
       added.isClosing = isClosing;
     }
@@ -24497,6 +24853,42 @@ var p5 = (function () {
       return primitive.addToShape(this);
     }
 
+    rectPrimitive(x, y, w, h, tl, tr, br, bl) {
+      const startVertex = this.#createVertex(new Vector(x, y));
+      const primitive = new RectPrimitive(startVertex, x, y, w, h, tl, tr, br, bl);
+      return primitive.addToShape(this);
+    }
+
+    point(x, y) {
+      const v0 = this.#createVertex(new Vector(x, y));
+      const primitive = new Point(v0);
+      return primitive.addToShape(this);
+    }
+
+    line(x1, y1, x2, y2) {
+      const v0 = this.#createVertex(new Vector(x1, y1));
+      const v1 = this.#createVertex(new Vector(x2, y2));
+      const primitive = new Line(v0, v1);
+      return primitive.addToShape(this);
+    }
+
+    triangle(x1, y1, x2, y2, x3, y3) {
+      const v0 = this.#createVertex(new Vector(x1, y1));
+      const v1 = this.#createVertex(new Vector(x2, y2));
+      const v2 = this.#createVertex(new Vector(x3, y3));
+      const primitive = new Triangle(v0, v1, v2);
+      return primitive.addToShape(this);
+    }
+
+    quad(x1, y1, x2, y2, x3, y3, x4, y4) {
+      const v0 = this.#createVertex(new Vector(x1, y1));
+      const v1 = this.#createVertex(new Vector(x2, y2));
+      const v2 = this.#createVertex(new Vector(x3, y3));
+      const v3 = this.#createVertex(new Vector(x4, y4));
+      const primitive = new Quad(v0, v1, v2, v3);
+      return primitive.addToShape(this);
+    }
+
     beginContour(shapeKind = PATH) {
       if (this.at(-1)?.kind === EMPTY_PATH) {
         this.contours.pop();
@@ -24529,7 +24921,7 @@ var p5 = (function () {
             const prevVertexProperties = this.#vertexProperties;
             this.#vertexProperties = { ...prevVertexProperties };
             for (const key in anchorVertex) {
-              if (['position', 'textureCoordinates'].includes(key)) continue;
+              if (key === 'position' || key === 'textureCoordinates') continue;
               this.#vertexProperties[key] = anchorVertex[key];
             }
             this.vertex(
@@ -24575,7 +24967,7 @@ var p5 = (function () {
   // abstract class
   class PrimitiveVisitor {
     constructor() {
-      if (this.constructor === PrimitiveVisitor) {
+      if (new.target === PrimitiveVisitor) {
         throw new Error('PrimitiveVisitor is an abstract class: it cannot be instantiated.');
       }
     }
@@ -24600,6 +24992,9 @@ var p5 = (function () {
     }
     visitEllipsePrimitive(ellipse) {
       throw new Error('Method visitEllipsePrimitive() has not been implemented.');
+    }
+    visitRectPrimitive(rect) {
+      throw new Error('Method visitRectPrimitive() has not been implemented.');
     }
 
     // isolated primitives
@@ -24634,10 +25029,14 @@ var p5 = (function () {
     strokePath = null;
     fillPath = null;
     strokeWeight;
+    hasFill;
+    hasStroke;
 
-    constructor({ strokeWeight }) {
+    constructor({ strokeWeight, hasFill = true, hasStroke = true }) {
       super();
       this.strokeWeight = strokeWeight;
+      this.hasFill = hasFill;
+      this.hasStroke = hasStroke;
     }
 
     // path primitives
@@ -24651,8 +25050,11 @@ var p5 = (function () {
         // and the starting vertex rather than having two caps
         this.path.closePath();
       } else {
-        let vertex = lineSegment.getEndVertex();
-        this.path.lineTo(vertex.position.x, vertex.position.y);
+        const vertices = lineSegment.vertices;
+        for (let i = 0; i < vertices.length; i++) {
+          const position = vertices[i].position;
+          this.path.lineTo(position.x, position.y);
+        }
       }
     }
     visitBezierSegment(bezierSegment) {
@@ -24769,28 +25171,33 @@ var p5 = (function () {
         isFullCircle
       );
 
-      if (!this.fillPath) this.fillPath = new Path2D(this.path);
-      if (!this.strokePath) this.strokePath = new Path2D(this.path);
+      if (this.hasFill) {
+        if (!this.fillPath) this.fillPath = new Path2D(this.path);
 
-      this.fillPath.moveTo(startX, startY);
-      this.fillPath.ellipse(centerX, centerY, radiusX, radiusY,
-        0, arc.start, arc.stop);
-      if (createPieSlice) {
-        this.fillPath.lineTo(centerX, centerY);
-      }
-      this.fillPath.closePath();
-
-      this.strokePath.moveTo(startX, startY);
-      this.strokePath.ellipse(centerX, centerY, radiusX, radiusY,
-        0, arc.start, arc.stop);
-      if (arc.mode === PIE && createPieSlice) {
-        this.strokePath.lineTo(centerX, centerY);
-      }
-      if (arc.mode === PIE || arc.mode === CHORD) {
-        this.strokePath.closePath();
+        this.fillPath.moveTo(startX, startY);
+        this.fillPath.ellipse(centerX, centerY, radiusX, radiusY,
+          0, arc.start, arc.stop);
+        if (createPieSlice) {
+          this.fillPath.lineTo(centerX, centerY);
+        }
+        this.fillPath.closePath();
       }
 
-      // Still maintain base path just in case
+      if (this.hasStroke) {
+        if (!this.strokePath) this.strokePath = new Path2D(this.path);
+
+        this.strokePath.moveTo(startX, startY);
+        this.strokePath.ellipse(centerX, centerY, radiusX, radiusY,
+          0, arc.start, arc.stop);
+        if (arc.mode === PIE && createPieSlice) {
+          this.strokePath.lineTo(centerX, centerY);
+        }
+        if (arc.mode === PIE || arc.mode === CHORD) {
+          this.strokePath.closePath();
+        }
+      }
+
+      // Clipping uses the base path rather than the specialized paint paths.
       this.path.moveTo(startX, startY);
       this.path.ellipse(centerX, centerY, radiusX, radiusY,
         0, arc.start, arc.stop);
@@ -24803,6 +25210,62 @@ var p5 = (function () {
 
       this.path.moveTo(centerX + radiusX, centerY);
       this.path.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI);
+    }
+    visitRectPrimitive(rect) {
+      const x = rect.x;
+      const y = rect.y;
+      const w = rect.w;
+      const h = rect.h;
+      let tl = rect.tl;
+      let tr = rect.tr;
+      let br = rect.br;
+      let bl = rect.bl;
+
+      if (typeof tl === 'undefined') {
+        this.path.rect(x, y, w, h);
+      } else {
+        if (typeof tr === 'undefined') {
+          tr = tl;
+        }
+        if (typeof br === 'undefined') {
+          br = tr;
+        }
+        if (typeof bl === 'undefined') {
+          bl = br;
+        }
+
+        const absW = Math.abs(w);
+        const absH = Math.abs(h);
+        const hw = absW / 2;
+        const hh = absH / 2;
+
+        if (absW < 2 * tl) {
+          tl = hw;
+        }
+        if (absH < 2 * tl) {
+          tl = hh;
+        }
+        if (absW < 2 * tr) {
+          tr = hw;
+        }
+        if (absH < 2 * tr) {
+          tr = hh;
+        }
+        if (absW < 2 * br) {
+          br = hw;
+        }
+        if (absH < 2 * br) {
+          br = hh;
+        }
+        if (absW < 2 * bl) {
+          bl = hw;
+        }
+        if (absH < 2 * bl) {
+          bl = hh;
+        }
+
+        this.path.roundRect(x, y, w, h, [tl, tr, br, bl]);
+      }
     }
     visitQuadStrip(quadStrip) {
       for (let i = 0; i < quadStrip.vertices.length - 3; i += 2) {
@@ -24847,7 +25310,11 @@ var p5 = (function () {
       }
     }
     visitLineSegment(lineSegment) {
-      this.lastContour().push(lineSegment.getEndVertex());
+      const contour = this.lastContour();
+      const vertices = lineSegment.vertices;
+      for (let i = 0; i < vertices.length; i++) {
+        contour.push(vertices[i]);
+      }
     }
     visitBezierSegment(bezierSegment) {
       const contour = this.lastContour();
@@ -24998,6 +25465,72 @@ var p5 = (function () {
           centerY + radiusY * Math.sin(angle)
         );
         verts.push(new Vertex(vertexProps));
+      }
+
+      this.contours.push(verts);
+    }
+    visitRectPrimitive(rect) {
+      const x = rect.x;
+      const y = rect.y;
+      const w = rect.w;
+      const h = rect.h;
+      let tl = rect.tl;
+      let tr = rect.tr;
+      let br = rect.br;
+      let bl = rect.bl;
+
+      const startVertex = rect.vertices[0];
+      const getVertexProps = (px, py) => {
+        const props = {};
+        for (const [key, value] of Object.entries(startVertex)) {
+          if (key === 'position') continue;
+          props[key] = value;
+        }
+        props.position = new Vector(px, py);
+        return new Vertex(props);
+      };
+
+      const verts = [];
+      if (typeof tl === 'undefined') {
+        verts.push(getVertexProps(x, y));
+        verts.push(getVertexProps(x + w, y));
+        verts.push(getVertexProps(x + w, y + h));
+        verts.push(getVertexProps(x, y + h));
+        verts.push(getVertexProps(x, y));
+      } else {
+        if (typeof tr === 'undefined') tr = tl;
+        if (typeof br === 'undefined') br = tr;
+        if (typeof bl === 'undefined') bl = br;
+
+        const absW = Math.abs(w);
+        const absH = Math.abs(h);
+        const hw = absW / 2;
+        const hh = absH / 2;
+
+        if (absW < 2 * tl) tl = hw;
+        if (absH < 2 * tl) tl = hh;
+        if (absW < 2 * tr) tr = hw;
+        if (absH < 2 * tr) tr = hh;
+        if (absW < 2 * br) br = hw;
+        if (absH < 2 * br) br = hh;
+        if (absW < 2 * bl) bl = hw;
+        if (absH < 2 * bl) bl = hh;
+
+        const addCornerArc = (cx, cy, rx, ry, startAngle, endAngle) => {
+          const perimeter = Math.PI / 2 * (rx + ry) / 2;
+          const numPoints = Math.max(1, Math.ceil(this.curveDetail * perimeter));
+          for (let i = 0; i <= numPoints; i++) {
+            const angle = startAngle + (endAngle - startAngle) * (i / numPoints);
+            verts.push(getVertexProps(cx + rx * Math.cos(angle), cy + ry * Math.sin(angle)));
+          }
+        };
+
+        addCornerArc(x + tl, y + tl, tl, tl, Math.PI, 1.5 * Math.PI);
+        addCornerArc(x + w - tr, y + tr, tr, tr, 1.5 * Math.PI, 2 * Math.PI);
+        addCornerArc(x + w - br, y + h - br, br, br, 0, 0.5 * Math.PI);
+        addCornerArc(x + bl, y + h - bl, bl, bl, 0.5 * Math.PI, Math.PI);
+
+        verts.push(verts[0]);
       }
 
       this.contours.push(verts);
@@ -26632,6 +27165,12 @@ var p5 = (function () {
       this._clipInvert = false;
 
       this._currentShape = undefined; // Lazily generate current shape
+
+      // Lazily cached by _individualTextureCoordinates(); initialized here
+      // (rather than computed) so subclasses can rely on their own
+      // constructor state when getSupportedIndividualVertexProperties()
+      // is first consulted.
+      this._supportsIndividualTextureCoordinates = undefined;
     }
 
     get currentShape() {
@@ -26686,12 +27225,22 @@ var p5 = (function () {
       }
     }
 
-    bezierVertex(x, y, z = 0, u = 0, v = 0) {
-      const position = new Vector(x, y, z);
-      const textureCoordinates = this.getSupportedIndividualVertexProperties()
-        .textureCoordinates
+    // Builds the per-vertex texture-coordinates argument, caching whether
+    // the renderer supports them so the descriptor object isn't rebuilt on
+    // every vertex call.
+    _individualTextureCoordinates(u, v) {
+      if (this._supportsIndividualTextureCoordinates === undefined) {
+        this._supportsIndividualTextureCoordinates =
+          this.getSupportedIndividualVertexProperties().textureCoordinates;
+      }
+      return this._supportsIndividualTextureCoordinates
         ? new Vector(u, v)
         : undefined;
+    }
+
+    bezierVertex(x, y, z = 0, u = 0, v = 0) {
+      const position = new Vector(x, y, z);
+      const textureCoordinates = this._individualTextureCoordinates(u, v);
       this.currentShape.bezierVertex(position, textureCoordinates);
     }
 
@@ -26717,10 +27266,7 @@ var p5 = (function () {
 
     splineVertex(x, y, z = 0, u = 0, v = 0) {
       const position = new Vector(x, y, z);
-      const textureCoordinates = this.getSupportedIndividualVertexProperties()
-        .textureCoordinates
-        ? new Vector(u, v)
-        : undefined;
+      const textureCoordinates = this._individualTextureCoordinates(u, v);
       this.currentShape.splineVertex(position, textureCoordinates);
     }
 
@@ -26757,10 +27303,7 @@ var p5 = (function () {
 
     vertex(x, y, z = 0, u = 0, v = 0) {
       const position = new Vector(x, y, z);
-      const textureCoordinates = this.getSupportedIndividualVertexProperties()
-        .textureCoordinates
-        ? new Vector(u, v)
-        : undefined;
+      const textureCoordinates = this._individualTextureCoordinates(u, v);
       this.currentShape.vertex(position, textureCoordinates);
     }
 
@@ -26844,7 +27387,7 @@ var p5 = (function () {
       // get(x,y,w,h)
       }
 
-      const region = new Image(w*pd, h*pd);
+      const region = new Image$1(w*pd, h*pd);
       region.pixelDensity(pd);
       region.canvas
         .getContext('2d')
@@ -30605,8 +31148,9 @@ var p5 = (function () {
      * Sets the width of the stroke used for points, lines, and the outlines of
      * shapes.
      *
-     * Note: `strokeWeight()` is affected by transformations, especially calls to
-     * <a href="#/p5/scale">scale()</a>.
+     * Note: In 2D mode, `strokeWeight()` is affected by transformations,
+     * especially calls to <a href="#/p5/scale">scale()</a>. It isn't affected by
+     * transformations in WebGL and WebGPU modes.
      * 
      * Calling `strokeWeight()` without an argument returns the current stroke weight as a number.
      *
@@ -33550,9 +34094,9 @@ var p5 = (function () {
      *
      * Some additional color modes that p5.js supports are:
      *
-     * `RGBHDR` - High Dynamic Range RGB defined within the Display P3 color space.
+     * `RGBP3` - High Dynamic Range RGB defined within the Display P3 color space.
      *          Colors are expressed with an extended dynamic range. To render these colors
-     *          accurately, you must use the HDR canvas.
+     *          accurately, you must use the P3 canvas.
      *
      * `HWB`    - Hue, Whiteness, Blackness.
      *          Similar to HSB and HSL, this mode uses a hue angle.
@@ -33600,10 +34144,10 @@ var p5 = (function () {
      *   ranges are currently not handled, so results in those cases may be ambiguous.
      *
      * @method colorMode
-     * @param {RGB|HSB|HSL|RGBHDR|HWB|LAB|LCH|OKLAB|OKLCH} mode   either RGB, HSB, HSL,
+     * @param {RGB|HSB|HSL|RGBP3|HWB|LAB|LCH|OKLAB|OKLCH} mode   either RGB, HSB, HSL,
      *          or one of the extended modes described above.
      * @param {Number}  [max]  range for all values.
-     * @return {RGB|HSB|HSL|RGBHDR|HWB|LAB|LCH|OKLAB|OKLCH} The current color mode.
+     * @return {RGB|HSB|HSL|RGBP3|HWB|LAB|LCH|OKLAB|OKLCH} The current color mode.
      *
      * @example
      * function setup() {
@@ -33896,7 +34440,7 @@ var p5 = (function () {
      */
     /**
      * @method colorMode
-     * @param {RGB|HSB|HSL|RGBHDR|HWB|LAB|LCH|OKLAB|OKLCH} mode
+     * @param {RGB|HSB|HSL|RGBP3|HWB|LAB|LCH|OKLAB|OKLCH} mode
      * @param {Number} max1     range for the red or hue depending on the
      *                              current color mode.
      * @param {Number} max2     range for the green or saturation depending
@@ -33905,18 +34449,18 @@ var p5 = (function () {
      *                              depending on the current color mode.
      * @param {Number} [maxA]   range for the alpha.
      *
-     * @return {RGB|HSB|HSL|RGBHDR|HWB|LAB|LCH|OKLAB|OKLCH} The current color mode.
+     * @return {RGB|HSB|HSL|RGBP3|HWB|LAB|LCH|OKLAB|OKLCH} The current color mode.
      */
     /**
      * @method colorMode
-     * @return {RGB|HSB|HSL|RGBHDR|HWB|LAB|LCH|OKLAB|OKLCH} The current color mode.
+     * @return {RGB|HSB|HSL|RGBP3|HWB|LAB|LCH|OKLAB|OKLCH} The current color mode.
      */
     fn.colorMode = function(mode, max1, max2, max3, maxA) {
       // p5._validateParameters('colorMode', arguments);
       if (
         [
           RGB,
-          RGBHDR,
+          RGBP3,
           HSB,
           HSL,
           HWB,
@@ -38405,13 +38949,13 @@ var p5 = (function () {
             fn.saveJSON(args[0], args[1], args[2]);
             return;
           case 'txt':
-            fn.saveStrings(args[0], args[1], args[2]);
+            fn.saveStrings(args[0], args[1], 'txt', args[2]);
             return;
           // =================================================
           // OPTION 3: decide based on object...
           default:
             if (args[0] instanceof Array) {
-              fn.saveStrings(args[0], args[1], args[2]);
+              fn.saveStrings(args[0], args[1], undefined, args[2]);
             } else if (args[0] instanceof p5.Table) {
               fn.saveTable(args[0], args[1], args[2]);
             } else if (args[0] instanceof p5.Image) {
@@ -38873,6 +39417,40 @@ var p5 = (function () {
 
   function loadingDisplaying(p5, fn){
     /**
+     * The largest possible number of pixels a gif frame can contain.
+     *
+     * This static property defines how large, in terms of dimension, a gif image
+     * is allowed to be loaded into a p5 sketch. The default value is
+     * 16,000,000. This means an image's width multiplied by its height must not
+     * exceed 100,000,000. For example, an image with width 10,000 and height
+     * 10,000 is just enough, as well as an image with width 5000 and height
+     * 20,000. An image with width 20,000 and height 20,000 is not allowed and
+     * will cause an error when it is loaded.
+     *
+     * To avoid this error, you should try to reduce the image dimension of the
+     * gif. If that is not possible or not desirable, you can set
+     * `MAX_GIF_PIXELS` to a higher value instead.
+     *
+     * @static
+     * @property {Boolean} MAX_GIF_PIXELS
+     *
+     * @example
+     * // META: norender
+     * // Increase the maximum pixel counts to 200,000,000
+     * p5.MAX_GIF_PIXELS = 200_000_000;
+     *
+     * let img;
+     * async function setup() {
+     *   createCanvas(100, 100);
+     *
+     *   background(200);
+     *
+     *   img = await loadImage('./a-large-animated.gif');
+     * }
+     */
+    p5.MAX_GIF_PIXELS = 4000 * 4000; // 4 Channel per pixels for total of 64MB
+
+    /**
      * Loads an image to create a <a href="#/p5.Image">p5.Image</a> object.
      *
      * `loadImage()` interprets the first parameter one of three ways. If the path
@@ -38986,8 +39564,23 @@ var p5 = (function () {
 
         } else {
           // Non-GIF Section
-          const blob = new Blob([data]);
-          const img = await createImageBitmap(blob);
+          const img = await new Promise((resolve, reject) => {
+            const img = new Image();
+            const blob = new Blob([data], { type: contentType });
+            const url = URL.createObjectURL(blob);
+
+            img.onerror = e => {
+              URL.revokeObjectURL(url);
+              reject(e);
+            };
+
+            img.onload = () => {
+              URL.revokeObjectURL(url);
+              resolve(img);
+            };
+
+            img.src = url;
+          });
 
           pImg.width = pImg.canvas.width = img.width;
           pImg.height = pImg.canvas.height = img.height;
@@ -39469,6 +40062,13 @@ var p5 = (function () {
       pImg.height = pImg.canvas.height = gifReader.height;
       const frames = [];
       const numFrames = gifReader.numFrames();
+
+      if (pImg.width * pImg.height > p5.MAX_GIF_PIXELS) {
+        // GIF is too big, refuse to proceed
+        p5.FES.log`The GIF is over the maximum allowed dimension. Try to shrink the image or set p5.MAX_GIF_PIXELS to a higher value.`();
+        throw new Error("The GIF is over the maximum allowed dimension.");
+      }
+
       let framePixels = new Uint8ClampedArray(pImg.width * pImg.height * 4);
 
       const loadGIFFrameIntoImage = (frameNum, gifReader) => {
@@ -46350,14 +46950,14 @@ var p5 = (function () {
 
     /**
      * Multiplies a quaternion with other quaternion.
-     * @method mult
+     * @method multiply
      * @param  {p5.Quat} [quat] quaternion to multiply with the quaternion calling the method.
      * @chainable
      */
     multiply(quat) {
 
       return new Quat(
-        this.w * quat.w - this.vec.x * quat.vec.x - this.vec.y * quat.vec.y - this.vec.z - quat.vec.z,
+        this.w * quat.w - this.vec.x * quat.vec.x - this.vec.y * quat.vec.y - this.vec.z * quat.vec.z,
         this.w * quat.vec.x + this.vec.x * quat.w + this.vec.y * quat.vec.z - this.vec.z * quat.vec.y,
         this.w * quat.vec.y - this.vec.x * quat.vec.z + this.vec.y * quat.w + this.vec.z * quat.vec.x,
         this.w * quat.vec.z + this.vec.x * quat.vec.y - this.vec.y * quat.vec.x + this.vec.z * quat.w
@@ -50560,6 +51160,15 @@ var p5 = (function () {
       }
 
       if (
+        !this.renderer.geometryBuilder &&
+        this.shapeMode === TRIANGLE_FAN &&
+        !this.renderer.supportsTriangleFan()
+      ) {
+        this._convertFanToTriangles();
+        this.shapeMode = TRIANGLES;
+      }
+
+      if (
         this.renderer.states.textureMode === IMAGE &&
         this.renderer.states._tex !== null &&
         this.renderer.states._tex.width > 0 &&
@@ -50573,6 +51182,46 @@ var p5 = (function () {
           }
         });
       }
+    }
+
+    _remapVertices(newIndices) {
+      this.geometry.vertices = newIndices.map(i => this.geometry.vertices[i]);
+      this.geometry.vertexNormals = newIndices.map(i => this.geometry.vertexNormals[i]);
+
+      const remapFlat = (arr, stride) => {
+        const result = [];
+        for (const i of newIndices) {
+          for (let j = 0; j < stride; j++) {
+            result.push(arr[i * stride + j]);
+          }
+        }
+        return result;
+      };
+
+      this.geometry.uvs = remapFlat(this.geometry.uvs, 2);
+      this.geometry.vertexColors = remapFlat(this.geometry.vertexColors, 4);
+      this.geometry.vertexStrokeColors = remapFlat(this.geometry.vertexStrokeColors, 4);
+
+      for (const propName in this.geometry.userVertexProperties) {
+        const prop = this.geometry.userVertexProperties[propName];
+        const size = prop.getDataSize();
+        const oldData = prop.getSrcArray();
+        prop.resetSrcArray();
+        for (const i of newIndices) {
+          prop.setCurrentData(oldData.slice(i * size, i * size + size));
+          prop.pushCurrentData();
+        }
+      }
+    }
+
+    _convertFanToTriangles() {
+      const n = this.geometry.vertices.length;
+      if (n < 3) return;
+      const newIndices = [];
+      for (let i = 2; i < n; i++) {
+        newIndices.push(0, i - 1, i);
+      }
+      this._remapVertices(newIndices);
     }
 
     _resetUserVertexProperties() {
@@ -55057,7 +55706,11 @@ var p5 = (function () {
       // the next time a shader is used. However, the texture() function
       // works differently and is global p5 state. If the p5 state has
       // been cleared, we also need to clear the value in uSampler to match.
-      fillShader.setUniform("uSampler", this.states._tex || empty);
+      this._settingFillUniforms = true;
+      if (this.states._tex || !fillShader._userSetSampler) {
+        fillShader.setUniform("uSampler", this.states._tex || empty);
+      }
+      this._settingFillUniforms = false;
       fillShader.setUniform(
         "uTint",
         this.states.tint?._getRGBA([255, 255, 255, 255]) ?? [255, 255, 255, 255]
@@ -55180,7 +55833,7 @@ var p5 = (function () {
     _getEmptyTexture() {
       if (!this._emptyTexture) {
         // a plain white texture RGBA, full alpha, single pixel.
-        const im = new Image(1, 1);
+        const im = new Image$1(1, 1);
         im.set(0, 0, 255);
         this._emptyTexture = new Texture(this, im);
       }
@@ -60624,7 +61277,7 @@ var p5 = (function () {
      * @returns {String} The GLSL version used by the shader.
      */
     version() {
-      const match = /#version (.+)$/.exec(this.vertSrc());
+      const match = /#version (.+)$/m.exec(this.vertSrc());
       if (match) {
         return match[1];
       } else {
@@ -61626,6 +62279,10 @@ var p5 = (function () {
       const uniform = this.uniforms[uniformName];
       if (!uniform) {
         return;
+      }
+
+      if (uniformName === 'uSampler' && !this._renderer._settingFillUniforms) {
+        this._userSetSampler = true;
       }
 
       // In p5.strands-related code, where some of the code may be in
@@ -63939,7 +64596,7 @@ var p5 = (function () {
      *   // Replace alpha in the color with dithering by
      *   // randomly setting pixel colors to 0 based on opacity
      *   let a = 1;
-     *   if (noise(pixelInputs.position.xy) > pixelInputs.color.a) {
+     *   if (random() > pixelInputs.color.a) {
      *     a = 0;
      *   }
      *   pixelInputs.color.a = a;
@@ -65769,11 +66426,7 @@ var p5 = (function () {
      * <a href="#/p5/angleMode">angleMode()</a> is `DEGREES`, then values are
      * returned in the range 0 to 180.
      *
-     * @method acos
-     * @param  {Number} value value whose arc cosine is to be returned.
-     * @return {Number}       arc cosine of the given value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -65791,8 +66444,9 @@ var p5 = (function () {
      *
      *   describe('The numbers 3.142, -1, and 3.142 written on separate rows.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -65810,6 +66464,52 @@ var p5 = (function () {
      *
      *   describe('The numbers 3.927, -0.707, and 2.356 written on separate rows.');
      * }
+     * ```
+     *
+     * `acos()` can also be used in shaders with p5.strands. The following example
+     * uses `acos()` to create a pulsing color transition on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that pulses between orange and teal.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // acos(cos(t)) creates a triangle wave that goes from 0 to PI and back.
+     *   // Dividing by PI normalizes the result to the 0 to 1 range.
+     *   let value = acos(cos(t)) / PI;
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let orange = [1, 0.5, 0, 1];
+     *   let teal = [0, 0.8, 0.8, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between orange (when value = 0) and teal (when value = 1).
+     *   // acos() creates a pulsing effect by turning smooth oscillation into a triangle wave.
+     *   finalColor.set(mix(orange, teal, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method acos
+     * @param  {Number} value value whose arc cosine is to be returned.
+     * @return {Number}       arc cosine of the given value.
      */
     fn.acos = function(ratio) {
       return this._fromRadians(Math.acos(ratio));
@@ -65824,11 +66524,7 @@ var p5 = (function () {
      * the <a href="#/p5/angleMode">angleMode()</a> is `DEGREES` then values are
      * returned in the range -90 to 90.
      *
-     * @method asin
-     * @param  {Number} value value whose arc sine is to be returned.
-     * @return {Number}       arc sine of the given value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -65846,8 +66542,9 @@ var p5 = (function () {
      *
      *   describe('The numbers 1.047, 0.866, and 1.047 written on separate rows.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -65865,6 +66562,52 @@ var p5 = (function () {
      *
      *   describe('The numbers 4.189, -0.866, and -1.047 written on separate rows.');
      * }
+     * ```
+     *
+     * `asin()` can also be used in shaders with p5.strands. The following example
+     * uses `asin()` to create a smooth color transition on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that smoothly shifts between green and purple.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // asin(sin(t)) returns a value between -PI/2 and PI/2.
+     *   // Dividing by PI/2 normalizes to -1 to 1, then adding 1 and multiplying by 0.5
+     *   // remaps to the 0 to 1 range.
+     *   let value = (asin(sin(t)) / (PI / 2) + 1) * 0.5;
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let green = [0, 1, 0.5, 1];
+     *   let purple = [0.5, 0, 1, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between green (when value = 0) and purple (when value = 1).
+     *   finalColor.set(mix(green, purple, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method asin
+     * @param  {Number} value value whose arc sine is to be returned.
+     * @return {Number}       arc sine of the given value.
      */
     fn.asin = function(ratio) {
       return this._fromRadians(Math.asin(ratio));
@@ -65879,11 +66622,7 @@ var p5 = (function () {
      * (about 1.57). If the <a href="#/p5/angleMode">angleMode()</a> is `DEGREES`
      * then values are returned in the range -90 to 90.
      *
-     * @method atan
-     * @param  {Number} value value whose arc tangent is to be returned.
-     * @return {Number}       arc tangent of the given value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -65901,8 +66640,9 @@ var p5 = (function () {
      *
      *   describe('The numbers 1.047, 1.732, and 1.047 written on separate rows.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -65920,6 +66660,55 @@ var p5 = (function () {
      *
      *   describe('The numbers 4.189, 1.732, and 1.047 written on separate rows.');
      * }
+     * ```
+     *
+     * `atan()` can also be used in shaders with p5.strands. The following example
+     * uses `atan()` to create a soft color transition on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that softly shifts between pink and lime.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   // sin() oscillates the input between -5 and 5, so atan() gets both positive and negative values.
+     *   let t = sin(millis() * 0.001) * 5;
+     *
+     *   // atan(t) returns values between -PI/2 and PI/2.
+     *   // Dividing by PI/2 normalizes to -1 to 1, then adding 1 and multiplying by 0.5
+     *   // remaps to the 0 to 1 range.
+     *   // atan() compresses the wide range of t into a smooth S-curve (soft clipping).
+     *   let value = (atan(t) / (PI / 2) + 1) * 0.5;
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let pink = [1, 0, 0.5, 1];
+     *   let lime = [0.5, 1, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between pink (when value = 0) and lime (when value = 1).
+     *   // atan() creates a soft, eased transition instead of a linear blend.
+     *   finalColor.set(mix(pink, lime, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method atan
+     * @param  {Number} value value whose arc tangent is to be returned.
+     * @return {Number}       arc tangent of the given value.
      */
     fn.atan = function(ratio) {
       return this._fromRadians(Math.atan(ratio));
@@ -66003,11 +66792,7 @@ var p5 = (function () {
      * calculates the cosine of an angle, using radians by default, or according
      * to if <a href="#/p5/angleMode">angleMode()</a> setting (RADIANS or DEGREES).
      *
-     * @method cos
-     * @param  {Number} angle the angle, in radians by default, or according to if <a href="/reference/p5/angleMode/">angleMode()</a> setting (RADIANS or DEGREES).
-     * @return {Number}       cosine of the angle.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66025,8 +66810,9 @@ var p5 = (function () {
      *   line(50, y, x, y);
      *   circle(x, y, 20);
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66043,8 +66829,9 @@ var p5 = (function () {
      *   // Draw the point.
      *   point(x, y);
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66061,6 +66848,51 @@ var p5 = (function () {
      *   // Draw the point.
      *   point(x, y);
      * }
+     * ```
+     *
+     * `cos()` can also be used in shaders with p5.strands. The following example
+     * uses `cos()` to smoothly oscillate the color of a shape over time.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that fades between yellow and blue.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // cos(t) oscillates between -1 and 1.
+     *   // 0.5 + 0.5 * cos(t) remaps this to the 0 to 1 range.
+     *   let value = 0.5 + 0.5 * cos(t);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let yellow = [1, 1, 0, 1];
+     *   let blue = [0, 0, 1, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between yellow (when value = 0) and blue (when value = 1).
+     *   finalColor.set(mix(yellow, blue, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method cos
+     * @param  {Number} angle the angle, in radians by default, or according to if <a href="/reference/p5/angleMode/">angleMode()</a> setting (RADIANS or DEGREES).
+     * @return {Number}       cosine of the angle.
      */
     fn.cos = function(angle) {
       return Math.cos(this._toRadians(angle));
@@ -66074,11 +66906,7 @@ var p5 = (function () {
      * calculates the sine of an angle, using radians by default, or according to
      * if <a href="#/p5/angleMode">angleMode()</a> setting (RADIANS or DEGREES).
      *
-     * @method sin
-     * @param  {Number} angle the angle, in radians by default, or according to if <a href="/reference/p5/angleMode/">angleMode()</a> setting (RADIANS or DEGREES).
-     * @return {Number}       sine of the angle.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66096,8 +66924,9 @@ var p5 = (function () {
      *   line(50, y, x, y);
      *   circle(x, y, 20);
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66114,8 +66943,9 @@ var p5 = (function () {
      *   // Draw the point.
      *   point(x, y);
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66132,6 +66962,51 @@ var p5 = (function () {
      *   // Draw the point.
      *   point(x, y);
      * }
+     * ```
+     *
+     * `sin()` can also be used in shaders with p5.strands. The following example
+     * uses `sin()` to oscillate the color of a shape over time.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that pulses between cyan and magenta.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) oscillates between -1 and 1.
+     *   // 0.5 + 0.5 * sin(t) remaps this to the 0 to 1 range.
+     *   let value = 0.5 + 0.5 * sin(t);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let cyan = [0, 1, 1, 1];
+     *   let magenta = [1, 0, 1, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between cyan (when value = 0) and magenta (when value = 1).
+     *   finalColor.set(mix(cyan, magenta, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method sin
+     * @param  {Number} angle the angle, in radians by default, or according to if <a href="/reference/p5/angleMode/">angleMode()</a> setting (RADIANS or DEGREES).
+     * @return {Number}       sine of the angle.
      */
     fn.sin = function(angle) {
       return Math.sin(this._toRadians(angle));
@@ -66146,11 +67021,7 @@ var p5 = (function () {
      * by default, or according to
      * if <a href="#/p5/angleMode">angleMode()</a> setting (RADIANS or DEGREES).
      *
-     * @method tan
-     * @param  {Number} angle the angle, in radians by default, or according to if <a href="/reference/p5/angleMode/">angleMode()</a> setting (RADIANS or DEGREES).
-     * @return {Number}       tangent of the angle.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66167,6 +67038,53 @@ var p5 = (function () {
      *   // Draw the point.
      *   point(x, y);
      * }
+     * ```
+     *
+     * `tan()` can also be used in shaders with p5.strands. The following example
+     * uses `tan()` to create rapid color transitions on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere with rapidly shifting colors.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.0005 to slow it down.
+     *   let t = millis() * 0.0005;
+     *
+     *   // tan(t) can grow to very large values (even infinity) at certain angles.
+     *   // 0.5 + 0.5 * tan(t) shifts the range but can still go way past 0 or 1.
+     *   // min(max(..., 0), 1) clamps the result to the 0 to 1 range.
+     *   let value = min(max(0.5 + 0.5 * tan(t), 0), 1);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let orange = [1, 0.5, 0, 1];
+     *   let blue = [0, 0.5, 1, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between orange (when value = 0) and blue (when value = 1).
+     *   // tan() creates rapid, dramatic color shifts as it spikes and resets.
+     *   finalColor.set(mix(orange, blue, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method tan
+     * @param  {Number} angle the angle, in radians by default, or according to if <a href="/reference/p5/angleMode/">angleMode()</a> setting (RADIANS or DEGREES).
+     * @return {Number}       tangent of the angle.
      */
     fn.tan = function(angle) {
       return Math.tan(this._toRadians(angle));
@@ -66182,11 +67100,7 @@ var p5 = (function () {
      * quarter of a full rotation. The same angle is 2 &times; &pi; &divide; 4
      * (about 1.57) radians.
      *
-     * @method degrees
-     * @param  {Number} radians radians value to convert to degrees.
-     * @return {Number}         converted angle.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66201,6 +67115,54 @@ var p5 = (function () {
      *
      *   describe('The text "0.79 rad = 45˚".');
      * }
+     * ```
+     *
+     * `degrees()` can also be used in shaders with p5.strands. The following example
+     * uses `degrees()` to convert a radian value to degrees inside a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that cycles through warm colors.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // degrees() converts the radian value t to degrees.
+     *   // (deg % 360) wraps the degrees into a 0-360 range.
+     *   // Dividing by 360 normalizes to the 0 to 1 range.
+     *   let deg = degrees(t);
+     *   let value = (deg % 360) / 360;
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let red = [1, 0, 0, 1];
+     *   let yellow = [1, 1, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between red (when value = 0) and yellow (when value = 1).
+     *   // degrees() creates a cycling sawtooth pattern as time increases.
+     *   finalColor.set(mix(red, yellow, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method degrees
+     * @param  {Number} radians radians value to convert to degrees.
+     * @return {Number}         converted angle.
      */
     fn.degrees = angle => angle * RAD_TO_DEG;
 
@@ -66214,11 +67176,7 @@ var p5 = (function () {
      * quarter of a full rotation. The same angle is 2 &times; &pi; &divide; 4
      * (about 1.57) radians.
      *
-     * @method radians
-     * @param  {Number} degrees degree value to convert to radians.
-     * @return {Number}         converted angle.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -66233,6 +67191,56 @@ var p5 = (function () {
      *
      *   describe('The text "45˚ = 0.785 rad".');
      * }
+     * ```
+     *
+     * `radians()` can also be used in shaders with p5.strands. The following example
+     * uses `radians()` to convert degrees to radians inside a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that fades between red and white.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start.
+     *   // Multiply by 0.05 and mod 360 to cycle through 0-360 degrees over time.
+     *   let deg = (millis() * 0.05) % 360;
+     *
+     *   // radians() converts degrees to radians so sin() can use them.
+     *   let rad = radians(deg);
+     *
+     *   // sin(rad) oscillates between -1 and 1.
+     *   // 0.5 + 0.5 * sin(rad) remaps this to the 0 to 1 range.
+     *   let value = 0.5 + 0.5 * sin(rad);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let red = [1, 0, 0, 1];
+     *   let white = [1, 1, 1, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between red (when value = 0) and white (when value = 1).
+     *   // radians() converts the degree input so sin() can produce smooth oscillation.
+     *   finalColor.set(mix(red, white, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method radians
+     * @param  {Number} degrees degree value to convert to radians.
+     * @return {Number}         converted angle.
      */
     fn.radians = angle => angle * DEG_TO_RAD;
 
@@ -67074,7 +68082,7 @@ var p5 = (function () {
      * @extends p5.Element
      * @param {Number} w            width width of the graphics buffer in pixels.
      * @param {Number} h            height height of the graphics buffer in pixels.
-     * @param {(P2D|WEBGL|P2DHDR)} renderer   the renderer to use, either P2D or WEBGL.
+     * @param {(P2D|WEBGL|P2DP3)} renderer   the renderer to use, either P2D or WEBGL.
      * @param {p5} [pInst]          sketch instance.
      * @param {HTMLCanvasElement} [canvas]     existing `<canvas>` element to use.
      *
@@ -67218,7 +68226,7 @@ var p5 = (function () {
     _detectSourceType() {
       const obj = this.src;
       this.isFramebufferTexture = obj instanceof FramebufferTexture;
-      this.isSrcP5Image = obj instanceof Image;
+      this.isSrcP5Image = obj instanceof Image$1;
       this.isSrcP5Graphics = obj instanceof Graphics;
       this.isSrcP5Renderer = obj instanceof Renderer;
       this.isImageData = typeof ImageData !== 'undefined' && obj instanceof ImageData;
@@ -67781,6 +68789,9 @@ var p5 = (function () {
           gl.uniform1f(location, data);
         }
         break;
+      case gl.FLOAT_MAT2:
+        gl.uniformMatrix2fv(location, false, data);
+        break;
       case gl.FLOAT_MAT3:
         gl.uniformMatrix3fv(location, false, data);
         break;
@@ -67919,6 +68930,7 @@ var p5 = (function () {
 
       uniform.isArray =
         uniformInfo.size > 1 ||
+        uniform.type === gl.FLOAT_MAT2 ||
         uniform.type === gl.FLOAT_MAT3 ||
         uniform.type === gl.FLOAT_MAT4 ||
         uniform.type === gl.FLOAT_VEC2 ||
@@ -68147,7 +69159,7 @@ var p5 = (function () {
       this.density = settings.density || this.renderer._pixelDensity;
       if (settings.width && settings.height) {
         const dimensions =
-          this.renderer._adjustDimensions(settings.width, settings.height);
+          this.renderer._adjustDimensions(settings.width, settings.height, this.density);
         this.width = dimensions.adjustedWidth;
         this.height = dimensions.adjustedHeight;
         this._autoSized = false;
@@ -68229,7 +69241,7 @@ var p5 = (function () {
     resize(width, height) {
       this._autoSized = false;
       const dimensions =
-        this.renderer._adjustDimensions(width, height);
+        this.renderer._adjustDimensions(width, height, this.density);
       width = dimensions.adjustedWidth;
       height = dimensions.adjustedHeight;
       this.width = width;
@@ -69510,7 +70522,7 @@ var p5 = (function () {
      * @method createCanvas
      * @param  {Number} [width] width of the canvas. Defaults to 100.
      * @param  {Number} [height] height of the canvas. Defaults to 100.
-     * @param  {(P2D|WEBGL|P2DHDR)} [renderer] either P2D or WEBGL. Defaults to `P2D`.
+     * @param  {(P2D|WEBGL|P2DP3)} [renderer] either P2D or WEBGL. Defaults to `P2D`.
      * @param  {HTMLCanvasElement} [canvas] existing canvas element that should be used for the sketch.
      * @return {p5.Renderer} new `p5.Renderer` that holds the canvas.
      *
@@ -70161,6 +71173,13 @@ var p5 = (function () {
       throw new Error(prefixedMessage);
   }
 
+  function dimensionMismatchError(declaredDim,actualDim,varName){
+      userError(
+          'dimension mismatch',
+      `Cannot assign a value of dimension ${actualDim} to \`${varName}\`, which expects dimension ${declaredDim}.`
+      );
+  }
+
   /////////////////////////////////
   // Public functions for strands runtime
   /////////////////////////////////
@@ -70449,6 +71468,16 @@ var p5 = (function () {
 
       // For varying variables, we need both assignment generation AND a way to reference by identifier
       if (this._originalIdentifier) {
+        const valueDim = value?.isStrandsNode
+          ? value.dimension
+          : (Array.isArray(value) ? value.length : 1);
+        if (valueDim !== this._originalDimension && valueDim !== 1){
+          dimensionMismatchError(
+            this._originalDimension,
+            valueDim,
+            this._originalIdentifier
+          );
+        }
         // Create a variable node for the target (the varying variable)
         const { id: targetVarID } = variableNode(
           this.strandsContext,
@@ -70501,6 +71530,16 @@ var p5 = (function () {
 
       // For varying variables, create swizzle assignment
       if (this._originalIdentifier) {
+        const valueDim = value?.isStrandsNode
+          ? value.dimension
+          : (Array.isArray(value) ? value.length : 1);
+        if (valueDim !== swizzlePattern.length && valueDim !== 1){
+          dimensionMismatchError(
+            swizzlePattern.length,
+            valueDim,
+            `${this._originalIdentifier}.${swizzlePattern}`
+          );
+        }
         // Create a variable node for the target with swizzle
         const { id: targetVarID } = variableNode(
           this.strandsContext,
@@ -71049,38 +72088,24 @@ var p5 = (function () {
     return createStrandsNode(id, dimension, strandsContext);
   }
 
-  function structConstructorNode(strandsContext, structTypeInfo, rawUserArgs) {
+  function structConstructorNode(strandsContext, structTypeInfo, dependsOn) {
     const { cfg, dag } = strandsContext;
     const { properties } = structTypeInfo;
 
-    if (!(rawUserArgs.length === properties.length)) {
+    if (dependsOn.length !== properties.length) {
       userError('type error',
-        `You've tried to construct a ${structTypeInfo.typeName} struct with ${rawUserArgs.length} properties, but it expects ${properties.length} properties.\n` +
+        `You've tried to construct a ${structTypeInfo.typeName} struct with ${dependsOn.length} properties, but it expects ${properties.length} properties.\n` +
         `The properties it expects are:\n` +
-        `${properties.map(prop => prop.name + ' ' + prop.DataType.baseType + prop.DataType.dimension)}`
+        `${properties.map(prop => `${prop.name}: ${prop.dataType.baseType}${prop.dataType.dimension}`).join(', ')}`
       );
-    }
-
-    const dependsOn = [];
-    for (let i = 0; i < properties.length; i++) {
-      const expectedProperty = properties[i];
-      const { originalNodeID, mappedDependencies } = mapPrimitiveDepsToIDs(strandsContext, expectedProperty.dataType, rawUserArgs[i]);
-      if (originalNodeID) {
-        dependsOn.push(originalNodeID);
-      }
-      else {
-        dependsOn.push(
-          constructTypeFromIDs(strandsContext, expectedProperty.dataType, mappedDependencies)
-        );
-      }
     }
 
     const nodeData = createNodeData({
       nodeType: NodeType.OPERATION,
       opCode: OpCode.Nary.CONSTRUCTOR,
       dimension: properties.length,
-      baseType: structTypeInfo.typeName ,
-      dependsOn
+      baseType: structTypeInfo.typeName,
+      dependsOn,
     });
     const id = getOrCreateNode(dag, nodeData);
     recordInBasicBlock(cfg, cfg.currentBlock, id);
@@ -71277,7 +72302,11 @@ var p5 = (function () {
               scalars.push(createStrandsNode(id, dimension, strandsContext));
             }
           } else {
-            userError('type error', `Swizzle assignment: RHS vector does not match LHS vector (need ${chars.length}, got ${value.dimension}).`);
+            dimensionMismatchError(
+              chars.length,
+              value.dimension,
+              `${target._originalIdentifier || 'value'}.${property}`
+            );
           }
         } else if (Array.isArray(value)) {
           const flat = value.flat(Infinity);
@@ -71751,7 +72780,7 @@ var p5 = (function () {
       }
       const dag = strandsContext.dag;
       const rootNode = getNodeDataFromID(dag, rootNodeID);
-      if (isStructType(returnType)) {
+      if (isStructType(returnType) && rootNode.identifier) {
         const structTypeInfo = returnType;
         for (let i = 0; i < structTypeInfo.properties.length; i++) {
           const prop = structTypeInfo.properties[i];
@@ -72042,7 +73071,7 @@ var p5 = (function () {
         _arraysEqual: (a, b) => JSON.stringify(a) === JSON.stringify(b),
         _getEmptyTexture: () => {
           if (!this._emptyTexture) {
-            const im = new Image(1, 1);
+            const im = new Image$1(1, 1);
             im.set(0, 0, 255);
             this._emptyTexture = new Texture(this._renderer, im);
           }
@@ -72474,8 +73503,6 @@ var p5 = (function () {
     }
   }
 
-  const styleEmpty = 'rgba(0,0,0,0)';
-
   class Renderer2D extends Renderer {
     constructor(pInst, w, h, isMainCanvas, elt, attributes = {}) {
       super(pInst, w, h, isMainCanvas);
@@ -72530,7 +73557,7 @@ var p5 = (function () {
       // Get and store drawing context
       this.drawingContext = this.canvas.getContext('2d', attributes);
       if(attributes.colorSpace === 'display-p3'){
-        this.states.colorMode = RGBHDR;
+        this.states.colorMode = RGBP3;
       }
       this.scale(this._pixelDensity, this._pixelDensity);
 
@@ -72634,7 +73661,7 @@ var p5 = (function () {
       }
       this.push();
       this.resetMatrix();
-      if (args[0] instanceof Image) {
+      if (args[0] instanceof Image$1) {
         const img = args[0];
         if (args[1] >= 0) {
           // set transparency of background
@@ -72739,7 +73766,9 @@ var p5 = (function () {
 
     drawShape(shape) {
       const visitor = new PrimitiveToPath2DConverter({
-        strokeWeight: this.states.strokeWeight
+        strokeWeight: this.states.strokeWeight,
+        hasFill: !this._clipping && !!this.states.fillColor,
+        hasStroke: !this._clipping && !!this.states.strokeColor
       });
       shape.accept(visitor);
       if (this._clipping) {
@@ -72907,10 +73936,12 @@ var p5 = (function () {
       ctx.save();
       ctx.clearRect(0, 0, img.canvas.width, img.canvas.height);
 
+      const tint = this.states.tint._getRGBA([255, 255, 255, 255]);
+
       if (
-        this.states.tint[0] < 255 ||
-        this.states.tint[1] < 255 ||
-        this.states.tint[2] < 255
+        tint[0] < 255 ||
+        tint[1] < 255 ||
+        tint[2] < 255
       ) {
         // Color tint: we need to use the multiply blend mode to change the colors.
         // However, the canvas implementation of this destroys the alpha channel of
@@ -72933,16 +73964,16 @@ var p5 = (function () {
 
         // Apply color tint
         ctx.globalCompositeOperation = 'multiply';
-        ctx.fillStyle = `rgb(${this.states.tint.slice(0, 3).join(', ')})`;
+        ctx.fillStyle = `rgb(${tint.slice(0, 3).join(', ')})`;
         ctx.fillRect(0, 0, img.canvas.width, img.canvas.height);
 
         // Replace the alpha channel with the original alpha * the alpha tint
         ctx.globalCompositeOperation = 'destination-in';
-        ctx.globalAlpha = this.states.tint[3] / 255;
+        ctx.globalAlpha = tint[3] / 255;
         ctx.drawImage(img.canvas, 0, 0);
       } else {
         // If we only need to change the alpha, we can skip all the extra work!
-        ctx.globalAlpha = this.states.tint[3] / 255;
+        ctx.globalAlpha = tint[3] / 255;
         ctx.drawImage(img.canvas, 0, 0);
       }
 
@@ -73028,7 +74059,7 @@ var p5 = (function () {
       // round down to get integer numbers
       x = Math.floor(x);
       y = Math.floor(y);
-      if (imgOrCol instanceof Graphics || imgOrCol instanceof Image) {
+      if (imgOrCol instanceof Graphics || imgOrCol instanceof Image$1) {
         this.drawingContext.save();
         this.drawingContext.setTransform(1, 0, 0, 1, 0, 0);
         this.drawingContext.scale(
@@ -73168,96 +74199,32 @@ var p5 = (function () {
     }
 
     line(x1, y1, x2, y2) {
-      const ctx = this.drawingContext;
-      if (!this.states.strokeColor) {
-        return this;
-      } else if (this._getStroke() === styleEmpty) {
-        return this;
-      }
-      if (this._clipping) {
-        const tempPath = new Path2D();
-        tempPath.moveTo(x1, y1);
-        tempPath.lineTo(x2, y2);
-        const currentTransform = this.drawingContext.getTransform();
-        const clipBaseTransform = this._clipBaseTransform.inverse();
-        const relativeTransform = clipBaseTransform.multiply(currentTransform);
-        this.clipPath.addPath(tempPath, relativeTransform);
-        return this;
-      }
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
+      const shape = new p5$2.Shape({ position: new p5$2.Vector(0, 0) });
+      shape.beginShape();
+      shape.line(x1, y1, x2, y2);
+      shape.endShape();
+      this.drawShape(shape);
 
       return this;
     }
 
     point(x, y) {
-      const ctx = this.drawingContext;
-      if (!this.states.strokeColor) {
-        return this;
-      } else if (this._getStroke() === styleEmpty) {
-        return this;
-      }
-      const s = this._getStroke();
-      const f = this._getFill();
-      if (this._clipping) {
-        const tempPath = new Path2D();
-        const drawingContextWidth = this.drawingContext.lineWidth;
-        tempPath.arc(x, y, drawingContextWidth / 2, 0, TWO_PI);
-        const currentTransform = this.drawingContext.getTransform();
-        const clipBaseTransform = this._clipBaseTransform.inverse();
-        const relativeTransform = clipBaseTransform.multiply(currentTransform);
-        this.clipPath.addPath(tempPath, relativeTransform);
-        return this;
-      }
-      this._setFill(s);
-      ctx.beginPath();
-      ctx.arc(x, y, ctx.lineWidth / 2, 0, TWO_PI, false);
-      ctx.fill();
-      this._setFill(f);
+      const shape = new p5$2.Shape({ position: new p5$2.Vector(0, 0) });
+      shape.beginShape();
+      shape.point(x, y);
+      shape.endShape();
+      this.drawShape(shape);
 
       return this;
     }
 
     quad(x1, y1, x2, y2, x3, y3, x4, y4) {
-      const ctx = this.drawingContext;
-      const doFill = !!this.states.fillColor,
-        doStroke = this.states.strokeColor;
-      if (doFill && !doStroke) {
-        if (this._getFill() === styleEmpty) {
-          return this;
-        }
-      } else if (!doFill && doStroke) {
-        if (this._getStroke() === styleEmpty) {
-          return this;
-        }
-      }
-      if (this._clipping) {
-        const tempPath = new Path2D();
-        tempPath.moveTo(x1, y1);
-        tempPath.lineTo(x2, y2);
-        tempPath.lineTo(x3, y3);
-        tempPath.lineTo(x4, y4);
-        tempPath.closePath();
-        const currentTransform = this.drawingContext.getTransform();
-        const clipBaseTransform = this._clipBaseTransform.inverse();
-        const relativeTransform = clipBaseTransform.multiply(currentTransform);
-        this.clipPath.addPath(tempPath, relativeTransform);
-        return this;
-      }
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.lineTo(x3, y3);
-      ctx.lineTo(x4, y4);
-      ctx.closePath();
-      if (doFill) {
-        ctx.fill();
-      }
-      if (doStroke) {
-        ctx.stroke();
-      }
+      const shape = new p5$2.Shape({ position: new p5$2.Vector(0, 0) });
+      shape.beginShape();
+      shape.quad(x1, y1, x2, y2, x3, y3, x4, y4);
+      shape.endShape();
+      this.drawShape(shape);
+
       return this;
     }
 
@@ -73270,134 +74237,29 @@ var p5 = (function () {
       let tr = args[5];
       let br = args[6];
       let bl = args[7];
-      const ctx = this.drawingContext;
-      const doFill = !!this.states.fillColor,
-        doStroke = this.states.strokeColor;
-      if (doFill && !doStroke) {
-        if (this._getFill() === styleEmpty) {
-          return this;
-        }
-      } else if (!doFill && doStroke) {
-        if (this._getStroke() === styleEmpty) {
-          return this;
-        }
-      }
-      if (this._clipping) {
-        const tempPath = new Path2D();
-        if (typeof tl === 'undefined') {
-          tempPath.rect(x, y, w, h);
-        } else {
-          tempPath.roundRect(x, y, w, h, [tl, tr, br, bl]);
-        }
-        const currentTransform = this.drawingContext.getTransform();
-        const clipBaseTransform = this._clipBaseTransform.inverse();
-        const relativeTransform = clipBaseTransform.multiply(currentTransform);
-        this.clipPath.addPath(tempPath, relativeTransform);
-        return this;
-      }
-      ctx.beginPath();
-      if (typeof tl === 'undefined') {
-        // No rounded corners
-        ctx.rect(x, y, w, h);
-      } else {
-        // At least one rounded corner
-        // Set defaults when not specified
-        if (typeof tr === 'undefined') {
-          tr = tl;
-        }
-        if (typeof br === 'undefined') {
-          br = tr;
-        }
-        if (typeof bl === 'undefined') {
-          bl = br;
-        }
 
-        // corner rounding must always be positive
-        const absW = Math.abs(w);
-        const absH = Math.abs(h);
-        const hw = absW / 2;
-        const hh = absH / 2;
+      const shape = new p5$2.Shape({ position: new p5$2.Vector(0, 0) });
+      shape.beginShape();
+      shape.rectPrimitive(x, y, w, h, tl, tr, br, bl);
+      shape.endShape();
+      this.drawShape(shape);
 
-        // Clip radii
-        if (absW < 2 * tl) {
-          tl = hw;
-        }
-        if (absH < 2 * tl) {
-          tl = hh;
-        }
-        if (absW < 2 * tr) {
-          tr = hw;
-        }
-        if (absH < 2 * tr) {
-          tr = hh;
-        }
-        if (absW < 2 * br) {
-          br = hw;
-        }
-        if (absH < 2 * br) {
-          br = hh;
-        }
-        if (absW < 2 * bl) {
-          bl = hw;
-        }
-        if (absH < 2 * bl) {
-          bl = hh;
-        }
-
-        ctx.roundRect(x, y, w, h, [tl, tr, br, bl]);
-      }
-      if (doFill) {
-        ctx.fill();
-      }
-      if (doStroke) {
-        ctx.stroke();
-      }
       return this;
     }
 
-
     triangle(args) {
-      const ctx = this.drawingContext;
-      const doFill = !!this.states.fillColor,
-        doStroke = this.states.strokeColor;
       const x1 = args[0],
         y1 = args[1];
       const x2 = args[2],
         y2 = args[3];
       const x3 = args[4],
         y3 = args[5];
-      if (doFill && !doStroke) {
-        if (this._getFill() === styleEmpty) {
-          return this;
-        }
-      } else if (!doFill && doStroke) {
-        if (this._getStroke() === styleEmpty) {
-          return this;
-        }
-      }
-      if (this._clipping) {
-        const tempPath = new Path2D();
-        tempPath.moveTo(x1, y1);
-        tempPath.lineTo(x2, y2);
-        tempPath.lineTo(x3, y3);
-        tempPath.closePath();
-        const currentTransform = this.drawingContext.getTransform();
-        const clipBaseTransform = this._clipBaseTransform.inverse();
-        const relativeTransform = clipBaseTransform.multiply(currentTransform);
-        this.clipPath.addPath(tempPath, relativeTransform);
-        return this;
-      }
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.lineTo(x3, y3);
-      ctx.closePath();
-      if (doFill) {
-        ctx.fill();
-      }
-      if (doStroke) {
-        ctx.stroke();
-      }
+
+      const shape = new p5$2.Shape({ position: new p5$2.Vector(0, 0) });
+      shape.beginShape();
+      shape.triangle(x1, y1, x2, y2, x3, y3);
+      shape.endShape();
+      this.drawShape(shape);
 
       return this;
     }
@@ -73668,11 +74530,88 @@ var p5 = (function () {
      */
     p5.Renderer2D = Renderer2D;
     p5.renderers[P2D] = Renderer2D;
-    p5.renderers['p2d-hdr'] = new Proxy(Renderer2D, {
+    p5.renderers['p2d-p3'] = new Proxy(Renderer2D, {
       construct(target, [pInst, w, h, isMainCanvas, elt]){
         return new target(pInst, w, h, isMainCanvas, elt, { colorSpace: 'display-p3' });
       }
     });
+  }
+
+  /**
+   * @module Loading
+   * @for p5
+   * @private
+   *
+   * Handles the logic for creating a loading indicator.
+   * Currently, the loading indicator is basic and can be extended in the future.
+   */
+
+  /**
+   * Creates a loading indicator when the sketch's setup() function is running.
+   * It is called and removed automatically using the presetup and postsetup lifecycles hooks.
+   *
+   * @param {*} p5 The p5 constructor
+   * @param {*} fn The p5 prototype object
+   * @param {*} lifecycles Lifecycle hooks for the sketch
+   */
+  function loading$2(p5, fn, lifecycles) {
+    lifecycles.presetup = function() {
+      if (typeof window === 'undefined' || this._loadingIndicator) {
+        return;
+      }
+
+      const canvasParent = this.canvas?.parentElement;
+      let container = this._userNode || canvasParent || document.body;
+
+      if (typeof container === 'string') {
+        container = document.getElementById(container) || document.body;
+      }
+
+      this._loadingIndicator = createLoadingIndicator(container);
+    };
+
+    lifecycles.postsetup = function() {
+      if (this._loadingIndicator) {
+        this._loadingIndicator.remove();
+        this._loadingIndicator = null;
+      }
+    };
+  }
+
+  /**
+   * Creates and stylizes the loading indicator.
+   * As a helper function, it can be extensible and modified in future versions.
+   *
+   * @private
+   * @param {HTMLElement} container The HTML element to append the indicator to
+   * @returns {HTMLElement} The loading indicator div element
+   */
+  function createLoadingIndicator(container) {
+    if (!document.getElementById('p5-loading-style')) {
+      const loadingStyle = document.createElement('style');
+      loadingStyle.id = 'p5-loading-style';
+      loadingStyle.textContent = '@keyframes p5-loading-spin { to { transform: rotate(360deg); } }';
+      document.head.appendChild(loadingStyle);
+    }
+
+    const indicator = document.createElement('div');
+    indicator.className = 'loading-indicator';
+    indicator.style.cssText = `
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: rgba(0, 0, 0, 0.8);
+    animation: p5-loading-spin 1s linear infinite;
+    z-index: 9999;
+  `;
+
+    container.appendChild(indicator);
+    return indicator;
   }
 
   /**
@@ -74314,6 +75253,7 @@ var p5 = (function () {
   p5$2.registerAddon(renderer);
   p5$2.registerAddon(renderer2D);
   p5$2.registerAddon(graphics);
+  p5$2.registerAddon(loading$2);
 
   //////////////////////////////////////////////
   // PUBLIC p5 PROPERTIES AND METHODS
@@ -80496,7 +81436,7 @@ var p5 = (function () {
         const fnNames = entryPoints;
 
         if (context.preload && !p5.isPreloadSupported()) {
-          p5._error(context, translator('fes.preloadDisabled'));
+          p5._error(p5.instance, translator('fes.preloadDisabled'));
         }
 
         const fxns = {};
@@ -81136,7 +82076,7 @@ var p5 = (function () {
       p5._fesLogCache = {};
 
       lifecycles.presetup = function () {
-        window.addEventListener('load', checkForUserDefinedFunctions, false);
+        checkForUserDefinedFunctions(window);
         window.addEventListener('error', p5._fesErrorMonitor, false);
         window.addEventListener('unhandledrejection', p5._fesErrorMonitor, false);
       };
@@ -86146,13 +87086,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	abs: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
   	mult: {
   		overloads: [
   			[
@@ -86200,19 +87133,19 @@ var p5 = (function () {
   			]
   		]
   	},
-  	ceil: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
   	ellipseMode: {
   		overloads: [
   			[
   				"CENTER|RADIUS|CORNER|CORNERS"
   			],
   			[
+  			]
+  		]
+  	},
+  	abs: {
+  		overloads: [
+  			[
+  				"Number"
   			]
   		]
   	},
@@ -86328,7 +87261,7 @@ var p5 = (function () {
   			[
   				"Number?",
   				"Number?",
-  				"P2D|WEBGL|P2DHDR?",
+  				"P2D|WEBGL|P2DP3?",
   				"HTMLCanvasElement?"
   			],
   			[
@@ -86354,27 +87287,11 @@ var p5 = (function () {
   			]
   		]
   	},
-  	constrain: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number",
-  				"Number"
-  			]
-  		]
-  	},
   	createImage: {
   		overloads: [
   			[
   				"Integer",
   				"Integer"
-  			]
-  		]
-  	},
-  	acos: {
-  		overloads: [
-  			[
-  				"Number"
   			]
   		]
   	},
@@ -86398,6 +87315,13 @@ var p5 = (function () {
   		overloads: [
   			[
   				"Object?"
+  			]
+  		]
+  	},
+  	ceil: {
+  		overloads: [
+  			[
+  				"Number"
   			]
   		]
   	},
@@ -86460,6 +87384,13 @@ var p5 = (function () {
   			]
   		]
   	},
+  	acos: {
+  		overloads: [
+  			[
+  				"Number"
+  			]
+  		]
+  	},
   	endClip: {
   		overloads: [
   			[
@@ -86502,37 +87433,6 @@ var p5 = (function () {
   		]
   	},
   	loop: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
-  	dist: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Number"
-  			],
-  			[
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Number"
-  			]
-  		]
-  	},
-  	asin: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
-  	millis: {
   		overloads: [
   			[
   			]
@@ -86614,6 +87514,15 @@ var p5 = (function () {
   			]
   		]
   	},
+  	mix: {
+  		overloads: [
+  			[
+  				"Number|p5.Vector",
+  				"Number|p5.Vector",
+  				"Number|Boolean"
+  			]
+  		]
+  	},
   	applyMatrix: {
   		overloads: [
   			[
@@ -86659,18 +87568,18 @@ var p5 = (function () {
   			]
   		]
   	},
-  	push: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
-  	noise: {
+  	constrain: {
   		overloads: [
   			[
   				"Number",
-  				"Number?",
-  				"Number?"
+  				"Number",
+  				"Number"
+  			]
+  		]
+  	},
+  	push: {
+  		overloads: [
+  			[
   			]
   		]
   	},
@@ -86683,29 +87592,9 @@ var p5 = (function () {
   			]
   		]
   	},
-  	saveGif: {
+  	millis: {
   		overloads: [
   			[
-  				"String",
-  				"Number",
-  				"Object?"
-  			]
-  		]
-  	},
-  	month: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
-  	random: {
-  		overloads: [
-  			[
-  				"Number?",
-  				"Number?"
-  			],
-  			[
-  				"Array"
   			]
   		]
   	},
@@ -86731,6 +87620,15 @@ var p5 = (function () {
   			]
   		]
   	},
+  	saveGif: {
+  		overloads: [
+  			[
+  				"String",
+  				"Number",
+  				"Object?"
+  			]
+  		]
+  	},
   	saveCanvas: {
   		overloads: [
   			[
@@ -86741,13 +87639,6 @@ var p5 = (function () {
   			[
   				"String?",
   				"String?"
-  			]
-  		]
-  	},
-  	atan: {
-  		overloads: [
-  			[
-  				"Number"
   			]
   		]
   	},
@@ -86764,16 +87655,12 @@ var p5 = (function () {
   			]
   		]
   	},
-  	exp: {
+  	noise: {
   		overloads: [
   			[
-  				"Number"
-  			]
-  		]
-  	},
-  	second: {
-  		overloads: [
-  			[
+  				"Number",
+  				"Number?",
+  				"Number?"
   			]
   		]
   	},
@@ -86783,6 +87670,23 @@ var p5 = (function () {
   				"CENTER|RADIUS|CORNER|CORNERS"
   			],
   			[
+  			]
+  		]
+  	},
+  	month: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
+  	random: {
+  		overloads: [
+  			[
+  				"Number?",
+  				"Number?"
+  			],
+  			[
+  				"Array"
   			]
   		]
   	},
@@ -86823,6 +87727,31 @@ var p5 = (function () {
   			]
   		]
   	},
+  	asin: {
+  		overloads: [
+  			[
+  				"Number"
+  			]
+  		]
+  	},
+  	dist: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Number"
+  			],
+  			[
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Number"
+  			]
+  		]
+  	},
   	cursor: {
   		overloads: [
   			[
@@ -86834,23 +87763,16 @@ var p5 = (function () {
   			]
   		]
   	},
-  	year: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
-  	floor: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
   	str: {
   		overloads: [
   			[
   				"String|Boolean|Number"
+  			]
+  		]
+  	},
+  	second: {
+  		overloads: [
+  			[
   			]
   		]
   	},
@@ -86882,6 +87804,15 @@ var p5 = (function () {
   			]
   		]
   	},
+  	set: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number",
+  				"Number|Number[]|Object"
+  			]
+  		]
+  	},
   	loadModel: {
   		overloads: [
   			[
@@ -86903,14 +87834,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	randomGaussian: {
-  		overloads: [
-  			[
-  				"Number?",
-  				"Number?"
-  			]
-  		]
-  	},
   	redraw: {
   		overloads: [
   			[
@@ -86918,11 +87841,9 @@ var p5 = (function () {
   			]
   		]
   	},
-  	atan2: {
+  	year: {
   		overloads: [
   			[
-  				"Number",
-  				"Number"
   			]
   		]
   	},
@@ -86972,9 +87893,25 @@ var p5 = (function () {
   			]
   		]
   	},
+  	randomGaussian: {
+  		overloads: [
+  			[
+  				"Number?",
+  				"Number?"
+  			]
+  		]
+  	},
   	addElement: {
   		overloads: [
   			[
+  			]
+  		]
+  	},
+  	clip: {
+  		overloads: [
+  			[
+  				"Function",
+  				"Object?"
   			]
   		]
   	},
@@ -87001,27 +87938,9 @@ var p5 = (function () {
   			]
   		]
   	},
-  	clip: {
+  	atan: {
   		overloads: [
   			[
-  				"Function",
-  				"Object?"
-  			]
-  		]
-  	},
-  	noiseDetail: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number?"
-  			]
-  		]
-  	},
-  	lerp: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number",
   				"Number"
   			]
   		]
@@ -87041,6 +87960,13 @@ var p5 = (function () {
   			]
   		]
   	},
+  	freeGeometry: {
+  		overloads: [
+  			[
+  				"p5.Geometry"
+  			]
+  		]
+  	},
   	frameRate: {
   		overloads: [
   			[
@@ -87050,24 +87976,25 @@ var p5 = (function () {
   			]
   		]
   	},
-  	freeGeometry: {
+  	strokeCap: {
   		overloads: [
   			[
-  				"p5.Geometry"
+  				"ROUND|SQUARE|PROJECT"
   			]
   		]
   	},
-  	cos: {
+  	exp: {
   		overloads: [
   			[
   				"Number"
   			]
   		]
   	},
-  	strokeCap: {
+  	noiseDetail: {
   		overloads: [
   			[
-  				"ROUND|SQUARE|PROJECT"
+  				"Number",
+  				"Number?"
   			]
   		]
   	},
@@ -87133,13 +88060,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	setMoveThreshold: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
   	bezierTangent: {
   		overloads: [
   			[
@@ -87151,7 +88071,7 @@ var p5 = (function () {
   			]
   		]
   	},
-  	noiseSeed: {
+  	setMoveThreshold: {
   		overloads: [
   			[
   				"Number"
@@ -87175,13 +88095,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	log: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
   	createP: {
   		overloads: [
   			[
@@ -87195,6 +88108,14 @@ var p5 = (function () {
   				"String",
   				"String",
   				"Object?"
+  			]
+  		]
+  	},
+  	atan2: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number"
   			]
   		]
   	},
@@ -87225,18 +88146,18 @@ var p5 = (function () {
   			]
   		]
   	},
+  	noiseSeed: {
+  		overloads: [
+  			[
+  				"Number"
+  			]
+  		]
+  	},
   	saveStl: {
   		overloads: [
   			[
   				"String?",
   				"Object?"
-  			]
-  		]
-  	},
-  	sin: {
-  		overloads: [
-  			[
-  				"Number"
   			]
   		]
   	},
@@ -87249,10 +88170,9 @@ var p5 = (function () {
   			]
   		]
   	},
-  	mag: {
+  	floor: {
   		overloads: [
   			[
-  				"Number",
   				"Number"
   			]
   		]
@@ -87284,13 +88204,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	red: {
-  		overloads: [
-  			[
-  				"p5.Color|Number[]|String"
-  			]
-  		]
-  	},
   	strokeJoin: {
   		overloads: [
   			[
@@ -87312,10 +88225,10 @@ var p5 = (function () {
   			]
   		]
   	},
-  	tan: {
+  	red: {
   		overloads: [
   			[
-  				"Number"
+  				"p5.Color|Number[]|String"
   			]
   		]
   	},
@@ -87335,13 +88248,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	degrees: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
   	rotateX: {
   		overloads: [
   			[
@@ -87353,18 +88259,6 @@ var p5 = (function () {
   		overloads: [
   			[
   				"Object?"
-  			]
-  		]
-  	},
-  	map: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Boolean?"
   			]
   		]
   	},
@@ -87391,7 +88285,7 @@ var p5 = (function () {
   			]
   		]
   	},
-  	radians: {
+  	cos: {
   		overloads: [
   			[
   				"Number"
@@ -87480,10 +88374,12 @@ var p5 = (function () {
   			]
   		]
   	},
-  	green: {
+  	lerp: {
   		overloads: [
   			[
-  				"p5.Color|Number[]|String"
+  				"Number",
+  				"Number",
+  				"Number"
   			]
   		]
   	},
@@ -87512,14 +88408,10 @@ var p5 = (function () {
   			]
   		]
   	},
-  	max: {
+  	green: {
   		overloads: [
   			[
-  				"Number",
-  				"Number"
-  			],
-  			[
-  				"Number[]"
+  				"p5.Color|Number[]|String"
   			]
   		]
   	},
@@ -87578,6 +88470,18 @@ var p5 = (function () {
   			]
   		]
   	},
+  	clear: {
+  		overloads: [
+  			[
+  				"Number?",
+  				"Number?",
+  				"Number?",
+  				"Number?"
+  			],
+  			[
+  			]
+  		]
+  	},
   	setup: {
   		overloads: [
   			[
@@ -87594,18 +88498,6 @@ var p5 = (function () {
   		overloads: [
   			[
   				"Function"
-  			]
-  		]
-  	},
-  	clear: {
-  		overloads: [
-  			[
-  				"Number?",
-  				"Number?",
-  				"Number?",
-  				"Number?"
-  			],
-  			[
   			]
   		]
   	},
@@ -87696,6 +88588,13 @@ var p5 = (function () {
   			]
   		]
   	},
+  	sin: {
+  		overloads: [
+  			[
+  				"Number"
+  			]
+  		]
+  	},
   	loadXML: {
   		overloads: [
   			[
@@ -87721,14 +88620,10 @@ var p5 = (function () {
   			]
   		]
   	},
-  	min: {
+  	log: {
   		overloads: [
   			[
-  				"Number",
   				"Number"
-  			],
-  			[
-  				"Number[]"
   			]
   		]
   	},
@@ -87747,28 +88642,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	noDebugMode: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
-  	blue: {
-  		overloads: [
-  			[
-  				"p5.Color|Number[]|String"
-  			]
-  		]
-  	},
-  	angleMode: {
-  		overloads: [
-  			[
-  				"RADIANS|DEGREES"
-  			],
-  			[
-  			]
-  		]
-  	},
   	unchar: {
   		overloads: [
   			[
@@ -87776,6 +88649,12 @@ var p5 = (function () {
   			],
   			[
   				"String[]"
+  			]
+  		]
+  	},
+  	noDebugMode: {
+  		overloads: [
+  			[
   			]
   		]
   	},
@@ -87815,6 +88694,13 @@ var p5 = (function () {
   			]
   		]
   	},
+  	blue: {
+  		overloads: [
+  			[
+  				"p5.Color|Number[]|String"
+  			]
+  		]
+  	},
   	createSlider: {
   		overloads: [
   			[
@@ -87825,11 +88711,17 @@ var p5 = (function () {
   			]
   		]
   	},
-  	norm: {
+  	mag: {
   		overloads: [
   			[
   				"Number",
-  				"Number",
+  				"Number"
+  			]
+  		]
+  	},
+  	tan: {
+  		overloads: [
+  			[
   				"Number"
   			]
   		]
@@ -87848,20 +88740,31 @@ var p5 = (function () {
   			]
   		]
   	},
-  	pow: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number"
-  			]
-  		]
-  	},
   	loadBlob: {
   		overloads: [
   			[
   				"String|Request",
   				"Function?",
   				"Function?"
+  			]
+  		]
+  	},
+  	fullscreen: {
+  		overloads: [
+  			[
+  				"Boolean?"
+  			]
+  		]
+  	},
+  	point: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number",
+  				"Number?"
+  			],
+  			[
+  				"p5.Vector"
   			]
   		]
   	},
@@ -87893,32 +88796,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	fullscreen: {
-  		overloads: [
-  			[
-  				"Boolean?"
-  			]
-  		]
-  	},
-  	point: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number",
-  				"Number?"
-  			],
-  			[
-  				"p5.Vector"
-  			]
-  		]
-  	},
-  	alpha: {
-  		overloads: [
-  			[
-  				"p5.Color|Number[]|String"
-  			]
-  		]
-  	},
   	createButton: {
   		overloads: [
   			[
@@ -87934,6 +88811,13 @@ var p5 = (function () {
   			]
   		]
   	},
+  	alpha: {
+  		overloads: [
+  			[
+  				"p5.Color|Number[]|String"
+  			]
+  		]
+  	},
   	endShape: {
   		overloads: [
   			[
@@ -87942,20 +88826,10 @@ var p5 = (function () {
   			]
   		]
   	},
-  	set: {
+  	degrees: {
   		overloads: [
   			[
-  				"Number",
-  				"Number",
-  				"Number|Number[]|Object"
-  			]
-  		]
-  	},
-  	round: {
-  		overloads: [
-  			[
-  				"Number",
-  				"Number?"
+  				"Number"
   			]
   		]
   	},
@@ -87982,10 +88856,24 @@ var p5 = (function () {
   			]
   		]
   	},
-  	imageLight: {
+  	map: {
   		overloads: [
   			[
-  				"p5.Image"
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Boolean?"
+  			]
+  		]
+  	},
+  	pixelDensity: {
+  		overloads: [
+  			[
+  				"Number?"
+  			],
+  			[
   			]
   		]
   	},
@@ -88004,12 +88892,10 @@ var p5 = (function () {
   			]
   		]
   	},
-  	pixelDensity: {
+  	imageLight: {
   		overloads: [
   			[
-  				"Number?"
-  			],
-  			[
+  				"p5.Image"
   			]
   		]
   	},
@@ -88025,7 +88911,13 @@ var p5 = (function () {
   			]
   		]
   	},
-  	sq: {
+  	displayDensity: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
+  	radians: {
   		overloads: [
   			[
   				"Number"
@@ -88047,23 +88939,10 @@ var p5 = (function () {
   			]
   		]
   	},
-  	displayDensity: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
   	keyTyped: {
   		overloads: [
   			[
   				"KeyboardEvent?"
-  			]
-  		]
-  	},
-  	hue: {
-  		overloads: [
-  			[
-  				"p5.Color|Number[]|String"
   			]
   		]
   	},
@@ -88088,6 +88967,13 @@ var p5 = (function () {
   			],
   			[
   				"p5.Vector|Number[]"
+  			]
+  		]
+  	},
+  	hue: {
+  		overloads: [
+  			[
+  				"p5.Color|Number[]|String"
   			]
   		]
   	},
@@ -88133,13 +89019,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	sqrt: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
   	httpPost: {
   		overloads: [
   			[
@@ -88168,16 +89047,27 @@ var p5 = (function () {
   			]
   		]
   	},
+  	max: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number",
+  				"...Number[]"
+  			],
+  			[
+  				"Number[]"
+  			]
+  		]
+  	},
   	lights: {
   		overloads: [
   			[
   			]
   		]
   	},
-  	fract: {
+  	getURLPath: {
   		overloads: [
   			[
-  				"Number"
   			]
   		]
   	},
@@ -88192,12 +89082,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	getURLPath: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
   	normal: {
   		overloads: [
   			[
@@ -88207,6 +89091,36 @@ var p5 = (function () {
   				"Number",
   				"Number",
   				"Number"
+  			]
+  		]
+  	},
+  	shearX: {
+  		overloads: [
+  			[
+  				"Number"
+  			]
+  		]
+  	},
+  	colorMode: {
+  		overloads: [
+  			[
+  				"RGB|HSB|HSL|RGBP3|HWB|LAB|LCH|OKLAB|OKLCH",
+  				"Number?"
+  			],
+  			[
+  				"RGB|HSB|HSL|RGBP3|HWB|LAB|LCH|OKLAB|OKLCH",
+  				"Number",
+  				"Number",
+  				"Number",
+  				"Number?"
+  			],
+  			[
+  			]
+  		]
+  	},
+  	getURLParams: {
+  		overloads: [
+  			[
   			]
   		]
   	},
@@ -88235,42 +89149,19 @@ var p5 = (function () {
   			]
   		]
   	},
-  	shearX: {
-  		overloads: [
-  			[
-  				"Number"
-  			]
-  		]
-  	},
-  	colorMode: {
-  		overloads: [
-  			[
-  				"RGB|HSB|HSL|RGBHDR|HWB|LAB|LCH|OKLAB|OKLCH",
-  				"Number?"
-  			],
-  			[
-  				"RGB|HSB|HSL|RGBHDR|HWB|LAB|LCH|OKLAB|OKLCH",
-  				"Number",
-  				"Number",
-  				"Number",
-  				"Number?"
-  			],
-  			[
-  			]
-  		]
-  	},
-  	getURLParams: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
   	lightFalloff: {
   		overloads: [
   			[
   				"Number",
   				"Number",
   				"Number"
+  			]
+  		]
+  	},
+  	shader: {
+  		overloads: [
+  			[
+  				"p5.Shader"
   			]
   		]
   	},
@@ -88288,13 +89179,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	shader: {
-  		overloads: [
-  			[
-  				"p5.Shader"
-  			]
-  		]
-  	},
   	keyIsDown: {
   		overloads: [
   			[
@@ -88306,6 +89190,15 @@ var p5 = (function () {
   		overloads: [
   			[
   				"String"
+  			]
+  		]
+  	},
+  	angleMode: {
+  		overloads: [
+  			[
+  				"RADIANS|DEGREES"
+  			],
+  			[
   			]
   		]
   	},
@@ -88335,6 +89228,18 @@ var p5 = (function () {
   		overloads: [
   			[
   				"Number"
+  			]
+  		]
+  	},
+  	min: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number",
+  				"...Number[]"
+  			],
+  			[
+  				"Number[]"
   			]
   		]
   	},
@@ -88391,6 +89296,15 @@ var p5 = (function () {
   			]
   		]
   	},
+  	norm: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number",
+  				"Number"
+  			]
+  		]
+  	},
   	worldToScreen: {
   		overloads: [
   			[
@@ -88421,6 +89335,15 @@ var p5 = (function () {
   			]
   		]
   	},
+  	screenToWorld: {
+  		overloads: [
+  			[
+  				"Number|p5.Vector",
+  				"Number",
+  				"Number?"
+  			]
+  		]
+  	},
   	createModel: {
   		overloads: [
   			[
@@ -88443,12 +89366,10 @@ var p5 = (function () {
   			]
   		]
   	},
-  	screenToWorld: {
+  	strokeShader: {
   		overloads: [
   			[
-  				"Number|p5.Vector",
-  				"Number",
-  				"Number?"
+  				"p5.Shader"
   			]
   		]
   	},
@@ -88459,10 +89380,11 @@ var p5 = (function () {
   			]
   		]
   	},
-  	strokeShader: {
+  	pow: {
   		overloads: [
   			[
-  				"p5.Shader"
+  				"Number",
+  				"Number"
   			]
   		]
   	},
@@ -88470,6 +89392,18 @@ var p5 = (function () {
   		overloads: [
   			[
   				"p5.Color|Number[]|String"
+  			]
+  		]
+  	},
+  	translate: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number",
+  				"Number?"
+  			],
+  			[
+  				"p5.Vector"
   			]
   		]
   	},
@@ -88498,15 +89432,11 @@ var p5 = (function () {
   			]
   		]
   	},
-  	translate: {
+  	createWriter: {
   		overloads: [
   			[
-  				"Number",
-  				"Number",
-  				"Number?"
-  			],
-  			[
-  				"p5.Vector"
+  				"String",
+  				"String?"
   			]
   		]
   	},
@@ -88594,14 +89524,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	createWriter: {
-  		overloads: [
-  			[
-  				"String",
-  				"String?"
-  			]
-  		]
-  	},
   	fill: {
   		overloads: [
   			[
@@ -88623,12 +89545,6 @@ var p5 = (function () {
   			[
   				"p5.Color"
   			],
-  			[
-  			]
-  		]
-  	},
-  	noTint: {
-  		overloads: [
   			[
   			]
   		]
@@ -88806,6 +89722,12 @@ var p5 = (function () {
   			]
   		]
   	},
+  	noTint: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
   	ellipsoid: {
   		overloads: [
   			[
@@ -88814,6 +89736,14 @@ var p5 = (function () {
   				"Number?",
   				"Integer?",
   				"Integer?"
+  			]
+  		]
+  	},
+  	round: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number?"
   			]
   		]
   	},
@@ -88829,17 +89759,17 @@ var p5 = (function () {
   			]
   		]
   	},
-  	lightness: {
-  		overloads: [
-  			[
-  				"p5.Color|Number[]|String"
-  			]
-  		]
-  	},
   	imageShader: {
   		overloads: [
   			[
   				"p5.Shader"
+  			]
+  		]
+  	},
+  	lightness: {
+  		overloads: [
+  			[
+  				"p5.Color|Number[]|String"
   			]
   		]
   	},
@@ -88863,15 +89793,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	imageMode: {
-  		overloads: [
-  			[
-  				"CORNER|CORNERS|CENTER"
-  			],
-  			[
-  			]
-  		]
-  	},
   	createRadio: {
   		overloads: [
   			[
@@ -88884,11 +89805,27 @@ var p5 = (function () {
   			]
   		]
   	},
+  	sq: {
+  		overloads: [
+  			[
+  				"Number"
+  			]
+  		]
+  	},
   	createVideo: {
   		overloads: [
   			[
   				"String|String[]?",
   				"Function?"
+  			]
+  		]
+  	},
+  	imageMode: {
+  		overloads: [
+  			[
+  				"CORNER|CORNERS|CENTER"
+  			],
+  			[
   			]
   		]
   	},
@@ -88943,6 +89880,13 @@ var p5 = (function () {
   			]
   		]
   	},
+  	sqrt: {
+  		overloads: [
+  			[
+  				"Number"
+  			]
+  		]
+  	},
   	close: {
   		overloads: [
   			[
@@ -88965,6 +89909,13 @@ var p5 = (function () {
   			[
   				"Object",
   				"Object?"
+  			]
+  		]
+  	},
+  	fract: {
+  		overloads: [
+  			[
+  				"Number"
   			]
   		]
   	},
@@ -89027,16 +89978,16 @@ var p5 = (function () {
   			]
   		]
   	},
+  	baseMaterialShader: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
   	doubleClicked: {
   		overloads: [
   			[
   				"MouseEvent?"
-  			]
-  		]
-  	},
-  	baseMaterialShader: {
-  		overloads: [
-  			[
   			]
   		]
   	},
@@ -89083,13 +90034,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	mouseWheel: {
-  		overloads: [
-  			[
-  				"WheelEvent?"
-  			]
-  		]
-  	},
   	saveJSON: {
   		overloads: [
   			[
@@ -89102,6 +90046,13 @@ var p5 = (function () {
   	pop: {
   		overloads: [
   			[
+  			]
+  		]
+  	},
+  	mouseWheel: {
+  		overloads: [
+  			[
+  				"WheelEvent?"
   			]
   		]
   	},
@@ -89134,21 +90085,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	bezierOrder: {
-  		overloads: [
-  			[
-  				"Number"
-  			],
-  			[
-  			]
-  		]
-  	},
-  	exitPointerLock: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
   	saveStrings: {
   		overloads: [
   			[
@@ -89156,6 +90092,12 @@ var p5 = (function () {
   				"String",
   				"String?",
   				"Boolean?"
+  			]
+  		]
+  	},
+  	exitPointerLock: {
+  		overloads: [
+  			[
   			]
   		]
   	},
@@ -89206,6 +90148,15 @@ var p5 = (function () {
   			]
   		]
   	},
+  	bezierOrder: {
+  		overloads: [
+  			[
+  				"Number"
+  			],
+  			[
+  			]
+  		]
+  	},
   	blendMode: {
   		overloads: [
   			[
@@ -89237,12 +90188,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	baseComputeShader: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
   	buildStrokeShader: {
   		overloads: [
   			[
@@ -89252,6 +90197,59 @@ var p5 = (function () {
   			[
   				"Object",
   				"Object?"
+  			]
+  		]
+  	},
+  	baseComputeShader: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
+  	loadStrokeShader: {
+  		overloads: [
+  			[
+  				"String",
+  				"Function?",
+  				"Function?"
+  			]
+  		]
+  	},
+  	perspective: {
+  		overloads: [
+  			[
+  				"Number?",
+  				"Number?",
+  				"Number?",
+  				"Number?"
+  			]
+  		]
+  	},
+  	baseStrokeShader: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
+  	resetShader: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
+  	buildComputeShader: {
+  		overloads: [
+  			[
+  				"Function"
+  			]
+  		]
+  	},
+  	linePerspective: {
+  		overloads: [
+  			[
+  				"Boolean"
+  			],
+  			[
   			]
   		]
   	},
@@ -89281,53 +90279,6 @@ var p5 = (function () {
   			]
   		]
   	},
-  	loadStrokeShader: {
-  		overloads: [
-  			[
-  				"String",
-  				"Function?",
-  				"Function?"
-  			]
-  		]
-  	},
-  	perspective: {
-  		overloads: [
-  			[
-  				"Number?",
-  				"Number?",
-  				"Number?",
-  				"Number?"
-  			]
-  		]
-  	},
-  	baseStrokeShader: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
-  	buildComputeShader: {
-  		overloads: [
-  			[
-  				"Function"
-  			]
-  		]
-  	},
-  	resetShader: {
-  		overloads: [
-  			[
-  			]
-  		]
-  	},
-  	linePerspective: {
-  		overloads: [
-  			[
-  				"Boolean"
-  			],
-  			[
-  			]
-  		]
-  	},
   	ortho: {
   		overloads: [
   			[
@@ -89337,17 +90288,6 @@ var p5 = (function () {
   				"Number?",
   				"Number?",
   				"Number?"
-  			]
-  		]
-  	},
-  	splineProperty: {
-  		overloads: [
-  			[
-  				"String",
-  				null
-  			],
-  			[
-  				"String"
   			]
   		]
   	},
@@ -89387,16 +90327,20 @@ var p5 = (function () {
   			]
   		]
   	},
-  	splineProperties: {
-  		overloads: [
-  			[
-  				"Object"
-  			]
-  		]
-  	},
   	createCamera: {
   		overloads: [
   			[
+  			]
+  		]
+  	},
+  	splineProperty: {
+  		overloads: [
+  			[
+  				"String",
+  				null
+  			],
+  			[
+  				"String"
   			]
   		]
   	},
@@ -89413,6 +90357,23 @@ var p5 = (function () {
   		overloads: [
   			[
   				"p5.Camera"
+  			]
+  		]
+  	},
+  	splineProperties: {
+  		overloads: [
+  			[
+  				"Object"
+  			]
+  		]
+  	},
+  	textureWrap: {
+  		overloads: [
+  			[
+  				"CLAMP|REPEAT|MIRROR",
+  				"CLAMP|REPEAT|MIRROR?"
+  			],
+  			[
   			]
   		]
   	},
@@ -89437,18 +90398,14 @@ var p5 = (function () {
   			]
   		]
   	},
-  	beginContour: {
+  	normalMaterial: {
   		overloads: [
   			[
   			]
   		]
   	},
-  	textureWrap: {
+  	beginContour: {
   		overloads: [
-  			[
-  				"CLAMP|REPEAT|MIRROR",
-  				"CLAMP|REPEAT|MIRROR?"
-  			],
   			[
   			]
   		]
@@ -89457,12 +90414,6 @@ var p5 = (function () {
   		overloads: [
   			[
   				"OPEN|CLOSE?"
-  			]
-  		]
-  	},
-  	normalMaterial: {
-  		overloads: [
-  			[
   			]
   		]
   	},
@@ -90842,6 +91793,20 @@ var p5 = (function () {
   		overloads: [
   			[
   				"Number[]|Float32Array|Object[]"
+  			]
+  		]
+  	},
+  	read: {
+  		overloads: [
+  			[
+  			]
+  		]
+  	},
+  	set: {
+  		overloads: [
+  			[
+  				"Number",
+  				"Number|Object"
   			]
   		]
   	}
@@ -102730,6 +103695,7 @@ var p5 = (function () {
       const events = [
         'pointerdown',
         'pointerup',
+        'pointercancel',
         'pointermove',
         'dragend',
         'dragover',
@@ -103789,6 +104755,10 @@ var p5 = (function () {
       this._activePointers.set(e.pointerId, e);
       this._setMouseButton(e);
 
+      if (this.mouseIsPressed && e.buttons === 0) {
+        this._onpointerup(e);
+      }
+
       if (
         !this.mouseIsPressed &&
         typeof this._customActions.mouseMoved === 'function'
@@ -104114,6 +105084,16 @@ var p5 = (function () {
 
     fn._ondragend = fn._onpointerup;
     fn._ondragover = fn._onpointermove;
+
+    fn._onpointercancel = function(e) {
+      this._activePointers.delete(e.pointerId);
+      this._setMouseButton(e);
+      this._updatePointerCoords(e);
+
+      if (this._activePointers.size === 0) {
+        this.mouseIsPressed = false;
+      }
+    };
 
     /**
      * A function that's called once after a mouse button is pressed and released.
@@ -106347,11 +107327,7 @@ var p5 = (function () {
      * -5 and 5 are both five units away from zero, so calling `abs(-5)` and
      * `abs(5)` both return 5. The absolute value of a number is always positive.
      *
-     * @method abs
-     * @param  {Number} n number to compute.
-     * @return {Number}   absolute value of given number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106371,6 +107347,55 @@ var p5 = (function () {
      *   // from the middle.
      *   rect(0, 100 - h, 100, h);
      * }
+     * ```
+     *
+     * `abs()` can also be used in shaders with p5.strands. The following example
+     * uses `abs()` to create a mirror effect on the color of a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere with colors that fold back like a mirror.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) goes between -1 and 1 over time.
+     *   let sinVal = sin(t);
+     *
+     *   // abs() folds the negative values to positive.
+     *   // Now value goes between 0 and 1, creating a mirror effect.
+     *   let value = abs(sinVal);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let navy = [0.2, 0.2, 0.8, 1];
+     *   let coral = [0.8, 0.2, 0.2, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between navy (when value = 0) and coral (when value = 1).
+     *   finalColor.set(mix(navy, coral, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method abs
+     * @param  {Number} n number to compute.
+     * @return {Number}   absolute value of given number.
+     *
      */
     fn.abs = Math.abs;
 
@@ -106381,11 +107406,7 @@ var p5 = (function () {
      * For example, calling `ceil(9.03)` and `ceil(9.97)` both return the value
      * 10.
      *
-     * @method ceil
-     * @param  {Number} n number to round up.
-     * @return {Integer}   rounded up number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106410,6 +107431,57 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The one on the left is dark red and the one on the right is bright red.');
      * }
+     * ```
+     *
+     * `ceil()` can also be used in shaders with p5.strands. The following example
+     * uses `ceil()` to create a stepped color effect on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere with stepped color bands.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) goes between -1 and 1.
+     *   // 0.5 + 0.5 * sin(t) remaps this to the 0 to 1 range.
+     *   let sinVal = 0.5 + 0.5 * sin(t);
+     *
+     *   // Multiply by 4 then ceil to get the next whole number up.
+     *   // Divide by 4 to bring the result back to the 0 to 1 range.
+     *   // This creates 4 distinct stepped color levels: 0.25, 0.5, 0.75, 1.
+     *   let value = ceil(sinVal * 4) / 4;
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let cyan = [0, 0.5, 1, 1];
+     *   let orange = [1, 0.5, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between cyan (when value = 0) and orange (when value = 1).
+     *   // ceil() creates sharp steps between color levels.
+     *   finalColor.set(mix(cyan, orange, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method ceil
+     * @param  {Number} n number to round up.
+     * @return {Integer}   rounded up number.
      */
     fn.ceil = Math.ceil;
 
@@ -106547,11 +107619,7 @@ var p5 = (function () {
      * Calculates the value of Euler's number e (2.71828...) raised to the power
      * of a number.
      *
-     * @method exp
-     * @param  {Number} n exponent to raise.
-     * @return {Number}   e^n
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106575,8 +107643,9 @@ var p5 = (function () {
      *
      *   describe('A series of circles that grow exponentially from top left to bottom right.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106597,6 +107666,53 @@ var p5 = (function () {
      *   // Draw a point.
      *   point(x, y);
      * }
+     * ```
+     *
+     * `exp()` can also be used in shaders with p5.strands. The following example
+     * uses `exp()` to create an accelerating color transition on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that brightens with accelerating speed.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.0005 to slow it.
+     *   let t = millis() * 0.0005;
+     *
+     *   // exp(t) grows slowly at first, then accelerates (exponential growth).
+     *   // Multiply by 0.01 to keep it from growing too fast.
+     *   // min(..., 1) caps the value at 1 so it doesn't go past white.
+     *   let value = min(exp(t) * 0.01, 1);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let darkBlue = [0.1, 0.1, 0.3, 1];
+     *   let lightYellow = [1, 1, 0.5, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between darkBlue (when value = 0) and lightYellow (when value = 1).
+     *   // Because exp() accelerates, the color transition gets faster over time.
+     *   finalColor.set(mix(darkBlue, lightYellow, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method exp
+     * @param  {Number} n exponent to raise.
+     * @return {Number}   e^n
      */
     fn.exp = Math.exp;
 
@@ -106604,11 +107720,7 @@ var p5 = (function () {
      * Calculates the closest integer value that is less than or equal to the
      * value of a number.
      *
-     * @method floor
-     * @param  {Number} n number to round down.
-     * @return {Integer}  rounded down number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106631,6 +107743,57 @@ var p5 = (function () {
      *
      *   describe('Two rectangles. The one on the left is bright red and the one on the right is black.');
      * }
+     * ```
+     *
+     * `floor()` can also be used in shaders with p5.strands. The following example
+     * uses `floor()` to create banding effects on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere with posterized color bands.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) goes between -1 and 1.
+     *   // 0.5 + 0.5 * sin(t) remaps this to the 0 to 1 range.
+     *   let sinVal = 0.5 + 0.5 * sin(t);
+     *
+     *   // Multiply by 4 then floor to get the next whole number down.
+     *   // Divide by 4 to bring the result back to the 0 to 1 range.
+     *   // This creates 5 distinct stepped color levels: 0, 0.25, 0.5, 0.75, 1.
+     *   let value = floor(sinVal * 4) / 4;
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let darkPurple = [0.2, 0, 0.8, 1];
+     *   let brightTeal = [0.2, 1, 0.8, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between darkPurple (when value = 0) and brightTeal (when value = 1).
+     *   // The floor() creates visible banding/posterization in the color.
+     *   finalColor.set(mix(darkPurple, brightTeal, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method floor
+     * @param  {Number} n number to round down.
+     * @return {Integer}  rounded down number.
      */
     fn.floor = Math.floor;
 
@@ -106647,13 +107810,7 @@ var p5 = (function () {
      * number outside of the original interval. For example, calling
      * `lerp(0, 10, 1.5)` will return 15.
      *
-     * @method lerp
-     * @param  {Number} start first value.
-     * @param  {Number} stop  second value.
-     * @param  {Number} amt   number.
-     * @return {Number}       lerped value.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106681,8 +107838,9 @@ var p5 = (function () {
      *
      *   describe('Five points in a horizontal line. The outer points are black and the inner points are gray.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * let x = 50;
      * let y = 50;
      * let targetX = 50;
@@ -106712,6 +107870,54 @@ var p5 = (function () {
      *   x = mouseX;
      *   y = mouseY;
      * }
+     * ```
+     *
+     * `lerp()` can also be used in shaders with p5.strands, where it maps to the
+     * <a href="#/p5/mix">mix()</a> function in GLSL. The following example
+     * uses `lerp()` to blend colors on a shape over time.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that blends between teal and coral.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) goes between -1 and 1 over time.
+     *   // 0.5 + 0.5 * sin(t) remaps this to the 0 to 1 range.
+     *   let value = 0.5 + 0.5 * sin(t);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let teal = [0, 0.8, 0.8, 1];
+     *   let coral = [1, 0.5, 0.3, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // lerp() blends teal (when value = 0) and coral (when value = 1).
+     *   finalColor.set(lerp(teal, coral, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method lerp
+     * @param  {Number} start first value.
+     * @param  {Number} stop  second value.
+     * @param  {Number} amt   number.
+     * @return {Number}       lerped value.
      */
     fn.lerp = function(start, stop, amt) {
       // p5._validateParameters('lerp', arguments);
@@ -106724,11 +107930,7 @@ var p5 = (function () {
      * `log()` expects the `n` parameter to be a value greater than 0 because
      * the natural logarithm is defined that way.
      *
-     * @method log
-     * @param  {Number} n number greater than 0.
-     * @return {Number}   natural logarithm of n.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106744,8 +107946,9 @@ var p5 = (function () {
      *
      *   describe('Two white circles. The circle at the top-left is small. The circle at the bottom-right is about five times larger.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106766,6 +107969,53 @@ var p5 = (function () {
      *   // Draw a point.
      *   point(x, y);
      * }
+     * ```
+     *
+     * `log()` can also be used in shaders with p5.strands. The following example
+     * uses `log()` to create a decelerating color transition on a shape.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that slowly shifts from purple to yellow.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // log(1 + t * 2) grows at a moderate pace over time.
+     *   // Multiply by 0.4 to bring it into the 0 to 1 range.
+     *   // min(..., 1) caps the value at 1.
+     *   let value = min(log(1 + t * 2) * 0.4, 1);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let purple = [0.5, 0, 0.5, 1];
+     *   let yellow = [1, 1, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between purple (when value = 0) and yellow (when value = 1).
+     *   // Because log() slows down over time, the color transition decelerates.
+     *   finalColor.set(mix(purple, yellow, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method log
+     * @param  {Number} n number greater than 0.
+     * @return {Number}   natural logarithm of n.
      */
     fn.log = Math.log;
 
@@ -106833,16 +108083,7 @@ var p5 = (function () {
      * constrains the remapped value to the target range. For example,
      * `map(11, 0, 10, 0, 100, true)` returns 100.
      *
-     * @method map
-     * @param  {Number} value  the value to be remapped.
-     * @param  {Number} start1 lower bound of the value's current range.
-     * @param  {Number} stop1  upper bound of the value's current range.
-     * @param  {Number} start2 lower bound of the value's target range.
-     * @param  {Number} stop2  upper bound of the value's target range.
-     * @param  {Boolean} [withinBounds] constrain the value to the newly mapped range.
-     * @return {Number}        remapped number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106861,8 +108102,9 @@ var p5 = (function () {
      *   // Draw the bottom line.
      *   line(0, 75, 0, x);
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106881,6 +108123,58 @@ var p5 = (function () {
      *   // Draw the circle.
      *   circle(50, 50, 20);
      * }
+     * ```
+     *
+     * `map()` can also be used in shaders with p5.strands. The following example
+     * uses `map()` to remap time values to color in a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that shifts between cyan and orange over time.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) goes between -1 and 1 over time.
+     *   let sinVal = sin(t);
+     *
+     *   // map() remaps this from the range [-1, 1] to the range [0, 1].
+     *   let value = map(sinVal, -1, 1, 0, 1);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let cyan = [0, 0.5, 1, 1];
+     *   let orange = [1, 0.5, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between cyan (when value = 0) and orange (when value = 1).
+     *   finalColor.set(mix(cyan, orange, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method map
+     * @param  {Number} value  the value to be remapped.
+     * @param  {Number} start1 lower bound of the value's current range.
+     * @param  {Number} stop1  upper bound of the value's current range.
+     * @param  {Number} start2 lower bound of the value's target range.
+     * @param  {Number} stop2  upper bound of the value's target range.
+     * @param  {Boolean} [withinBounds] constrain the value to the newly mapped range.
+     * @return {Number}        remapped number.
      */
     fn.map = function(n, start1, stop1, start2, stop2, withinBounds) {
       // p5._validateParameters('map', arguments);
@@ -106904,12 +108198,7 @@ var p5 = (function () {
      * The version of `max()` with two or more parameters interprets them as
      * individual numbers and returns the largest number.
      *
-     * @method max
-     * @param  {Number} n0 first number to compare.
-     * @param  {Number} n1 second number to compare.
-     * @return {Number}             maximum number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106927,8 +108216,9 @@ var p5 = (function () {
      *
      *   describe('The number 20 written in the middle of a gray square.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -106949,6 +108239,54 @@ var p5 = (function () {
      *
      *   describe('The number 20 written in the middle of a gray square.');
      * }
+     * ```
+     *
+     * `max()` can also be used in shaders with p5.strands. The following example
+     * uses `max()` to clamp values in a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that shifts from rose to steelBlue and stops.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // 1 - t * 0.2 decreases steadily over time.
+     *   // max(..., 0) ensures the value never goes below 0.
+     *   let value = max(1 - t * 0.2, 0);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let steelBlue = [0, 0.3, 0.8, 1];
+     *   let rose = [1, 0.3, 0.8, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between steelBlue (when value = 0) and rose (when value = 1).
+     *   // max() clamps the blend so the color stops changing once it reaches steelBlue.
+     *   finalColor.set(mix(steelBlue, rose, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method max
+     * @param  {Number} n0 first number to compare.
+     * @param  {Number} n1 second number to compare.
+     * @param  {...Number} rest additional numbers to compare.
+     * @return {Number}             maximum number.
      */
     /**
      * @method max
@@ -106980,12 +108318,7 @@ var p5 = (function () {
      * The version of `min()` with two or more parameters interprets them as
      * individual numbers and returns the smallest number.
      *
-     * @method min
-     * @param  {Number} n0 first number to compare.
-     * @param  {Number} n1 second number to compare.
-     * @return {Number}             minimum number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107003,8 +108336,9 @@ var p5 = (function () {
      *
      *   describe('The number 5 written in the middle of a gray square.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107025,6 +108359,54 @@ var p5 = (function () {
      *
      *   describe('The number 5 written in the middle of a gray square.');
      * }
+     * ```
+     *
+     * `min()` can also be used in shaders with p5.strands. The following example
+     * uses `min()` to clamp values in a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that shifts from red to green and stops.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // t * 0.2 grows steadily over time.
+     *   // min(..., 1) caps the value at 1 so it doesn't go past the target color.
+     *   let value = min(t * 0.2, 1);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let deepRed = [0.8, 0, 0.2, 1];
+     *   let yellowGreen = [0.8, 1, 0.2, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between deepRed (when value = 0) and yellowGreen (when value = 1).
+     *   // min() clamps the blend so the color stops changing once it reaches yellowGreen.
+     *   finalColor.set(mix(deepRed, yellowGreen, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method min
+     * @param  {Number} n0 first number to compare.
+     * @param  {Number} n1 second number to compare.
+     * @param  {...Number} rest additional numbers to compare.
+     * @return {Number}             minimum number.
      */
     /**
      * @method min
@@ -107093,12 +108475,7 @@ var p5 = (function () {
      * 2 &times; 2 &times; 2. `pow(2, -3)` evaluates 1 &#247;
      * (2 &times; 2 &times; 2).
      *
-     * @method pow
-     * @param  {Number} n base of the exponential expression.
-     * @param  {Number} e power by which to raise the base.
-     * @return {Number}   n^e.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107125,6 +108502,52 @@ var p5 = (function () {
      *
      *   describe('A series of circles that grow exponentially from top left to bottom right.');
      * }
+     * ```
+     *
+     * `pow()` can also be used in shaders with p5.strands. The following example
+     * uses `pow()` to create a gamma curve effect on colors in a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere with colors that shift with a power curve.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.0005 to slow it.
+     *   let t = millis() * 0.0005;
+     *
+     *   // pow(t, 2) squares the time value: it starts slow then accelerates.
+     *   let value = pow(t, 2);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let deepBlue = [0, 0.1, 0.5, 1];
+     *   let gold = [1, 0.8, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between deepBlue (when value = 0) and gold (when value = 1).
+     *   // Because pow() accelerates, the color transition gets faster over time.
+     *   finalColor.set(mix(deepBlue, gold, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method pow
+     * @param  {Number} n base of the exponential expression.
+     * @param  {Number} e power by which to raise the base.
+     * @return {Number}   n^e.
      */
     fn.pow = Math.pow;
 
@@ -107137,12 +108560,7 @@ var p5 = (function () {
      * decimal places to use when rounding. For example, `round(12.34, 1)` returns
      * 12.3. `decimals` is 0 by default.
      *
-     * @method round
-     * @param  {Number} n number to round.
-     * @param  {Number} [decimals] number of decimal places to round to, default is 0.
-     * @return {Integer}  rounded number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107160,8 +108578,9 @@ var p5 = (function () {
      *
      *   describe('The number 4 written in middle of the canvas.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107179,6 +108598,57 @@ var p5 = (function () {
      *
      *   describe('The number 12.78 written in middle of canvas.');
      * }
+     * ```
+     *
+     * `round()` can also be used in shaders with p5.strands. The following example
+     * uses `round()` to quantize colors in a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere with posterized quantized colors.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) goes between -1 and 1.
+     *   // 0.5 + 0.5 * sin(t) remaps this to the 0 to 1 range.
+     *   let sinVal = 0.5 + 0.5 * sin(t);
+     *
+     *   // Multiply by 4 then round to get 5 distinct levels (0, 0.25, 0.5, 0.75, 1).
+     *   // Divide by 4 to bring the result back to the 0 to 1 range.
+     *   let value = round(sinVal * 4) / 4;
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let mutedBlue = [0.3, 0.4, 0.7, 1];
+     *   let rose = [0.8, 0.3, 0.4, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between mutedBlue (when value = 0) and rose (when value = 1).
+     *   // The round() creates stepped bands of color like a posterization effect.
+     *   finalColor.set(mix(mutedBlue, rose, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method round
+     * @param  {Number} n number to round.
+     * @param  {Number} [decimals] number of decimal places to round to, default is 0.
+     * @return {Integer}  rounded number.
      */
     fn.round = function(n, decimals) {
       if (!decimals) {
@@ -107249,11 +108719,7 @@ var p5 = (function () {
      * always returns a positive value. `sqrt()` doesn't work with negative arguments
      * such as `sqrt(-9)`.
      *
-     * @method sqrt
-     * @param  {Number} n non-negative number to square root.
-     * @return {Number}   square root of number.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107269,8 +108735,9 @@ var p5 = (function () {
      *
      *   describe('Two white circles. The circle at the top-left is small. The circle at the bottom-right is ten times larger.');
      * }
+     * ```
      *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107291,6 +108758,63 @@ var p5 = (function () {
      *   // Draw the point.
      *   point(x, y);
      * }
+     * ```
+     *
+     * `sqrt()` can also be used in shaders with p5.strands. The following example
+     * uses `sqrt()` to create a smooth ease-out curve on color and size.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere that grows and shifts from navy to orange with an ease-out curve.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // sin(t) goes between -1 and 1.
+     *   // 0.5 + 0.5 * sin(t) remaps this to the 0 to 1 range.
+     *   let sinVal = 0.5 + 0.5 * sin(t);
+     *
+     *   // sqrt(sinVal) creates an ease-out curve: fast start, slow finish.
+     *   // Since sinVal is in [0,1], sqrt() stays in [0,1].
+     *   let value = sqrt(sinVal);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let navy = [0, 0.1, 0.4, 1];
+     *   let brightOrange = [1, 0.6, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between navy (when value = 0) and brightOrange (when value = 1).
+     *   // The sqrt() ease-out makes the color change fast at first, then slow down.
+     *   finalColor.set(mix(navy, brightOrange, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function drawShape() {
+     *   let t = millis() * 0.001;
+     *   let sinVal = 0.5 + 0.5 * sin(t);
+     *   let size = 10 + sqrt(sinVal) * 30;
+     *   sphere(size);
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   drawShape();
+     * }
+     * ```
+     *
+     * @method sqrt
+     * @param  {Number} n non-negative number to square root.
+     * @return {Number}   square root of number.
      */
     fn.sqrt = Math.sqrt;
 
@@ -107300,11 +108824,7 @@ var p5 = (function () {
      * A number's fractional part includes its decimal values. For example,
      * `fract(12.34)` returns 0.34.
      *
-     * @method fract
-     * @param {Number} n number whose fractional part will be found.
-     * @returns {Number} fractional part of n.
-     *
-     * @example
+     * ```js example
      * function setup() {
      *   createCanvas(100, 100);
      *
@@ -107324,6 +108844,53 @@ var p5 = (function () {
      *
      *   describe('The number 56.78 written above the number 0.78.');
      * }
+     * ```
+     *
+     * `fract()` can also be used in shaders with p5.strands. The following example
+     * uses `fract()` to create repeating patterns in a shader.
+     *
+     * ```js example
+     * let myShader;
+     *
+     * function setup() {
+     *   createCanvas(100, 100, WEBGL);
+     *   myShader = buildColorShader(shaderCallback);
+     *   describe('A sphere with a repeating gradient pattern.');
+     * }
+     *
+     * function shaderCallback() {
+     *   // shaderCallback runs on the GPU. millis() gives ms since start; multiply by 0.001 for seconds.
+     *   let t = millis() * 0.001;
+     *
+     *   // Multiply by 0.5 to slow the animation to half speed.
+     *   // fract(t * 0.5) extracts only the decimal part of the number.
+     *   // This creates a smooth sawtooth wave that repeats every 2 seconds.
+     *   let value = fract(t * 0.5);
+     *
+     *   // Each color is [R, G, B, A] with values from 0 to 1.
+     *   let cyan = [0, 0.5, 1, 1];
+     *   let orange = [1, 0.5, 0, 1];
+     *
+     *   finalColor.begin();
+     *
+     *   // mix() blends between cyan (when value = 0) and orange (when value = 1).
+     *   // Because fract() resets to 0 each cycle, the color loops smoothly.
+     *   finalColor.set(mix(cyan, orange, value));
+     *
+     *   finalColor.end();
+     * }
+     *
+     * function draw() {
+     *   background(220);
+     *   shader(myShader);
+     *   noStroke();
+     *   sphere(30);
+     * }
+     * ```
+     *
+     * @method fract
+     * @param {Number} n number whose fractional part will be found.
+     * @returns {Number} fractional part of n.
      */
     fn.fract = function(toConvert) {
       // p5._validateParameters('fract', arguments);
@@ -108455,6 +110022,8 @@ var p5 = (function () {
   }
 
   /**
+   * @private
+   * @internal
    * Each of the following decorators validates the data on vector operations.
    * These ensure that the arguments are consistently formatted, and that
    * pre-conditions are met.
@@ -120924,7 +122493,7 @@ var p5 = (function () {
      * coordinates of the bounding box's bottom-left corner. See
      * <a href="#/p5/textAlign">textAlign()</a> for more ways to align text.
      *
-     * The fourth parameter, `options`, is also optional. `font.textToPoints()`
+     * The fourth parameter, `options`, is also optional. `font.textToContours()`
      * expects an object with the following properties:
      *
      * `sampleFactor` is the ratio of the text's path length to the number of
@@ -121007,6 +122576,15 @@ var p5 = (function () {
      *
      * The generated model (a Geometry object) can be manipulated further—rotated, scaled,
      * or styled with shaders—to create engaging, interactive visual art.
+     * 
+     * The `options` parameter is also optional. `font.textToModel()` expects an object 
+     * with the following properties:
+     * 
+     * `extrude` is the depth to extrude the text. It defaults to 0. A value of 0 produces
+     * flat text; higher values create thicker, 3D models.
+     * 
+     * `sampleFactor` is a factor controlling the level of detail for the text contours.
+     * It defaults to 1. Higher values result in smoother curves.
      *
      * @param {String} str The text string to convert into a 3D model.
      * @param {Number} x The x-coordinate for the starting position of the text.
@@ -123366,7 +124944,14 @@ var p5 = (function () {
           }
         }
       } else {
-        const glMode = mode === TRIANGLES ? gl.TRIANGLES : gl.TRIANGLE_STRIP;
+        let glMode;
+        if (mode === TRIANGLES) {
+          glMode = gl.TRIANGLES;
+        } else if (mode === TRIANGLE_FAN) {
+          glMode = gl.TRIANGLE_FAN;
+        } else {
+          glMode = gl.TRIANGLE_STRIP;
+        }
         if (count === 1) {
           gl.drawArrays(glMode, 0, geometry.vertices.length);
         } else {
@@ -123510,14 +125095,14 @@ var p5 = (function () {
       return gl.getParameter(gl.MAX_TEXTURE_SIZE);
     }
 
-    _adjustDimensions(width, height) {
+    _adjustDimensions(width, height, density = this._pixelDensity) {
       if (!this._maxTextureSize) {
         this._maxTextureSize = this._getMaxTextureSize();
       }
       let maxTextureSize = this._maxTextureSize;
 
       let maxAllowedPixelDimensions = Math.floor(
-        maxTextureSize / this._pixelDensity
+        maxTextureSize / density
       );
       let adjustedWidth = Math.min(width, maxAllowedPixelDimensions);
       let adjustedHeight = Math.min(height, maxAllowedPixelDimensions);
@@ -123662,6 +125247,10 @@ var p5 = (function () {
     }
     defaultFarScale() {
       return 10;
+    }
+
+    supportsTriangleFan() {
+      return true;
     }
 
     viewport(w, h) {
@@ -124889,7 +126478,7 @@ var p5 = (function () {
       }
 
       // Create image from data
-      const region = new Image(w * framebuffer.density, h * framebuffer.density);
+      const region = new Image$1(w * framebuffer.density, h * framebuffer.density);
       region.imageData = region.canvas.getContext('2d').createImageData(
         region.width,
         region.height
@@ -134982,17 +136571,114 @@ var p5 = (function () {
 
     for (const name of Object.keys(BUILTIN_GLOBAL_SPECS)) {
       const spec = BUILTIN_GLOBAL_SPECS[name];
-      Object.defineProperty(window, name, {
-        get: () => {
+      const backingKey = `_strands_${name}`;
+
+      // Define on window for global mode only
+      const inst = getRuntimeP5Instance();
+      if (inst?._isGlobal) {
+        Object.defineProperty(window, name, {
+          get: () => {
+            if (strandsContext.active) {
+              return getBuiltinGlobalNode(strandsContext, name);
+            }
+            const inst = getRuntimeP5Instance();
+            return spec.get(inst);
+          },
+          configurable: true,
+        });
+      }
+
+      // Capture original descriptor (held in closure for the getter to delegate to)
+      const originalProtoDesc = Object.getOwnPropertyDescriptor(strandsContext.p5.prototype, name);
+
+      // Define on p5.prototype for instance mode
+      Object.defineProperty(strandsContext.p5.prototype, name, {
+        get: function() {
           if (strandsContext.active) {
             return getBuiltinGlobalNode(strandsContext, name);
           }
-          const inst = getRuntimeP5Instance();
-            return spec.get(inst);
+          // If our setter stored a value on this instance, return it
+          if (Object.prototype.hasOwnProperty.call(this, backingKey)) {
+            return this[backingKey];
+          }
+          // Delegate to original getter (e.g. width -> this._renderer?.width)
+          if (originalProtoDesc?.get) {
+            return originalProtoDesc.get.call(this);
+          }
+          // Fall back to original value for data properties (like mouseX)
+          return originalProtoDesc?.value;
         },
+        set: function(val) {
+          this[backingKey] = val;
+        },
+        configurable: true,
       });
+
+      // Define on p5.Graphics.prototype for graphics mode
+      const GraphicsProto = strandsContext.p5?.Graphics?.prototype;
+      if (GraphicsProto) {
+        const originalDesc = Object.getOwnPropertyDescriptor(GraphicsProto, name);
+
+        Object.defineProperty(GraphicsProto, name, {
+          get: function() {
+            if (strandsContext.active) {
+              return getBuiltinGlobalNode(strandsContext, name);
+            }
+            // Delegate to original getter if it exists (class-level getters like width, deltaTime)
+            if (originalDesc?.get) {
+              return originalDesc.get.call(this);
+            }
+            return this[backingKey];
+          },
+          set: function(val) {
+            if (originalDesc?.set) {
+              originalDesc.set.call(this, val);
+            } else {
+              this[backingKey] = val;
+            }
+          },
+          configurable: true,
+        });
+      }
     }
     strandsContext._builtinGlobalsAccessorsInstalled = true;
+  }
+
+  function installInstanceIndexAccessor(strandsContext) {
+    if (strandsContext._instanceIndexAccessorInstalled) return;
+
+    const getRuntimeP5Instance = () => strandsContext.renderer?._pInst || strandsContext.p5?.instance;
+
+    const instanceIndexGetter = function() {
+      if (strandsContext.active) {
+        const node = variableNode(strandsContext, { baseType: BaseType.INT, dimension: 1 }, strandsContext.backend.instanceIdReference());
+        return createStrandsNode(node.id, node.dimension, strandsContext);
+      }
+      return undefined;
+    };
+
+    const inst = getRuntimeP5Instance();
+    if (inst?._isGlobal) {
+      Object.defineProperty(window, 'instanceIndex', {
+        get: instanceIndexGetter,
+        configurable: true,
+      });
+    }
+
+    Object.defineProperty(strandsContext.p5.prototype, 'instanceIndex', {
+      get: instanceIndexGetter,
+      configurable: true,
+    });
+
+    const GraphicsProto = strandsContext.p5?.Graphics?.prototype;
+    if (GraphicsProto) {
+      Object.defineProperty(GraphicsProto, 'instanceIndex', {
+        get: instanceIndexGetter,
+        configurable: true,
+      });
+    }
+
+    strandsContext._instanceIndexAccessorInstalled = true;
   }
 
   //////////////////////////////////////////////
@@ -135168,7 +136854,7 @@ var p5 = (function () {
     const originalLerp = fn.lerp;
     augmentFn(fn, p5, 'lerp', function (...args) {
       if (strandsContext.active) {
-        return fn.mix(...args);
+        return this.mix(...args);
       } else {
         return originalLerp.apply(this, args);
       }
@@ -135189,6 +136875,139 @@ var p5 = (function () {
         return this.clamp(result, this.min(start2, stop2), this.max(start2, stop2));
       }
       return result;
+    });
+
+    const originalColor = fn.color;
+    augmentFn(fn, p5, 'color', function (...args) {
+      if (!strandsContext.active) {
+        return originalColor.apply(this, args);
+      }
+      // Reuse p5's parser - handles hex strings, rgb(), CSS named colors, numerics
+      const c = originalColor.apply(this, args);
+      // _getRGBA() returns [r, g, b, a] normalized to 0-1
+      const rgba = c._getRGBA();
+      const { id, dimension } = primitiveConstructorNode(
+        strandsContext,
+        { baseType: BaseType.FLOAT, dimension: null },
+        rgba
+      );
+      return createStrandsNode(id, dimension, strandsContext);
+    });
+    const originalLerpColor = fn.lerpColor;
+    augmentFn(fn, p5, 'lerpColor', function (...args) {
+      if (!strandsContext.active) {
+        return originalLerpColor.apply(this, args);
+      }
+      // In strands, colors are vec4s - lerpColor maps directly to GLSL mix()
+      return this.mix(...args);
+    });
+    // Component accessors: extract scalar channels from a vec4 color
+    const originalRed = fn.red;
+    augmentFn(fn, p5, 'red', function (...args) {
+      if (!strandsContext.active) {
+        return originalRed.apply(this, args);
+      }
+      return p5.strandsNode(args[0]).x;
+    });
+
+    const originalGreen = fn.green;
+    augmentFn(fn, p5, 'green', function (...args) {
+      if (!strandsContext.active) {
+        return originalGreen.apply(this, args);
+      }
+      return p5.strandsNode(args[0]).y;
+    });
+
+    const originalBlue = fn.blue;
+    augmentFn(fn, p5, 'blue', function (...args) {
+      if (!strandsContext.active) {
+        return originalBlue.apply(this, args);
+      }
+      return p5.strandsNode(args[0]).z;
+    });
+
+    const originalAlpha = fn.alpha;
+    augmentFn(fn, p5, 'alpha', function (...args) {
+      if (!strandsContext.active) {
+        return originalAlpha.apply(this, args);
+      }
+      return p5.strandsNode(args[0]).w;
+    });
+
+    // RGB to HSB conversion based on:
+    // https://en.wikipedia.org/wiki/HSL_and_HSV#From_RGB
+    // Using mix/step to avoid branching, via the compact form from:
+    // http://lolengine.net/blog/2013/07/27/rgb-to-hsv-in-glsl
+    const _rgb2hsb = (instance, colorNode) => {
+    const r = colorNode.x;
+    const g = colorNode.y;
+    const b = colorNode.z;
+    const K = instance.vec4(0, -1/3, 2/3, -1);
+    const p = instance.mix(
+      instance.vec4(b, g, K.w, K.z),
+      instance.vec4(g, b, K.x, K.y),
+      instance.step(b, g)
+    );
+    const q = instance.mix(
+      instance.vec4(p.x, p.y, p.w, r),
+      instance.vec4(r, p.y, p.z, p.x),
+      instance.step(p.x, r)
+    );
+    const d = q.x.sub(instance.min(q.w, q.y));
+    const e = p5.strandsNode(1e-10);
+    const h = instance.abs(q.z.add(q.w.sub(q.y).div(d.mult(6).add(e))));
+    const s = d.div(q.x.add(e));
+    return instance.vec3(h, s, q.x);
+  };
+
+  const _rgb2hsl = (instance, colorNode) => {
+    const r = colorNode.x;
+    const g = colorNode.y;
+    const b = colorNode.z;
+    const maxC = instance.max(r, instance.max(g, b));
+    const minC = instance.min(r, instance.min(g, b));
+    const l = maxC.add(minC).div(2);
+    const d = maxC.sub(minC);
+    const e = p5.strandsNode(1e-10);
+    const s = instance.mix(
+      p5.strandsNode(0),
+      d.div(p5.strandsNode(1).sub(instance.abs(l.mult(2).sub(1)))),
+      instance.step(e, d)
+    );
+    const h_rg = instance.mod(g.sub(b).div(d.add(e)), p5.strandsNode(6)).div(6);
+    const h_gb = b.sub(r).div(d.add(e)).add(2).div(6);
+    const h_br = r.sub(g).div(d.add(e)).add(4).div(6);
+    const isR = instance.step(maxC.sub(e), r).mult(instance.step(r.sub(e), maxC));
+    const isG = instance.step(maxC.sub(e), g).mult(instance.step(g.sub(e), maxC));
+    const h = instance.mix(instance.mix(h_br, h_gb, isG), h_rg, isR);
+    return instance.vec3(h, s, l);
+  };
+    const originalHue = fn.hue;
+    augmentFn(fn, p5, 'hue', function (...args) {
+      if (!strandsContext.active) return originalHue.apply(this, args);
+      const colorNode = p5.strandsNode(args[0]);
+      return _rgb2hsl(this, this.vec3(colorNode.x, colorNode.y, colorNode.z)).x;
+    });
+
+    const originalSaturation = fn.saturation;
+    augmentFn(fn, p5, 'saturation', function (...args) {
+      if (!strandsContext.active) return originalSaturation.apply(this, args);
+      const colorNode = p5.strandsNode(args[0]);
+      return _rgb2hsl(this, this.vec3(colorNode.x, colorNode.y, colorNode.z)).y;
+    });
+
+    const originalBrightness = fn.brightness;
+    augmentFn(fn, p5, 'brightness', function (...args) {
+      if (!strandsContext.active) return originalBrightness.apply(this, args);
+      const colorNode = p5.strandsNode(args[0]);
+      return _rgb2hsb(this, this.vec3(colorNode.x, colorNode.y, colorNode.z)).z;
+    });
+
+    const originalLightness = fn.lightness;
+    augmentFn(fn, p5, 'lightness', function (...args) {
+      if (!strandsContext.active) return originalLightness.apply(this, args);
+      const colorNode = p5.strandsNode(args[0]);
+      return _rgb2hsl(this, this.vec3(colorNode.x, colorNode.y, colorNode.z)).z;
     });
 
     augmentFn(fn, p5, 'getTexture', function (...rawArgs) {
@@ -135216,6 +137035,7 @@ var p5 = (function () {
     const originalNoise = fn.noise;
     const originalNoiseDetail = fn.noiseDetail;
     const originalRandom = fn.random;
+    const originalRandomGaussian=fn.randomGaussian;
     const originalRandomSeed = fn.randomSeed;
     const originalMillis = fn.millis;
 
@@ -135358,6 +137178,20 @@ var p5 = (function () {
         );
       }
     });
+
+     augmentFn(fn, p5, 'randomGaussian', function(...args){
+        if(!strandsContext.active){
+          return originalRandomGaussian.apply(this, args);
+        }
+        const mean = args.length >= 1 ? args[0] : 0;
+        const stdDev = args.length >= 2 ? args[1] : 1;
+
+        const u1 = this.max(this.random(), 1e-6);
+        const u2 = this.random();
+        const z = this.sqrt(this.log(u1).mult(-2)).mult(this.cos(u2.mult(2*Math.PI)));
+
+        return z.mult(stdDev).add(mean);
+      });
 
     augmentFn(fn, p5, 'millis', function (...args) {
       if (!strandsContext.active) {
@@ -135550,6 +137384,17 @@ var p5 = (function () {
               return createStrandsNode(propNode.id, propNode.dimension, strandsContext, onRebind);
             },
             set(val) {
+              const valDim = val?.isStrandsNode
+                ? val.dimension
+                : (Array.isArray(val) ? val.length : 1);
+              if( valDim !== propertyType.dataType.dimension && valDim !== 1){
+                dimensionMismatchError(
+                  propertyType.dataType.dimension,
+                  valDim,
+                  `${param.name}.${propertyType.name}`
+                );
+              }
+
               const oldDependsOn = dag.dependsOn[structNode.id];
               const newDependsOn = [...oldDependsOn];
               let newValueID;
@@ -135627,6 +137472,7 @@ var p5 = (function () {
   }
   function createShaderHooksFunctions(strandsContext, fn, shader) {
     installBuiltinGlobalAccessors(strandsContext);
+    installInstanceIndexAccessor(strandsContext);
 
     // Add shader context to hooks before spreading
     const vertexHooksWithContext = Object.fromEntries(
@@ -135659,6 +137505,54 @@ var p5 = (function () {
       hook.set = function(result) {
         hook._result = result;
       };
+      hook._active = false;
+
+      const numStructArgs = hookType.parameters.filter(
+        param => param.type && param.type.properties
+      ).length;
+      let argIdx = -1;
+      if (numStructArgs === 1) {
+        argIdx = hookType.parameters.findIndex(
+          param => param.type && param.type.properties
+        );
+      }
+      if (argIdx >= 0) {
+        const structParam = hookType.parameters[argIdx];
+        if (structParam.type.properties) {
+          const nameMatch = /^get([A-Z0-9]\w*)$/.exec(hookType.name);
+          const displayName = nameMatch
+            ? nameMatch[1][0].toLowerCase() + nameMatch[1].slice(1)
+            : hookType.name;
+          for (const prop of structParam.type.properties) {
+            const key = prop.name;
+            Object.defineProperty(hook, key, {
+              get() {
+                if (!this._active) {
+                  userError(
+                    'scope error',
+                    `It looks like you're trying to access "${displayName}.${key}" outside of its begin()/end() block.\n\n` +
+                    `Properties of ${displayName} are only available between ` +
+                    `${displayName}.begin() and ${displayName}.end().\n\n` +
+                    `To share data between hooks, use sharedVec3() or sharedFloat() ` +
+                    `to pass values between them.`
+                  );
+                }
+                return this._args[this._argIdx][key];
+              },
+              set(val) {
+                if (!this._active) {
+                  userError(
+                    'scope error',
+                    `It looks like you're trying to set "${displayName}.${key}" outside of its begin()/end() block.`
+                  );
+                }
+                this._args[this._argIdx][key] = val;
+              },
+              enumerable: true,
+            });
+          }
+        }
+      }
 
       let entryBlockID;
       function setupHook() {
@@ -135667,25 +137561,14 @@ var p5 = (function () {
         addEdge(cfg, cfg.currentBlock, entryBlockID);
         pushBlock(cfg, entryBlockID);
         const args = createHookArguments(strandsContext, hookType.parameters);
-        const numStructArgs = hookType.parameters.filter(param => param.type.properties).length;
-        let argIdx = -1;
-        if (numStructArgs === 1) {
-          argIdx = hookType.parameters.findIndex(param => param.type.properties);
-        }
+        hook._active = true;
+        hook._args = args;
+        hook._argIdx = argIdx;
         hook._properties = [];
         for (let i = 0; i < args.length; i++) {
           if (i === argIdx) {
             for (const key of args[argIdx].structProperties || []) {
               hook._properties.push(key);
-              Object.defineProperty(hook, key, {
-                get() {
-                  return args[argIdx][key];
-                },
-                set(val) {
-                  args[argIdx][key] = val;
-                },
-                enumerable: true,
-              });
             }
             if (hookType.returnType?.typeName === hookType.parameters[argIdx].type.typeName) {
               hook.set(args[argIdx]);
@@ -135698,6 +137581,7 @@ var p5 = (function () {
         return args;
       }
       function finishHook() {
+        hook._active = false;
         const userReturned = hook._result;
         strandsContext.activeHook = undefined;
 
@@ -136136,18 +138020,20 @@ var p5 = (function () {
    */
 
   /**
-   * @method instanceID
+   * @property instanceIndex
    * @beta
    * @description
    * Returns the index of the current instance when drawing multiple copies of a
    * shape with <a href="#/p5/model">`model(count)`</a>. The first instance has an
-   * ID of `0`, the second has `1`, and so on.
+   * index of `0`, the second has `1`, and so on.
    *
    * This lets each copy of a shape behave differently. For example, you can use
-   * the ID to place instances at different positions, give them different colors,
+   * the index to place instances at different positions, give them different colors,
    * or animate them at different speeds.
    *
-   * `instanceID()` can only be used inside a p5.strands shader callback.
+   * `instanceIndex` can only be used inside a p5.strands shader callback.
+   *
+   * (Note: `instanceID()` is also available as a function for compatibility.)
    *
    * ```js example
    * let instancesShader;
@@ -136170,7 +138056,7 @@ var p5 = (function () {
    *   // Spread spheres evenly across the canvas based on their index
    *   let spacing = width / count;
    *   worldInputs.position.x +=
-   *     (instanceID() - (count - 1) / 2) * spacing;
+   *     (instanceIndex - (count - 1) / 2) * spacing;
    *   worldInputs.end();
    * }
    *
@@ -136184,7 +138070,7 @@ var p5 = (function () {
    * }
    * ```
    *
-   * If you are using WebGPU mode, a common pattern is to use `instanceID()` to look up data made with
+   * If you are using WebGPU mode, a common pattern is to use `instanceIndex` to look up data made with
    * <a href="#/p5/createStorage">`createStorage()`</a>.
    * This lets you give each instance different properties.
    *
@@ -136227,7 +138113,7 @@ var p5 = (function () {
    *   let itemColor = sharedVec4();
    *
    *   worldInputs.begin();
-   *   let item = data[instanceID()];
+   *   let item = data[instanceIndex];
    *   itemColor = item.color;
    *   worldInputs.position += item.position;
    *   worldInputs.end();
@@ -136249,7 +138135,22 @@ var p5 = (function () {
    * This can be paired with <a href="#/p5/buildComputeShader">`buildComputeShader`</a>
    * to update the data being read.
    *
-   * @webgpu
+   * @type {*}
+   */
+
+  /**
+   * @method instanceID
+   * @beta
+   * @deprecated Use <a href="#/p5/instanceIndex">`instanceIndex`</a> instead.
+   * @description
+   * A function alias for <a href="#/p5/instanceIndex">`instanceIndex`</a>, kept for compatibility.
+   * Prefer using <a href="#/p5/instanceIndex">`instanceIndex`</a> directly as a value instead.
+   *
+   * Returns the index of the current instance when drawing multiple copies of a
+   * shape with <a href="#/p5/model">`model(count)`</a>.
+   *
+   * `instanceID()` can only be used inside a p5.strands shader callback.
+   *
    * @returns {*} The index of the current instance.
    */
 
