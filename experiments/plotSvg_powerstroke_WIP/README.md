@@ -1,11 +1,3 @@
 # plotSvg_powerstroke Example
 
-**WORK IN PROGRESS — NOTHING TO SEE HERE YET**
-
----
-
-Todo: 
-
-* Wacom
-
-
+This is an experiment in implementing [Inkscape's PowerStroke feature](https://wiki.inkscape.org/wiki/PowerStroke) in p5.plotSvg.
