@@ -1,55 +1,22 @@
 # p5.plotSvg Roadmap
 
-This document tracks near-term release work and deferred technical decisions. It
-is not a changelog; `CONTEXT.md` remains the primary orientation document for
-the current architecture.
-
-## 0.3.0 Add-on Release
-
-The current goal is to publish p5.plotSvg as a p5.js add-on while preserving
-existing sketches that load `lib/p5.plotSvg.js` directly or call the legacy
-global functions.
-
-Release checklist:
-
-- Keep `lib/p5.plotSvg.js` as the source of truth for this release.
-- Run `npm run build` after source changes and commit the generated `dist/`
-  files.
-- Keep package entry points conservative:
-  - `main`: `lib/p5.plotSvg.js`
-  - `browser`: `dist/p5.plotSvg.js`
-  - `module`: `dist/p5.plotSvg.esm.js`
-  - `unpkg` / `jsdelivr`: `dist/p5.plotSvg.js`
-- Preserve unconditional global exports for backward compatibility.
-- Prefer add-on/prototype-style usage in new documentation and examples.
-- Verify release candidates with:
-
-```sh
-npm run build
-npm test
-npm pack --dry-run
-```
+This document tracks remaining work and deferred technical decisions. It is not
+a changelog; completed release work should be removed from this file.
 
 ## p5 Libraries Submission
 
 Local staging materials live in `admin/p5-libraries-listing/`.
 
-For the p5 website pull request:
+Remaining work:
 
-- copy `admin/p5-libraries-listing/p5.plotSvg.yaml` to
-  `p5.js-website/src/content/libraries/en/p5.plotSvg.yaml`;
-- copy `admin/p5-libraries-listing/p5.plotSvg.png` to
-  `p5.js-website/src/content/libraries/images/p5.plotSvg.png`;
-- keep the category as `export` unless the p5 maintainers request a change;
-- confirm that `npmFilePath: dist/p5.plotSvg.js` works through jsDelivr after
-  publishing the package version being submitted.
+- Track the p5.js website pull request until p5.plotSvg is accepted or a
+  revision is requested.
+- Apply any listing metadata, category, image, or wording changes requested by
+  the p5 maintainers.
+- Confirm the public p5.js libraries listing after the website PR is merged and
+  deployed.
 
 ## Compatibility Work
-
-Completed compatibility work includes p5 v2 shims for `curve()`,
-`curveTightness()`, `curveVertex()`, and `quadraticVertex()`, plus
-descriptor-safe override/restore behavior that avoids instance-mode global
-pollution.
 
 Remaining compatibility decisions:
 
@@ -80,8 +47,10 @@ These choices are intentional unless the project scope changes:
 
 ## Deferred Source Layout Cleanup
 
-After the add-on release is stable, use a separate branch to repair the
-temporary conservative source layout.
+The repository still uses the conservative release layout: `lib/p5.plotSvg.js`
+is the source of truth, `src/` contains thin build wrappers, and `dist/` contains
+generated package builds. This preserves old CDN paths, but it is not the clean
+long-term structure for an add-on package.
 
 Likely steps:
 
@@ -98,5 +67,5 @@ Likely steps:
 6. Run the full browser test matrix and compare SVG fixtures after the move.
 
 The main risk is churn: moving the large implementation file will make diffs
-noisy and could hide accidental behavior changes. This cleanup should remain
-separate from the 0.3.0 add-on release.
+noisy and could hide accidental behavior changes. Keep this cleanup separate
+from behavior changes.
