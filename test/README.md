@@ -1,5 +1,16 @@
 # p5.plotSvg Tests
 
+## Full Automated Suite
+
+Run:
+
+```sh
+./test/run-playwright-tests.sh
+```
+
+This wrapper runs `npx playwright test --browser=chromium` from the repository
+root. It accepts extra Playwright arguments after the script name.
+
 ## Manual Split-Screen Smoke Test
 
 Open `test/compat/split.html` in a browser to see the same compatibility sketch
@@ -73,6 +84,24 @@ This test exports `test/shapes/shapes_v1/sketch.js` in p5 v1 and compares the
 normalized SVG against `test/shapes/fixtures/shapes_v1.svg`. It is intentionally
 more curve-focused than Smorgasbord, while Smorgasbord remains the broader
 shape, transform, grouping, and element-type regression test.
+
+## Native p5.svg-Inspired Scenarios
+
+Run:
+
+```sh
+npx playwright test test/p5-native-svg-inspired.spec.js --browser=chromium
+```
+
+These tests adapt export-relevant drawing scenarios from the native p5.svg
+visual tests added to p5.js in
+[processing/p5.js#9123](https://github.com/processing/p5.js/pull/9123) by
+Vansh Kabra, especially the upstream
+[`test/unit/visual/cases/svg.js`](https://github.com/processing/p5.js/blob/202d0da34fe24a161da47fcc8cd419429eea2d37/test/unit/visual/cases/svg.js)
+visual cases. The upstream tests target p5.svg's `buildShape()` / `getSVG()`
+workflow; these translated cases use p5.plotSvg's
+`beginRecordSvg()` / `endRecordSvg()` workflow and assert plotter-oriented SVG
+for primitives, custom paths, transforms, and push/pop state restoration.
 
 ## Path Data Regression Baseline
 

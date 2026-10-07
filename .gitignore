@@ -3,6 +3,7 @@
 temp/
 test-results/
 playwright-report/
+test/run-playwright-tests.sh
 node_modules/
 npm-debug.log*
 yarn-debug.log*
