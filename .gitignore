@@ -1,6 +1,10 @@
 
 .DS_Store
 temp/
+experiments/clipping/
+experiments/clipping/occult/
+experiments/clipping/shapely/
+experiments/clipping/geos/
 test-results/
 playwright-report/
 test/run-playwright-tests.sh
